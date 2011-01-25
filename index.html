@@ -1,0 +1,150 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>jQuery Horizontal Accordion Plugin</title>
+		<link rel="stylesheet" href="screen.css">
+	</head>
+	<body>
+		
+		
+		<div>
+		    <ol>
+				<li>
+				    <h2><a href="#">Slide One</a></h2>
+				    <div></div>
+				</li>
+				<li>
+				    <h2><a href="#">Slide Two</a></h2>
+				    <div></div>
+				</li>
+				<li>
+				    <h2><a href="#">Slide Three</a></h2>
+				    <div></div>
+				</li>
+				<li>
+				    <h2><a href="#">Slide Four</a></h2>
+				    <div></div>
+				</li>
+				<li>
+				    <h2><a href="#">Slide Five</a></h2>
+				    <div></div>
+				</li>
+		    </ol>
+			<noscript>
+				<p>Please enable JavaScript to get the full experience.</p>
+			</noscript>	
+		</div>
+		
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+		<script>
+			(function($) {
+				
+				$.fn.liteAccordion = function(options) {
+					
+					var defaults = {
+						containerWidth : 960,
+						containerHeight : 320,
+						headerWidth: 48,
+						
+						firstSlide : 1, // number
+						activeOn : 'click', // mouseover
+						autoPlay : false, // true
+						pauseOnHover : false, // true
+
+						theme : 'basic', // basic, light, dark
+						roundedCorners : false // true	
+					},
+					
+					settings = $.extend({}, defaults, options),
+					
+					$accordion = this,
+					$slides = $accordion.find('li');
+					
+					$accordion.height(settings.containerHeight).width(settings.containerWidth);
+					// $header.width(settings.headerWidth);
+					
+					$slides.each(function(index) {
+						var $this = $(this),
+							color = ['orange','yellow','green','blue','purple'];
+												
+						$this
+							.children('h2')
+								.css('left', index * settings.headerWidth)
+								.next()
+								.width(settings.containerWidth - (index + 1) * settings.headerWidth)
+								.css('left', settings.headerWidth * (index + 1))
+								.css('background', color[index]);
+
+						if (index !== 0) {
+							
+							// console.log($this.add($this.nextAll()).children('h2'));
+							
+							$this
+								.children('h2')
+								.click(function(e) {
+									var $this = $(this),
+										pos = settings.containerWidth - ($slides.length - index) * settings.headerWidth;
+
+									$this
+										.animate({
+											left : (parseInt($this.css('left'),10) === pos) ? index * settings.headerWidth : pos
+										}, 1000)
+										.next()
+										.animate({
+											left : (parseInt($this.css('left'),10) === pos) ? (index + 1) * settings.headerWidth : pos
+										}, 1000);
+										
+									e.preventDefault();
+								});	
+						}
+					});
+
+					
+					
+				
+					
+					
+					
+					/*
+						options:
+							
+							
+							
+							set number of slides
+							set active slide
+
+							slide on click
+							slide on mouseover
+							show/hide numbers
+
+							auto play
+							pause on hover
+
+							original, light, dark colour schemes
+							rounded corners
+
+
+					*/
+					
+					return this.each(function() {
+					
+					
+						
+					});
+
+
+					
+					
+				};
+			
+			
+			$('body > div').liteAccordion();
+				
+		 	})(jQuery);
+			
+			
+		</script>
+		
+	</body>
+</html>

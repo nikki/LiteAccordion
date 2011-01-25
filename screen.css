@@ -1,0 +1,32 @@
+@charset 'utf-8';
+/**************************************************
+
+	project:  Personal Portfolio
+	author:   Nicola Hibbert
+	url:	  http://nicolahibbert.com
+
+/*************************************************/
+/****************************************** HTML */
+body { font: 16px/24px "Helvetica Neue", Verdana, Arial, sans-serif; color: #333; width: 960px; margin: 50px auto 0; text-align: center; background: #eee; }
+
+body > div { position: relative; text-align: left; width: 960px; height: 320px; background: white; overflow: hidden; }
+
+ol { height: 100%; margin: 0; padding: 0; list-style-type: none; }
+
+li > h2 { margin: 0; height: 48px; width: 320px; position: absolute; background: red; z-index: 2; -webkit-transform: rotate(-90deg); -webkit-transform-origin: 160px 160px; -moz-transform: rotate(-90deg); -moz-transform-origin: 160px 160px; -o-transform: rotate(-90deg); -o-transform-origin: 160px 160px; transform: rotate(-90deg); transform-origin: 160px 160px; filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); }
+
+h2 > a { height: 100%; width: 100%; display: block; outline: 0; }
+
+li > div { height: 100%; width: 912px; position: absolute; top: 0; left: 48px; z-index: 1; }
+
+noscript { position: absolute; height: 100%; width: 100%; top: 0; left: 0; background: white; }
+
+noscript p { padding: 10px; margin: 0; }
+
+/****************************************** Dark */
+.dark { border: 10px solid #3e3e3e; }
+
+.dark li { background: black; }
+
+/***************************************** Light */
+/*************************************** Rounded */
