@@ -66,15 +66,16 @@
 					
 					$slides.each(function(index) {
 						var $this = $(this),
+							pos = settings.containerWidth - ($slides.length - index) * settings.headerWidth,
 							color = ['orange','yellow','green','blue','purple'];
 												
 						$this
 							.children('h2')
 								.css('left', index * settings.headerWidth)
 								.next()
-								.width(settings.containerWidth - (index + 1) * settings.headerWidth)
-								.css('left', settings.headerWidth * (index + 1))
-								.css('background', color[index]);
+									.width(settings.containerWidth - (index + 1) * settings.headerWidth)
+									.css('left', settings.headerWidth * (index + 1))
+									.css('background', color[index]);
 
 						if (index !== 0) {
 							
@@ -83,58 +84,41 @@
 							$this
 								.children('h2')
 								.click(function(e) {
-									var $this = $(this),
-										pos = settings.containerWidth - ($slides.length - index) * settings.headerWidth;
-
+									var $this = $(this);
+									
+									/*
+									if($this[0].offsetLeft === index * settings.headerWidth) {
+										$this
+											.parent()
+											.nextAll()
+											.children('h2')
+											.animate({
+												// left : ($this[0].offsetLeft === pos) ? index * settings.headerWidth : pos
+												left : ($this[0].offsetLeft === pos) ? index * settings.headerWidth : pos - 48
+											}, 1000)
+												.next()
+												.animate({
+													left : ($this[0].offsetLeft === pos) ? (index + 1) * settings.headerWidth : pos
+												}, 1000);
+										
+									}
+									*/
+									
 									$this
 										.animate({
-											left : (parseInt($this.css('left'),10) === pos) ? index * settings.headerWidth : pos
+											left : ($this[0].offsetLeft === pos) ? index * settings.headerWidth : pos
 										}, 1000)
-										.next()
-										.animate({
-											left : (parseInt($this.css('left'),10) === pos) ? (index + 1) * settings.headerWidth : pos
-										}, 1000);
-										
+											.next()
+											.animate({
+												left : ($this[0].offsetLeft === pos) ? (index + 1) * settings.headerWidth : pos
+											}, 1000);
+								
 									e.preventDefault();
-								});	
+								});							
+												
 						}
+		
 					});
-
-					
-					
-				
-					
-					
-					
-					/*
-						options:
-							
-							
-							
-							set number of slides
-							set active slide
-
-							slide on click
-							slide on mouseover
-							show/hide numbers
-
-							auto play
-							pause on hover
-
-							original, light, dark colour schemes
-							rounded corners
-
-
-					*/
-					
-					return this.each(function() {
-					
-					
-						
-					});
-
-
-					
 					
 				};
 			
