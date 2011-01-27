@@ -1,32 +1,46 @@
 @charset 'utf-8';
-/**************************************************
-
-	project:  Personal Portfolio
-	author:   Nicola Hibbert
-	url:	  http://nicolahibbert.com
-
+/*************************************************
+*
+*	project:  liteAccordion - horizontal accordion plugin for jQuery
+*	author:   Nicola Hibbert
+*	url:	  http://nicolahibbert.com/horizontal-accordion-jquery-plugin
+*	demo:	  http://www.nicolahibbert.com/demo/liteAccordion
+*
+*	Copyright (c) 2010-2011 Nicola Hibbert
+*	License: MIT
+*
 /*************************************************/
-/****************************************** HTML */
-body { font: 16px/24px "Helvetica Neue", Verdana, Arial, sans-serif; color: #333; width: 960px; margin: 50px auto 0; text-align: center; background: #eee; }
+/****************************************** Demo */
+body { font: 16px/24px "Helvetica Neue", Arial, sans-serif; color: #333; width: 970px; margin: 50px auto 0; text-align: center; background: #eee; }
 
-.accordion { position: relative; text-align: left; overflow: hidden; }
+figure { display: block; width: 100%; height: 100%; }
+
+figcaption { padding: 10px 15px; position: absolute; bottom: 20px; right: 20px; z-index: 3; background: rgba(0, 0, 0, 0.7); color: white; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; }
+
+.tempborder { padding: 4px 0; background: #030303; border: 5px solid #3e3e3e; border-radius: 6px; -moz-border-radius: 6px; -webkit-border-radius: 6px; width: 960px; }
+
+/****************************************** Core */
+.accordion { position: relative; text-align: left; overflow: hidden; font: 'Helvetica Neue', Verdana, Arial, sans-serif; }
 
 .accordion ol { height: 100%; margin: 0; padding: 0; list-style-type: none; }
 
-.accordion li > h2 { margin: 0; position: absolute; background: black; color: white; z-index: 2; -webkit-transform: rotate(-90deg); -webkit-transform-origin: 160px 160px; -moz-transform: rotate(-90deg); -moz-transform-origin: 160px 160px; -o-transform: rotate(-90deg); -o-transform-origin: 160px 160px; transform: rotate(-90deg); transform-origin: 160px 160px; filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); }
+.accordion li > h2 { color: black; font-weight: normal; margin: 0; position: absolute; z-index: 2; top: 0; -webkit-transform: rotate(-90deg); -webkit-transform-origin: 160px 160px; -moz-transform: rotate(-90deg); -moz-transform-origin: 160px 160px; -o-transform: rotate(-90deg); -o-transform-origin: 160px 160px; transform: rotate(-90deg); transform-origin: 160px 160px; filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); }
 
 .accordion li > h2:hover { cursor: pointer; }
 
 .accordion li > div { height: 100%; position: absolute; top: 0; z-index: 1; overflow: hidden; }
 
-.accordion noscript { position: absolute; height: 100%; width: 100%; top: 0; left: 0; background: white; }
+.accordion noscript { position: absolute; height: 100%; width: 100%; top: 0; left: 0; background: white; /*z-index: 10*/ }
 
 .accordion noscript p { padding: 10px; margin: 0; }
 
-/****************************************** Dark */
-.dark { border: 10px solid #3e3e3e; }
+/****************************************** Basic */
+.basic li > h2 { background: black; background: rgba(0, 0, 0, 0.7); color: white; }
 
-.dark li { background: black; }
+/****************************************** Dark */
+.dark li > h2 { background: #030303; font-size: 16px; line-height: 40px; text-shadow: 0 -1px 0 #030303; }
+.dark li > h2 span { background: #3e3e3e; color: white; display: block; padding-left: 10px; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; height: 40px; margin: 4px 0; }
+.dark li > h2 span:hover { background: #434343; }
 
 /***************************************** Light */
 /*************************************** Rounded */

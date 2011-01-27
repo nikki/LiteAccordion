@@ -1,3 +1,14 @@
+/*************************************************
+*
+*	project:  liteAccordion - horizontal accordion plugin for jQuery
+*	author:   Nicola Hibbert
+*	url:	  http://nicolahibbert.com/horizontal-accordion-jquery-plugin
+*	demo:	  http://www.nicolahibbert.com/demo/liteAccordion
+*
+*	Copyright (c) 2010-2011 Nicola Hibbert
+*	License: MIT
+*
+/*************************************************/
 ;(function($) {
 	
 	$.fn.liteAccordion = function(options) {
@@ -8,9 +19,10 @@
 			containerHeight : 320,
 			headerWidth : 48,
 			
-			firstSlide : 3, 
+			firstSlide : 1, 
 			activateOn : 'click', // mouseover
-			slideSpeed : 1000,
+			onActivate : function() {},
+			slideSpeed : 800,
 			slideCallback : function() {},			
 			
 			autoPlay : false, 
@@ -18,7 +30,7 @@
 			pauseOnHover : false,
 
 			theme : 'basic', // basic, light, dark
-			roundedCorners : false 
+			roundedCorners : false
 		},
 		
 		// merge defaults with options in new settings object				
@@ -54,38 +66,34 @@
 				$this
 					.css('left', left)
 					.next()
-						.width(slideWidth)
-						.css('left', left + settings.headerWidth);
+						.width(slideWidth + settings.headerWidth)
+						.css('left', left);
 		});
 		
 		// bind event handler for activating slides
 		$header.bind(settings.activateOn, function() {
 			var $this = $(this),
 				index = $header.index($this),
-				pos = { // absolute positions!!
+				pos = {
 					left : index * settings.headerWidth,
 					right : index * settings.headerWidth + slideWidth
-				},
+				}, 
 				newPos,
-				$group = utils.getGroup.call(this, pos, index);
+				$group = utils.getGroup.call(this, pos, index); 
+
+			settings.onActivate.call($accordion);
 
 			if (this.offsetLeft === pos.left) {
-				newPos = pos.left + slideWidth;
+				newPos = slideWidth;
 			} else if (this.offsetLeft === pos.right) {
-				newPos = pos.right - slideWidth;
+				newPos = -slideWidth;
 			}
 
-			$group.each(function(index) {
-				$(this)
-					.animate({
-						left : newPos + (index + 1) * settings.headerWidth
-					}, settings.slideSpeed)
-					.next()
-					.animate({
-						left : newPos + (index + 2) * settings.headerWidth
-					}, settings.slideSpeed, settings.slideCallback.call(this));
-			});
-
+			$group
+				.add($group.next())
+				.animate({
+					left : '+=' + newPos
+				}, settings.slideSpeed, settings.slideCallback);	
 		});
 	
 		// core utility and animation methods
@@ -96,7 +104,7 @@
 				if (this.offsetLeft === pos.left) {
 					return $parent.nextAll().children(':first-child').filter(function() { return this.offsetLeft === $header.index(this) * settings.headerWidth });
 				} else if (this.offsetLeft === pos.right) {
-					return $parent.add($parent.prevAll()).children(':first-child').filter(function() { return this.offsetLeft !== $header.index(this) * settings.headerWidth });	
+					return $parent.add($parent.prevAll()).children(':first-child').filter(function() { return this.offsetLeft === slideWidth + ($header.index(this) * settings.headerWidth) });	
 				}
 			},
 			next : function() {
