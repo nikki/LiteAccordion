@@ -1,12 +1,13 @@
 /*************************************************
 *
-*	project:  liteAccordion - horizontal accordion plugin for jQuery
-*	author:   Nicola Hibbert
-*	url:	  http://nicolahibbert.com/horizontal-accordion-jquery-plugin
-*	demo:	  http://www.nicolahibbert.com/demo/liteAccordion
+*	project:  	liteAccordion - horizontal accordion plugin for jQuery
+*	author:   	Nicola Hibbert
+*	url:	  	http://nicolahibbert.com/horizontal-accordion-jquery-plugin
+*	demo:	  	http://www.nicolahibbert.com/demo/liteAccordion
 *
-*	Copyright (c) 2010-2011 Nicola Hibbert
-*	License: MIT
+*	Version:  	0.1.0
+*	Copyright: 	(c) 2010-2011 Nicola Hibbert
+*	License: 	MIT
 *
 /*************************************************/
 ;(function($) {
@@ -66,8 +67,8 @@
 				$this
 					.css('left', left)
 					.next()
-						.width(slideWidth + settings.headerWidth)
-						.css('left', left);
+						.width(slideWidth)
+						.css({ left : left, paddingLeft : settings.headerWidth });
 		});
 		
 		// bind event handler for activating slides
