@@ -114,27 +114,30 @@
 					return $parent.add($parent.prevAll()).children(':first-child').filter(function() { return this.offsetLeft === slideWidth + ($header.index(this) * settings.headerWidth) });	
 				} // rewrite
 			},
-			nextSlide : function(clicked) {
-				var currentSlide;
+			nextSlide : function() {
+				var currentSlide = settings.firstSlide;
 				
-				(clicked) ? currentSlide = 0 : currentSlide = settings.activeSlide;
-				
-				return function() {
+				return function(num) {
+					// pass in (zero based!) index of slide from click event
+					if (num && typeof num === 'number') {
+						currentSlide = num;
+					}
+										
 					// using eq to filter so needs to be zero indexed (i.e. don't add 1)
 					return currentSlide++ % slideLen;
 				}
 			},
-			play : function() {
+			play : function(pause, index) {
 				var getNext, go;
 				if (!settings.autoPlay) return;
 			
 				getNext = utils.nextSlide(), // gogo gadget closure!
 				go = function() {
-					// (stop) ? $header.eq(index).click() : $header.eq(getNext()).click();				
+					// (pause) ? $header.eq(getNext(index)).click() : $header.eq(getNext()).click();
+					// $header.eq(getNext()).click();	
+					console.log(getNext());				
 				};
-			
-				
-				
+
 				setInterval(go, settings.cycleSpeed);
 					
 				$slides.hover(function() {
