@@ -6,15 +6,11 @@
 *	url:	  	http://nicolahibbert.com/horizontal-accordion-jquery-plugin
 *	demo:	  	http://www.nicolahibbert.com/demo/liteAccordion
 *
-*	Version:  	1.0.0
-*	Copyright: 	(c) 2010-2011 Nicola Hibbert
-*	License: 	MIT
-*
 /*************************************************/
 /****************************************** Core */
-.accordion { position: relative; text-align: left; overflow: hidden; font: 'Helvetica Neue', Verdana, Arial, sans-serif; }
+.accordion { text-align: left; font: 'Helvetica Neue', Verdana, Arial, sans-serif; }
 
-.accordion ol { height: 100%; margin: 0; padding: 0; list-style-type: none; }
+.accordion ol { position: relative; overflow: hidden; height: 100%; margin: 0; padding: 0; list-style-type: none; }
 
 .accordion li > h2 { color: black; font-weight: normal; margin: 0; position: absolute; z-index: 2; top: 0; -webkit-transform: translateX(-100%) rotate(-90deg); -webkit-transform-origin: right top; -moz-transform: translateX(-100%) rotate(-90deg); -moz-transform-origin: right top; -o-transform: translateX(-100%) rotate(-90deg); -o-transform-origin: right top; transform: translateX(-100%) rotate(-90deg); transform-origin: right top; filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); }
 
@@ -34,11 +30,13 @@
 .basic li > div p { margin: 10px; font-size: 14px; }
 
 /****************************************** Dark */
-.dark li > h2 { background: #030303; font-size: 16px; line-height: 40px; text-shadow: 0 -1px 0 #030303; }
-.dark li > h2 span { background: #3e3e3e; color: white; display: block; padding-left: 10px; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; height: 40px; margin: 4px 0; }
-.dark li > h2 span:hover { background: #434343; }
+.dark { border: 9px solid #353535; border-bottom-width: 8px; border-radius: 6px; -moz-border-radius: 6px; -webkit-border-radius: 6px; padding: 5px 5px 6px 0; background: #030303; -webkit-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); -moz-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); -o-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); }
 
-.dark li > div { background: #030303; }
+.dark li > h2 { background: #030303; font-size: 16px; line-height: 2.7em; text-shadow: 0 -1px 0 #030303; }
+.dark li > h2 span { background: #353535; color: white; display: block; padding-right: 8%; text-align: right; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; height: 90%; margin-top: 5px; }
+.dark li > h2 span:hover, .dark li > h2 span.selected { background: #434343; }
+
+.dark li > div { background: #030303; margin-left: 5px; }
 
 /***************************************** Light */
 /*************************************** Rounded */

@@ -20,17 +20,17 @@
 			containerHeight : 320,
 			headerWidth : 48,
 			
-			firstSlide : 1, 
+			firstSlide : 3, 
 			activateOn : 'click', // mouseover
 			onActivate : function() {},
 			slideSpeed : 800,
 			slideCallback : function() {},			
 			
-			autoPlay : false, 
+			autoPlay : true, 
 			cycleSpeed : 5000,
 			pauseOnHover : false,
 
-			theme : 'basic', // basic, light, dark
+			theme : 'basic', // basic, light, dark, stitch
 			roundedCorners : false
 		},
 		
@@ -48,7 +48,7 @@
 		$accordion
 			.height(settings.containerHeight)
 			.width(settings.containerWidth)
-			.addClass((settings.theme === 'dark') ? 'dark' : (settings.theme === 'light') ? 'light' : 'basic')
+			.addClass(settings.theme)
 			.addClass(settings.roundedCorners && 'rounded');
 		
 		$header
@@ -81,22 +81,28 @@
 				}, 
 				newPos,
 				$group = utils.getGroup.call(this, pos, index); 
-
+			
+			// stop animation
+			utils.play.call($this, true, index);
+			
+			// callback	
 			settings.onActivate.call($accordion);
 
 			if (this.offsetLeft === pos.left) {
 				newPos = slideWidth;
 			} else if (this.offsetLeft === pos.right) {
 				newPos = -slideWidth;
-			}
+			} // rewrite
 
+			// get group of tabs & animate
 			$group
 				.add($group.next())
+				.stop()
 				.animate({
 					left : '+=' + newPos
 				}, settings.slideSpeed, settings.slideCallback);	
 		});
-	
+		
 		// core utility and animation methods
 		var utils = {
 			getGroup : function(pos, index) {		
@@ -106,24 +112,47 @@
 					return $parent.nextAll().children(':first-child').filter(function() { return this.offsetLeft === $header.index(this) * settings.headerWidth });
 				} else if (this.offsetLeft === pos.right) {
 					return $parent.add($parent.prevAll()).children(':first-child').filter(function() { return this.offsetLeft === slideWidth + ($header.index(this) * settings.headerWidth) });	
+				} // rewrite
+			},
+			nextSlide : function(clicked) {
+				var currentSlide;
+				
+				(clicked) ? currentSlide = 0 : currentSlide = settings.activeSlide;
+				
+				return function() {
+					// using eq to filter so needs to be zero indexed (i.e. don't add 1)
+					return currentSlide++ % slideLen;
 				}
 			},
-			next : function() {
-				// or prev
-				this.parent().next().children(':first-child').trigger('click');
-			},
 			play : function() {
+				var getNext, go;
 				if (!settings.autoPlay) return;
+			
+				getNext = utils.nextSlide(), // gogo gadget closure!
+				go = function() {
+					// (stop) ? $header.eq(index).click() : $header.eq(getNext()).click();				
+				};
+			
 				
-				// get all slide headers
-				// get first active slide
-				// trigger next after x amount of time
 				
+				setInterval(go, settings.cycleSpeed);
+					
+				$slides.hover(function() {
+				// 	clearInterval(go);
+				}, function() {
+					// console.log('fail');
+					// setInterval(go, settings.cycleSpeed);
+				});
+			},
+			playNext : function() {
+				// or prev
+				// this.parent().next().children(':first-child').trigger('click');				
 			}
-		}	
+		};
 		
-	}; // end plugin
-
-	// setTimeout(function() { $('h2:eq(3)').trigger('click') }, 1000);
+		// start autoplay
+		settings.autoPlay && utils.play.call(this, false);
+		
+	};
 	
 })(jQuery);
