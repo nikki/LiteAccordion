@@ -20,18 +20,17 @@
 			containerHeight : 320,
 			headerWidth : 48,
 			
-			firstSlide : 3, 
-			activateOn : 'click', // mouseover
+			firstSlide : 1, 
 			onActivate : function() {},
 			slideSpeed : 800,
 			slideCallback : function() {},			
 			
-			autoPlay : true, 
-			cycleSpeed : 5000,
+			autoPlay : false, 
+			cycleSpeed : 6000,
 			pauseOnHover : false,
 
-			theme : 'basic', // basic, light, dark, stitch
-			roundedCorners : false
+			theme : 'basic', // basic, light*, dark, stitch*
+			rounded : false
 		},
 		
 		// merge defaults with options in new settings object				
@@ -42,18 +41,60 @@
 			$slides = $accordion.find('li'),
 			slideLen = $slides.length,
 			slideWidth = settings.containerWidth - (slideLen * settings.headerWidth),
-			$header = $slides.children('h2');
+			$header = $slides.children('h2'),
+			
+		// core utility and animation methods
+			utils = {
+				getGroup : function(pos, index) {		
+					if (this.offsetLeft === pos.left) {
+						return $header.slice(index + 1, slideLen).filter(function() { return this.offsetLeft === $header.index(this) * settings.headerWidth });
+					} else if (this.offsetLeft === pos.right) {
+						return $header.slice(0, index + 1).filter(function() { return this.offsetLeft === slideWidth + ($header.index(this) * settings.headerWidth) });	
+					} 					
+				},
+				nextSlide : function() {
+					var currentSlide = settings.firstSlide;
+
+					// get index of next slide
+					return function(num) {
+						// pass in (zero based!) index of slide from click event
+						if (num && typeof num === 'number') {
+							currentSlide = num;
+						}	
+
+						// using eq to filter so needs to be zero indexed (i.e. don't add 1)
+						return currentSlide++ % slideLen;
+					}
+				},
+				play : function(clicked) {
+					var getNext = utils.nextSlide(), // gogo gadget closure!
+						go = function() {
+							$header.eq(getNext(clicked)).click();
+						};
+
+					// start auto play
+					setInterval(go, settings.cycleSpeed);		
+				},
+				pause : function() {
+					return clearInterval();
+				},
+				slideCallbackContext : function() {
+					return settings.slideCallback.call(this);
+				}
+			};		
 		
-		// set heights, widths, theme & corner style
+		// set container heights, widths, theme & corner style
 		$accordion
 			.height(settings.containerHeight)
 			.width(settings.containerWidth)
 			.addClass(settings.theme)
-			.addClass(settings.roundedCorners && 'rounded');
+			.addClass(settings.rounded && 'rounded');
 		
+		// set tab width, height and selected class
 		$header
 			.width(settings.containerHeight)
-			.height(settings.headerWidth);
+			.height(settings.headerWidth)
+			.eq(settings.firstSlide - 1).children().addClass('selected');
 		
 		// set initial positions for each slide
 		$header.each(function(index) {
@@ -72,7 +113,7 @@
 		});
 		
 		// bind event handler for activating slides
-		$header.bind(settings.activateOn, function() {
+		$header.click(function() {
 			var $this = $(this),
 				index = $header.index($this),
 				pos = {
@@ -81,80 +122,50 @@
 				}, 
 				newPos,
 				$group = utils.getGroup.call(this, pos, index); 
-			
-			// stop animation
-			utils.play.call($this, true, index);
-			
-			// callback	
-			settings.onActivate.call($accordion);
 
+			// stop animation on click
+			// utils.pause();
+			
+			// activate onclick callback with slide div as context	
+			settings.onActivate.call($slides.children('div').eq(index));
+
+			// set animation direction
 			if (this.offsetLeft === pos.left) {
 				newPos = slideWidth;
 			} else if (this.offsetLeft === pos.right) {
 				newPos = -slideWidth;
 			} // rewrite
 
-			// get group of tabs & animate
-			$group
-				.add($group.next())
-				.stop()
-				.animate({
-					left : '+=' + newPos
-				}, settings.slideSpeed, settings.slideCallback);	
-		});
-		
-		// core utility and animation methods
-		var utils = {
-			getGroup : function(pos, index) {		
-				var $parent = $(this).parent();
+			// check if animation in progress
+			if (!$header.is(':animated')) {
 				
-				if (this.offsetLeft === pos.left) {
-					return $parent.nextAll().children(':first-child').filter(function() { return this.offsetLeft === $header.index(this) * settings.headerWidth });
-				} else if (this.offsetLeft === pos.right) {
-					return $parent.add($parent.prevAll()).children(':first-child').filter(function() { return this.offsetLeft === slideWidth + ($header.index(this) * settings.headerWidth) });	
-				} // rewrite
-			},
-			nextSlide : function() {
-				var currentSlide = settings.firstSlide;
+				// remove, then add selected class
+				$header.children().removeClass('selected').filter($this.children()).addClass('selected');
 				
-				return function(num) {
-					// pass in (zero based!) index of slide from click event
-					if (num && typeof num === 'number') {
-						currentSlide = num;
-					}
-										
-					// using eq to filter so needs to be zero indexed (i.e. don't add 1)
-					return currentSlide++ % slideLen;
+				// get group of tabs & animate
+				$group
+					.add($group.next())
+					.animate({
+						left : '+=' + newPos
+					}, settings.slideSpeed, utils.slideCallbackContext);	
 				}
-			},
-			play : function(pause, index) {
-				var getNext, go;
-				if (!settings.autoPlay) return;
-			
-				getNext = utils.nextSlide(), // gogo gadget closure!
-				go = function() {
-					// (pause) ? $header.eq(getNext(index)).click() : $header.eq(getNext()).click();
-					// $header.eq(getNext()).click();	
-					console.log(getNext());				
-				};
-
-				setInterval(go, settings.cycleSpeed);
+		});
 					
-				$slides.hover(function() {
-				// 	clearInterval(go);
-				}, function() {
-					// console.log('fail');
-					// setInterval(go, settings.cycleSpeed);
-				});
-			},
-			playNext : function() {
-				// or prev
-				// this.parent().next().children(':first-child').trigger('click');				
-			}
-		};
+		// pause accordion on hover		
+		/*
+		if (settings.pauseOnHover) {
+			$slides.hover(function()) {
+				utils.pause();
+			}, function() {
+				utils.play();
+			});
+		}
+		*/
 		
-		// start autoplay
-		settings.autoPlay && utils.play.call(this, false);
+		// start autoplay, call utils with no args = start from firstSlide
+		settings.autoPlay && utils.play();
+		
+		return $accordion;
 		
 	};
 	
