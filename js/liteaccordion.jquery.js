@@ -29,7 +29,8 @@
 			pauseOnHover : false,
 
 			theme : 'basic', // basic, light*, dark, stitch*
-			rounded : false
+			rounded : false,
+			enumerateSlides : false
 		},
 		
 		// merge defaults with options in new settings object				
@@ -75,11 +76,7 @@
 					playing = setInterval(start, settings.cycleSpeed);			
 				},
 				pause : function() {
-					// clearInterval(playing);
-				},
-				slideCallbackContext : function() {
-					// fix context
-					return settings.slideCallback.call();
+					clearInterval(playing);
 				}
 			};		
 		
@@ -94,26 +91,30 @@
 		$header
 			.width(settings.containerHeight)
 			.height(settings.headerWidth)
-			.eq(settings.firstSlide - 1).children().addClass('selected');
+			.eq(settings.firstSlide - 1).addClass('selected');
 		
 		// set initial positions for each slide
 		$header.each(function(index) {
 			var $this = $(this),
 				left = index * settings.headerWidth;
 				
-				if (index >= settings.firstSlide) {
-					left += slideWidth;
-				} 
-				
-				$this
-					.css('left', left)
-					.next()
-						.width(slideWidth)
-						.css({ left : left, paddingLeft : settings.headerWidth });
+			if (index >= settings.firstSlide) {
+				left += slideWidth;
+			} 
+			
+			$this
+				.css('left', left)
+				.next()
+					.width(slideWidth)
+					.css({ left : left, paddingLeft : settings.headerWidth });
+			
+			// add number to bottom of tab
+			settings.enumerateSlides && $this.append('<b>' + (index + 1) + '</b>');			
+
 		});
-		
+				
 		// bind event handler for activating slides
-		$header.click(function() {
+		$header.click(function(e) {
 			var $this = $(this),
 				index = $header.index($this),
 				pos = {
@@ -124,35 +125,36 @@
 				$group = utils.getGroup.call(this, pos, index); 
 
 			// stop animation on click
-			// utils.pause();
+			if (playing && e.originalEvent) {
+				utils.pause();
+			}
 			
 			// activate onclick callback with slide div as context	
-			settings.onActivate.call($slides.children('div').eq(index));
+			settings.onActivate.call($slides.eq(index));
 
 			// set animation direction
 			if (this.offsetLeft === pos.left) {
 				newPos = slideWidth;
 			} else if (this.offsetLeft === pos.right) {
 				newPos = -slideWidth;
-			} // rewrite
+			}
 
 			// check if animation in progress
 			if (!$header.is(':animated')) {
 				
 				// remove, then add selected class
-				$header.children().removeClass('selected').filter($this.children()).addClass('selected');
+				$header.removeClass('selected').filter($this).addClass('selected');
 				
 				// get group of tabs & animate
 				$group
 					.add($group.next())
 					.animate({
 						left : '+=' + newPos
-					}, settings.slideSpeed, utils.slideCallbackContext);	
+					}, settings.slideSpeed, function() { return settings.slideCallback.call($slides.eq(index)) });	
 				}
 		});
 					
 		// pause accordion on hover		
-		/*
 		if (settings.pauseOnHover) {
 			$slides.hover(function() {
 				utils.pause();
@@ -160,7 +162,6 @@
 				utils.play($slides.index($(this)) + 1);
 			});
 		}
-		*/
 		
 		// start autoplay, call utils with no args = start from firstSlide
 		settings.autoPlay && utils.play();
