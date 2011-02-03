@@ -7,7 +7,6 @@
 *
 *	Version:  	0.1.0
 *	Copyright: 	(c) 2010-2011 Nicola Hibbert
-*	License: 	MIT
 *
 /*************************************************/
 ;(function($) {
@@ -42,6 +41,7 @@
 			slideLen = $slides.length,
 			slideWidth = settings.containerWidth - (slideLen * settings.headerWidth),
 			$header = $slides.children('h2'),
+			playing,
 			
 		// core utility and animation methods
 			utils = {
@@ -68,18 +68,18 @@
 				},
 				play : function(clicked) {
 					var getNext = utils.nextSlide(), // gogo gadget closure!
-						go = function() {
+						start = function() {
 							$header.eq(getNext(clicked)).click();
 						};
-
-					// start auto play
-					setInterval(go, settings.cycleSpeed);		
+					
+					playing = setInterval(start, settings.cycleSpeed);			
 				},
 				pause : function() {
-					return clearInterval();
+					// clearInterval(playing);
 				},
 				slideCallbackContext : function() {
-					return settings.slideCallback.call(this);
+					// fix context
+					return settings.slideCallback.call();
 				}
 			};		
 		
@@ -154,10 +154,10 @@
 		// pause accordion on hover		
 		/*
 		if (settings.pauseOnHover) {
-			$slides.hover(function()) {
+			$slides.hover(function() {
 				utils.pause();
 			}, function() {
-				utils.play();
+				utils.play($slides.index($(this)) + 1);
 			});
 		}
 		*/
