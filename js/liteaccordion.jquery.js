@@ -26,7 +26,6 @@
 			
 			autoPlay : false, 
 			cycleSpeed : 6000,
-			pauseOnHover : false,
 
 			theme : 'basic', // basic, light*, dark, stitch*
 			rounded : false,
@@ -153,16 +152,7 @@
 					}, settings.slideSpeed, function() { return settings.slideCallback.call($slides.eq(index)) });	
 				}
 		});
-					
-		// pause accordion on hover		
-		if (settings.pauseOnHover) {
-			$slides.hover(function() {
-				utils.pause();
-			}, function() {
-				utils.play($slides.index($(this)) + 1);
-			});
-		}
-		
+								
 		// start autoplay, call utils with no args = start from firstSlide
 		settings.autoPlay && utils.play();
 		

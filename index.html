@@ -10,7 +10,7 @@
 			dt { font-weight: bold }
 			dd { margin: 0 }
 			figure { display: block; width: 100%; height: 100% }
-			figcaption { padding: 10px 15px; position: absolute; bottom: 20px; right: 30px; z-index: 3; background: rgba(0,0,0,0.7); color: white;
+			figcaption { padding: 10px 15px; position: absolute; bottom: 20px; right: 30px; z-index: 3; background: black; background: rgba(0,0,0,0.7); color: white;
 				-webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px }
 		</style>
 		<link rel="stylesheet" href="css/liteaccordion.css">
@@ -50,7 +50,7 @@
 				    <h2><span>Slide Three</span></h2>
 				    <div>
 						<figure>
-							<img src="img-demo/2.jpg" alt="image" />
+							<img src="img-demo/2a.jpg" alt="image" />
 							<figcaption>Some caption text goes in here...</figcaption>
 						</figure>
 					</div>
@@ -69,7 +69,7 @@
 				    <div>
 						<figure>
 							<img src="img-demo/2.jpg" alt="image" />
-							<figcaption>Bonus points for spotting the theme of these slides, tweet me @nicolahibbert :)</figcaption>
+							<figcaption>More caption text here!</figcaption>
 						</figure>
 					</div>
 				</li>
@@ -85,7 +85,7 @@
 		<h2>FAQ</h2>
 		<dl>
 			<dt>Q. Why is this plugin called 'liteAccordion'?</dt>
-			<dd>A. It is called liteAccordion because the raw JavaScript source is only 100000kb in size, and the themes don't use any background images. If you minify and gzip the JS, you can get the file size down to XKB!</dd>
+			<dd>A. It is called liteAccordion because the raw JavaScript source only weighs a (heavily commented!) 4.5kb, and the themes don't use any background images. If you minify and gzip the JS, you can get the file size down to ~1.2kb!</dd>
 			<dt>Q. What can I use it for?</dt>
 			<dd>A. Anything you like! Text, images, video - anything you can put in a div, you can put in a slide.</dd>
 			<dt>Q. But my page isn't 960px wide...</dt>
@@ -93,7 +93,7 @@
 			<dt>Q. What themes are available?</dt>
 			<dd>A. There are currently two themes available, 'basic' and 'dark', though I plan to add a light theme and a stitch theme based on <a href="http://www.ormanclark.com/">Orman Clark</a>'s <a href="http://www.premiumpixels.com/stitched-fabric-accordion/">stitch</a> theme for SlideDeck in the very near future.  If these themes aren't suitable, you can always customise the css :)</dd>
 			<dt>Q. Does it work in...</dt>
-			<dd>A. It works in Firefox, Chrome, Safari, Opera and IE7 upwards.</dd>
+			<dd>A. It's been tested on the latest versions of Firefox, Chrome, Safari and Opera on both OSX and W7.</dd>
 			<dt>Q. Sounds good! Can I use it for commercial projects?</dt>
 			<dd>A. liteAccordion is released under the MIT license, so it's free to use for commercial and personal projects.</dd>
 		</dl>
@@ -215,9 +215,8 @@
 			slideSpeed : 800,				// speed of slide animation (time/ms)
 			slideCallback : function() {},	// callback function triggered after slide animation is complete (function)
 
-			autoPlay : false, 				// automatically scroll through the slides (boolean)
+			autoPlay : false, 				// automatically scroll through the slides, if true with pause on user click (boolean)
 			cycleSpeed : 6000,				// time between slide activation (time/ms)
-			pauseOnHover : false,			// pause slides on hover (boolean)
 
 			theme : 'basic', 				// which theme to use ('basic', 'light'*, 'dark', or 'stitch'*)
 			rounded : false,				// whether to use rounded corners or not** (boolean)
@@ -229,14 +228,13 @@
 				onActivate : function() {
 					this.find('figcaption').fadeOut();
 				},
-				slideCallback : function() {					
+				slideCallback : function() {	
 					this.find('figcaption').fadeIn();
 				},
 				autoPlay : true,
-				pauseOnHover : true,
 				theme : 'dark',
 				rounded : true,
-				enumerateSlides : true
+				enumerateSlides : true				
 			}).find('figcaption:first').show();</pre>
 		<p>Note: the context for the two callback functions is the (jQuery wrapped) slide div (adjacent to the tab trigger).</p>
 
@@ -278,12 +276,26 @@
 				<p>Please enable JavaScript to get the full experience.</p>
 			</noscript>
 		</div>
-		<pre class="brush: js">$('#yourdiv').liteAccordion({ theme : 'dark', containerWidth : 600, containerHeight : 200 });</pre>
+		<pre class="brush: js">$('#yourdiv').liteAccordion({ 
+	theme : 'dark', 
+	containerWidth : 600, 
+	containerHeight : 200, 
+	slideSpeed : 600, 
+	firstSlide : 2 
+});</pre>
 
 		<h2>Licence</h2>
 		<p>The liteAccordion plugin is free for personal and commercial use, providing that the copyright notices are left intact. 
 			You may freely include this jQuery plugin in websites, web applications, templates, themes, and other materials intended for sale and/or distribution. 
 			You are not permitted to offer this plugin for distribution and/or resale 'as is' without prior consent.</p>
+		<p>	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+			IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+			FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+			AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+			LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+			OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+			THE SOFTWARE.
+		</p>
 
 		<h2>Attribution</h2>
 		<p>The '<a href="http://www.premiumpixels.com/horizontal-accordion-slider-psd/">dark</a>' theme was inspired by Orman Clark</a>. Thanks Orman! :)</p>
@@ -303,17 +315,16 @@
 					onActivate : function() {
 						this.find('figcaption').fadeOut();
 					},
-					slideCallback : function() {					
+					slideCallback : function() {	
 						this.find('figcaption').fadeIn();
 					},
 					autoPlay : true,
-					pauseOnHover : true,
 					theme : 'dark',
 					rounded : true,
 					enumerateSlides : true					
 			}).find('figcaption:first').show();
 			$('#two').liteAccordion();
-			$('#three').liteAccordion({ theme : 'dark', containerWidth : 600, containerHeight : 200 });
+			$('#three').liteAccordion({ theme : 'dark', containerWidth : 600, containerHeight : 200, slideSpeed : 600, firstSlide : 2 });
 		</script>
 
 	</body>
