@@ -16,7 +16,7 @@
 		<link rel="stylesheet" href="css/liteaccordion.css">
 		<link href="http://alexgorbatchev.com.s3.amazonaws.com/pub/sh/3.0.83/styles/shCore.css" rel="stylesheet" />
 		<link href="http://alexgorbatchev.com.s3.amazonaws.com/pub/sh/3.0.83/styles/shThemeDefault.css" rel="stylesheet" />
-		<!--[if IE]>
+		<!--[if lt IE 9]>
 			<script>
 				document.createElement('figure');
 				document.createElement('figcaption');			
@@ -91,13 +91,16 @@
 			<dt>Q. But my page isn't 960px wide...</dt>
 			<dd>A. Not a problem. The plugin has a range of options, and I've tried to use relative measurements in the css so that the styles scale.</dd>
 			<dt>Q. What themes are available?</dt>
-			<dd>A. There are currently two themes available, 'basic' and 'dark', though I plan to add a light theme and a stitch theme based on <a href="http://www.ormanclark.com/">Orman Clark</a>'s <a href="http://www.premiumpixels.com/stitched-fabric-accordion/">stitch</a> theme for SlideDeck in the very near future.  If these themes aren't suitable, you can always customise the css :)</dd>
+			<dd>A. There are currently two themes available, 'basic' and 'dark', though I plan to add a light theme and a stitch theme based on Orman Clark's <a href="http://www.premiumpixels.com/stitched-fabric-accordion/">stitch</a> theme for SlideDeck in the very near future.  If these themes aren't suitable, you can always customise the css :)</dd>
 			<dt>Q. Does it work in...</dt>
 			<dd>A. It's been tested on the latest versions of Firefox, Chrome, Safari and Opera on both OSX and W7.</dd>
 			<dt>Q. Sounds good! Can I use it for commercial projects?</dt>
 			<dd>A. liteAccordion is released under the MIT license, so it's free to use for commercial and personal projects.</dd>
 		</dl>
 		<p>If you find any bugs, please <a href="https://github.com/nikki/liteAccordion/issues">file a ticket on Github</a> and I'll fix it as soon as possible.  Thanks!</p>
+
+		<h2>New in 1.1!</h2>
+		<p>In version 1.1 (released 21/03/2011), a pause on hover function was added to the plugin.</p>
 
 		<h2>Basic Implementation</h2>
 		<p>1. Include jQuery, the liteAccordion CSS and the liteAccordion JavaScript files in your page:</p>
@@ -216,6 +219,7 @@
 			slideCallback : function() {},	// callback function triggered after slide animation is complete (function)
 
 			autoPlay : false, 				// automatically scroll through the slides, if true with pause on user click (boolean)
+			pauseOnHover : false, 			// *NEW in 1.1* - pause slides on hover
 			cycleSpeed : 6000,				// time between slide activation (time/ms)
 
 			theme : 'basic', 				// which theme to use ('basic', 'light'*, 'dark', or 'stitch'*)
@@ -232,6 +236,7 @@
 					this.find('figcaption').fadeIn();
 				},
 				autoPlay : true,
+				pauseOnHover : true,
 				theme : 'dark',
 				rounded : true,
 				enumerateSlides : true				
@@ -298,14 +303,7 @@
 		</p>
 
 		<h2>Attribution</h2>
-		<p>The '<a href="http://www.premiumpixels.com/horizontal-accordion-slider-psd/">dark</a>' theme was inspired by Orman Clark</a>. Thanks Orman! :)</p>
-
-		<!-- Syntax Highlighter -->
-		<script src="http://alexgorbatchev.com.s3.amazonaws.com/pub/sh/3.0.83/scripts/shCore.js"></script>
-		<script src="http://alexgorbatchev.com.s3.amazonaws.com/pub/sh/3.0.83/scripts/shBrushXml.js"></script>
-		<script src="http://alexgorbatchev.com.s3.amazonaws.com/pub/sh/3.0.83/scripts/shBrushJScript.js"></script>
-		<script>SyntaxHighlighter.all();</script>
-		<!-- end Syntax Highlighter -->
+		<p>The 'dark' theme was inspired by Orman Clark</a>. Thanks Orman! :)</p>
 
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
 		<script src="js/liteaccordion.jquery.js"></script>
@@ -319,6 +317,7 @@
 						this.find('figcaption').fadeIn();
 					},
 					autoPlay : true,
+					pauseOnHover : true,
 					theme : 'dark',
 					rounded : true,
 					enumerateSlides : true					
@@ -326,6 +325,13 @@
 			$('#two').liteAccordion();
 			$('#three').liteAccordion({ theme : 'dark', containerWidth : 600, containerHeight : 200, slideSpeed : 600, firstSlide : 2 });
 		</script>
+
+		<!-- Syntax Highlighter -->
+		<script src="http://alexgorbatchev.com.s3.amazonaws.com/pub/sh/3.0.83/scripts/shCore.js"></script>
+		<script src="http://alexgorbatchev.com.s3.amazonaws.com/pub/sh/3.0.83/scripts/shBrushXml.js"></script>
+		<script src="http://alexgorbatchev.com.s3.amazonaws.com/pub/sh/3.0.83/scripts/shBrushJScript.js"></script>
+		<script>SyntaxHighlighter.all();</script>
+		<!-- end Syntax Highlighter -->
 
 	</body>
 </html>
