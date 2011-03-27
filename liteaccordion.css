@@ -10,8 +10,7 @@
 /****************************************** Core */
 .accordion { text-align: left; font: 'Helvetica Neue', Verdana, Arial, sans-serif; }
 .accordion ol { position: relative; overflow: hidden; height: 100%; margin: 0; padding: 0; list-style-type: none; }
-.accordion li > h2 { color: black; font-weight: normal; margin: 0; z-index: 2; position: absolute; top: 0; left: 0; -webkit-transform: translateX(-100%) rotate(-90deg); -webkit-transform-origin: right top; -moz-transform: translateX(-100%) rotate(-90deg); -moz-transform-origin: right top; 
-	-o-transform: translateX(-100%) rotate(-90deg); -o-transform-origin: right top; -ms-transform: translateX(-100%) rotate(-90deg); -ms-transform-origin: right top; transform: translateX(-100%) rotate(-90deg); transform-origin: right top; filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); }
+.accordion li > h2 { color: black; font-weight: normal; margin: 0; z-index: 2; position: absolute; top: 0; left: 0; -webkit-transform: translateX(-100%) rotate(-90deg); -webkit-transform-origin: right top; -moz-transform: translateX(-100%) rotate(-90deg); -moz-transform-origin: right top; -o-transform: translateX(-100%) rotate(-90deg); -o-transform-origin: right top; transform: translateX(-100%) rotate(-90deg); transform-origin: right top; filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); }
 .accordion li > h2 span { display: block; padding-right: 8%; text-align: right; height: 90%; margin-top: 5px; }
 .accordion li > h2 b { display: inline-block; position: absolute; top: 10%; top: 42%\9; left: 10%; left: 5%\9; text-align: center; -webkit-transform: rotate(90deg); -moz-transform: rotate(90deg); -o-transform: rotate(90deg); transform: rotate(90deg); filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1); }
 .accordion li > h2:hover { cursor: pointer; }
@@ -24,8 +23,7 @@
 .basic li > div p { margin: 10px; font-size: 14px; }
 
 /****************************************** Dark */
-.dark { border: 9px solid #353535; border-bottom-width: 8px; padding: 5px 5px 6px 0; background: #030303; -webkit-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); -moz-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); -o-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); 
-	box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); }
+.dark { border: 9px solid #353535; border-bottom-width: 8px; padding: 5px 5px 6px 0; background: #030303; -webkit-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); -moz-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); -o-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); }
 .dark li > h2 { background: #030303; font-size: 16px; line-height: 2.7em; text-shadow: 0 -1px 0 #030303; }
 .dark li > h2 span { background: #353535; color: white; }
 .dark li > h2 b { background: #353535\9; color: #030303; font-size: 20px; text-shadow: -1px 1px 0 #5b5b5b; }
