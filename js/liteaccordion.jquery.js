@@ -124,19 +124,19 @@
 			} else if (this.offsetLeft === pos.right) {
 				pos.newPos = -slideWidth;
 			}
-
-			// activate onclick callback with slide div as context		
-			if (e.originalEvent) {
-				if (utils.sentinel === this) return false;
-				settings.onActivate.call($next);
-				utils.sentinel = this;
-			} else {
-				settings.onActivate.call($next);
-				utils.sentinel = false;
-			}
-
+			
 			// check if animation in progress
 			if (!$header.is(':animated')) {
+
+				// activate onclick callback with slide div as context		
+				if (e.originalEvent) {
+					if (utils.sentinel === this) return false;
+					settings.onActivate.call($next);
+					utils.sentinel = this;
+				} else {
+					settings.onActivate.call($next);
+					utils.sentinel = false;
+				}
 
 				// remove, then add selected class
 				$header.removeClass('selected').filter($this).addClass('selected');
