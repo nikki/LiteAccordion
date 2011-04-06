@@ -88,6 +88,15 @@
 			.height(settings.headerWidth)
 			.eq(settings.firstSlide - 1).addClass('selected');
 		
+		// ie :(
+		if ($.browser.msie) {
+			if ($.browser.version.substr(0,1) > 8) {
+				$header.css('filter', 'none');
+			} else if ($.browser.version.substr(0,1) < 7) {
+				return false;
+			}
+		}
+		
 		// set initial positions for each slide
 		$header.each(function(index) {
 			var $this = $(this),
@@ -104,7 +113,7 @@
 			// add number to bottom of tab
 			settings.enumerateSlides && $this.append('<b>' + (index + 1) + '</b>');			
 
-		});
+		});	
 				
 		// bind event handler for activating slides
 		$header.click(function(e) {
