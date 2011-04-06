@@ -5,7 +5,7 @@
 *	url:	  	http://nicolahibbert.com/horizontal-accordion-jquery-plugin
 *	demo:	  	http://www.nicolahibbert.com/demo/liteAccordion
 *
-*	Version:  	1.1.2
+*	Version:  	1.1.3
 *	Copyright: 	(c) 2010-2011 Nicola Hibbert
 *
 /*************************************************/
