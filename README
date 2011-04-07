@@ -1,1 +1,26 @@
 liteAccordion is a horizontal accordion plugin for jQuery.
+
+
+Options:
+These are the default settings for the liteAccordion plugin:
+
+containerWidth : 960,           // width of accordion (px)
+containerHeight : 320,          // height of accordion (px)
+headerWidth : 48,               // width of tabs (px)
+ 
+firstSlide : 1,                 // number of the first active slide (integer)
+onActivate : function() {},     // callback function triggered on tab click/mouseover (function)
+slideSpeed : 800,               // speed of slide animation (time/ms)
+slideCallback : function() {},  // callback function triggered after slide animation is complete (function)
+ 
+autoPlay : false,               // automatically scroll through the slides, if true with pause on user click (boolean)
+pauseOnHover : false,           // *NEW in 1.1* - pause slides on hover
+cycleSpeed : 6000,              // time between slide activation (time/ms)
+ 
+theme : 'basic',                // which theme to use ('basic', 'light'*, 'dark', or 'stitch'*)
+rounded : false,                // whether to use rounded corners or not** (boolean)
+enumerateSlides : false         // show slide number in tab
+
+
+Please post any feature requests on http://nicolahibbert.com/horizontal-accordion-jquery-plugin/
+Thanks!
