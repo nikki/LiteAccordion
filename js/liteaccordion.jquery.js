@@ -30,7 +30,9 @@
 
 			theme : 'basic', // basic, light*, dark, stitch*
 			rounded : false,
-			enumerateSlides : false
+			enumerateSlides : false,
+
+			uniqueName : ''
 		},
 		
 		// merge defaults with options in new settings object				
@@ -109,6 +111,8 @@
 				.next()
 					.width(slideWidth)
 					.css({ left : left, paddingLeft : settings.headerWidth });
+
+			$this.addClass(settings.uniqueName + "Header" + index);
 			
 			// add number to bottom of tab
 			settings.enumerateSlides && $this.append('<b>' + (index + 1) + '</b>');			
