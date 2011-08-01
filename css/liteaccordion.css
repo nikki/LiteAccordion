@@ -15,7 +15,8 @@
 .accordion li > h2 span { display: block; padding-right: 8%; text-align: right; height: 90%; margin-top: 5px; }
 .accordion li > h2 b { display: inline-block; position: absolute; top: 10%; top: 42%\9; left: 10%; left: 5%\9; text-align: center; -webkit-transform: rotate(90deg); -moz-transform: rotate(90deg); -o-transform: rotate(90deg); transform: rotate(90deg); filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1); }
 .accordion li > h2:hover { cursor: pointer; }
-.accordion li > div { height: 100%; position: absolute; top: 0; z-index: 1; overflow: hidden; background: white; }
+.accordion li > div { height: 100%; position: absolute; top: 0; z-index: 1; overflow: hidden; background: white }
+.accordion #wrap { position: relative; height: 100% }
 .accordion noscript p { padding: 10px; margin: 0; background: white; }
 
 /****************************************** Basic */
