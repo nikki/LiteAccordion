@@ -16,12 +16,11 @@
 .accordion li > h2 b { display: inline-block; position: absolute; top: 10%; top: 42%\9; left: 10%; left: 5%\9; text-align: center; -webkit-transform: rotate(90deg); -moz-transform: rotate(90deg); -o-transform: rotate(90deg); transform: rotate(90deg); filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1); }
 .accordion li > h2:hover { cursor: pointer; }
 .accordion li > div { height: 100%; position: absolute; top: 0; z-index: 1; overflow: hidden; background: white }
-.accordion #wrap { position: relative; height: 100% }
+.accordion .wrap { position: relative; height: 100% }
 .accordion noscript p { padding: 10px; margin: 0; background: white; }
 
 /****************************************** Basic */
 .basic li > h2 { background: #333; color: white; line-height: 1.8em; }
-.basic li > div h3 { margin: 15px 10px; }
 .basic li > div p { margin: 10px; font-size: 14px; }
 
 /****************************************** Dark */
@@ -34,9 +33,16 @@
 .dark h2.selected b { background: #434343\9; }
 .dark li > div { background: #030303; margin-left: 5px; }
 
+/**************************************** Stitch */
+.stitch { background: #353535; border-width: 9px; -webkit-border-image: url('bg_stitch_2.png') 9 repeat; -moz-border-image: url('bg_stitch_2.png') 9 repeat; border-image: url('bg_stitch_2.png') 9 repeat }
+.stitch li > h2 { background: #353535; border-width: 9px; -webkit-border-image: url('bg_stitch_2.png') 9 repeat; -moz-border-image: url('bg_stitch_2.png') 9 repeat; border-image: url('bg_stitch_2.png') 9 repeat }
+.stitch li:nth-child(1) > h2 { background: #c25252 }
+.stitch li:nth-child(2) > h2 { background: #ca9859 }
+.stitch li:nth-child(3) > h2 { background: #96ba5f }
+.stitch li:nth-child(4) > h2 { background: #59abb7 }
+.stitch li:nth-child(5) > h2 { background: #bb6098 }
+.stitch li > h2 span { margin-top: 2px }
+
 /*************************************** Rounded */
 .rounded { -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; }
 .rounded li > h2 span { -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; }
-
-/***************************************** Light */
-/**************************************** Stitch */
