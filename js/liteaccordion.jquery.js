@@ -171,6 +171,7 @@
 
                     },
                     
+                    // TODO
                     getSlidePositions : function(slide) {
                         var index = header.index(slide),
                             pos = {
@@ -183,8 +184,7 @@
                         if (pos.offset === pos.left) {
                             pos.newPos = slideWidth;                                   
                         } else if (pos.offset === pos.right) {
-                            pos.newPos = -slideWidth;                            
-
+                            pos.newPos = -slideWidth;
                         }
 
                         return pos;                      
