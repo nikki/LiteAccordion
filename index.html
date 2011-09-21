@@ -4,26 +4,29 @@
 		<meta charset="utf-8" />
 		<title>liteAccordion - a horizontal accordion plugin for jQuery</title>
 		<style>
+			html { overflow-y: scroll }
 			body { font: 14px/24px 'Helvetica Neue', Arial, sans-serif; color: #333; width: 960px; margin: 30px auto 60px; background: #eee }
-			body > h2 { margin: 30px 0 15px; text-shadow: 1px 1px 0 white; border-bottom: 2px solid #333; padding-bottom: 5px }
 			h1 { text-align: center; margin-bottom: 30px; text-shadow: 1px 1px 0 white }
 			dt { font-weight: bold }
 			dd { margin: 0 }
 			figure { display: block; width: 100%; height: 100%; margin: 0 }
 			figcaption { padding: 10px 15px; position: absolute; bottom: 20px; right: 30px; z-index: 3; background: black; background: rgba(0,0,0,0.7); color: white;
 				-webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px }
-			form { overflow: hidden }
-			form p { width: 50%; float: left; margin: 5px 0 }
-			.heading, .refresh, .output { width: 100%; clear: left }
+			.options h2 { margin: 30px 0 15px; text-shadow: 1px 1px 0 white; border-bottom: 2px solid #333; padding-bottom: 5px }
+			.options p { width: 50%; float: left; margin: 5px 0 }
+			p.heading, p.reset, .output { width: 100%; float: left; clear: left }
+			.output { position: relative }
+			.output h2 a { content: ''; position: absolute; top: 30px; right: 0; font-size: 14px; font-weight: normal; color: #333; text-decoration: none }
+			.output h2 a:hover { text-decoration: underline }
 			label { display: inline-block; width: 160px }
 			select { width: 160px; margin-right: 20px }
 			input[type='text'] { width: 40px }
-			textarea {}
+			textarea { width: 50%; height: 100px; display: none; font-family: monospace }
 		</style>
 		<link rel="stylesheet" href="css/liteaccordion.css">	
 	</head>
 	<body>
-
+		
 		<div id="demo">
 		    <ol>
 				<li name="one">
@@ -77,13 +80,68 @@
 			</noscript>
 		</div>
 		
-		<form>
+		<div id="demo2">
+		    <ol>
+				<li name="one">
+				    <h2><span>Slide One</span></h2>
+				    <div>
+						<figure>
+							<img src="img-demo/1.jpg" alt="image" />
+							<figcaption>I can haz big caek?</figcaption>
+						</figure>
+					</div>
+				</li>
+				<li name="two">
+				    <h2><span>Slide Two</span></h2>
+				    <div>
+						<figure>
+							<img src="img-demo/3.jpg" alt="image" />
+							<figcaption>Whoops.</figcaption>
+						</figure>
+					</div>
+				</li>
+				<li name="three">
+				    <h2><span>Slide Three</span></h2>
+				    <div>
+						<figure>
+							<img src="img-demo/2a.jpg" alt="image" />
+							<figcaption>Some caption text goes in here...</figcaption>
+						</figure>
+					</div>
+				</li>
+				<li name="four">
+				    <h2><span>Slide Four</span></h2>
+				    <div>
+						<figure>
+							<img src="img-demo/5.jpg" width="768" alt="image" />
+							<figcaption>Pew pew pew!</figcaption>
+						</figure>
+					</div>
+				</li>
+				<li name="five">
+				    <h2><span>Slide Five</span></h2>
+				    <div>
+						<figure>
+							<img src="img-demo/2.jpg" alt="image" />
+							<figcaption>More caption text here!</figcaption>
+						</figure>
+					</div>
+				</li>
+		    </ol>
+			<noscript>
+				<p>Please enable JavaScript to get the full experience.</p>
+			</noscript>
+		</div>		
+		
+		<div class="options">
 			<h2>Live Demo Suite</h2>
 			<p class="heading">
-				Test the options for the liteAccordion plugin by changing the options below. <br />
-				Use <b>refresh</b> to see your changes, and <b>output</b> to output the JavaScript code to paste into your page.</p>
-			<p class="refresh">
-				<input id='refresh' type='button' value='refresh' />				
+				Test the options for the liteAccordion plugin by changing the options below.<br />
+				Hit <b>enter</b> to see changes when entering a custom value, and use <b>reset</b> to start again.<br />
+				Toggle the output view to get the code for your custom settings object.
+			</p>
+			<p class="reset">
+				<input id='reset' type='button' value='reset' />							
 			</p>
 			<p>
 			    <label for="theme">theme</label>
@@ -101,7 +159,6 @@
 			    <label for="containerWidth">containerWidth</label>
 				<select id="containerWidth" name="containerWidth">
 			    	<option value="960">default (960px)</option>
-					<option value="auto">auto</option>
 					<option value="custom">... or enter a custom value</option>
 			    </select>
 			</p>
@@ -109,7 +166,6 @@
 				<label for="containerHeight">containerHeight</label>
 			    <select id="containerHeight" name="containerHeight">
 			    	<option value="320">fixed (320px)</option>
-					<option value="auto">auto</option>
 					<option value="custom">... or enter a custom numeric value</option>
 			    </select>
 			</p>				
@@ -183,65 +239,90 @@
 					<option value="true">true</option>						
 				</select>
 			</p>
-			<p class="output">
-				<!--<input id="output" type="button" value="output" />
-				<textarea>code</textarea>-->
-			</p>																									
-		</form>
-
+			<div class="output">
+				<h2>Output<a href="#">toggle code view</a></h2>
+				<textarea>code output here - currently set to defaults.</textarea>
+			</div>																									
+		</div>
+				
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 		<script src="js/jquery.easing.1.3.js"></script>
 		<script src="js/liteaccordion.jquery.js"></script>
 		<script>
+		// Code for the demo suite		
 			(function() {
 				var demo = $('#demo'),
-					selects = $('select', 'form'),
+					selects = $('.options select'),
 					easing = $('#easing'),
-					options;
+					outputToggle = $('.output h2 a'),
+					resetBtn = $('#reset'),
+					options,
+					update = function() {
+						options = {};
 
+						selects.each(function() { 
+							var current = this.value,
+								value;
+
+							if (!isNaN(parseInt(current, 10))) {
+								value = parseInt(current, 10); 
+							} else if (current === 'custom') {
+								value = parseInt($(this).next().val());
+							} else if (current === 'true') {
+								value = true;
+							} else if (current === 'false') {
+								value = false;
+							} else {
+								value = current;
+							}
+
+							options[this.name] = value;																	
+						});					
+
+						demo.liteAccordion('destroy');
+						demo.liteAccordion(options);
+						
+						$('.output textarea').text('$("#yourAccordion").liteAccordion(' + JSON.stringify(options) + ');');
+						
+					},
+					reset = function() {
+						options = {};
+						demo.liteAccordion('destroy');
+						demo.liteAccordion();
+					};
+					
 				// create easing select options from plugin
 				for (item in $.easing) { // should probably use a frag for this, but it's just a demo...
-					easing.append($('<option>').attr('value', item).text(item));
+					if (item !== 'def') {
+						easing.append($('<option>').attr('value', item).text(item));						
+					}
 				}					
+				easing.find('option[value=swing]').attr('selected', true);
 				
 				// init accordion
 				demo.liteAccordion();
-				// console.log(demo.liteAccordion('debug'));
+				$('#demo2').liteAccordion();				
 
 				// get new options on change event
-				selects.change(function() {
-					if (this.value === 'custom') {
-						$(this).after('<input type="text" />');
-					}	
+				selects.change(function() {		
+					this.value === 'custom' ? $(this).after('<input type="text" />') : update();
 				});
 				
-				$('#refresh').click(function() {
-					options = {};
-
-					selects.each(function() { 
-						var current = this.value,
-							value;
-
-						if (!isNaN(parseInt(current, 10))) {
-							value = parseInt(current, 10); 
-						} else if (current === 'custom') {
-							value = parseInt($(this).next().val());
-						} else if (current === 'true') {
-							value = true;
-						} else if (current === 'false') {
-							value = false;
-						} else {
-							value = current;
-						}
-
-						options[this.name] = value;																	
-					});					
-					
-					demo.liteAccordion('destroy');
-					console.log('destroyed');
-					demo.liteAccordion(options);
-					console.log('init');
-				});		
+				// new opts on enter
+				$(window).keyup(function(e) {
+					if (e.keyCode === 13) update();
+				});
+				
+				// reset
+				resetBtn.click(function(e) {
+					reset();
+					e.preventDefault();
+				});
+				
+				// show/hide code output						
+				outputToggle.click(function() {
+					$(this).parent().next().slideToggle();
+				});
 		
 			})();	
 		</script>
