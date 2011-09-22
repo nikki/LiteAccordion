@@ -40,7 +40,7 @@
             settings = $.extend({}, defaults, options),
         
         // 'globals'
-            accordion = $(elem),
+            accordion = elem,
             slides = accordion.children('ol').children('li'),
             header = slides.children('h2'),
             slideLen = slides.length,
@@ -49,15 +49,13 @@
         // public methods    
             methods = {
             
-                // convenience method for current slide index
-                current : function() {
-                    return elem.data('liteAccordion').current;
-                },
+                // current slide index
+                current : settings.firstSlide - 1,
         
                 // start accordion animation
                 play : function() {
                     var next = core.nextSlide();
-                        
+
                     core.playing = setInterval(function() {
                         header.eq(next()).trigger('click.liteAccordion');
                     }, settings.cycleSpeed);
@@ -71,11 +69,21 @@
                 // trigger next slide
                 next : function() {
 
+					// stop autoplay
+					methods.stop();
+					
+					// trigger
+					header.eq(methods.current + 1).trigger('click.liteAccordion');
                 },
 
                 // trigger previous slide
                 prev : function() {
 
+					// stop autoplay
+					methods.stop();
+					
+					// trigger
+					header.eq(methods.current - 1).trigger('click.liteAccordion');	
                 },
 
                 // destroy plugin instance
@@ -94,7 +102,6 @@
                     
                     // remove programmatically generated styles
                     slides.children().attr('style', '');
-
                 },
 
                 // poke around the internals
@@ -247,17 +254,18 @@
                 
                 // animation for click event
                 triggerClick : function(e) {
-                    var $this = $(this), slides, group, pos, wrap;
+                    var $this = $(this), slides, group, pos, wrap, index;
 
                     // if anim has not started
                     if (!accordion.find('.wrap').length) {
                         slides = core.groupSlides($this),
                         group = slides.group,
                         pos = slides.pos,
-                        wrap = group.parent();
+                        wrap = group.parent(),
+						index = header.index($this);
 
                         // set data for method.current
-                        elem.data('liteAccordion').current = header.index($this);
+                        methods.current = index === slideLen - 1 ? -1 : index;
 
                         // remove, then add selected class
                         header.removeClass('selected').filter($this).addClass('selected');
@@ -285,18 +293,18 @@
                 }
             };
 
-        // expose methods
-        this.methods = methods;
-
         // init plugin
         core.init();
+
+		// expose methods
+		return methods;
        
     };
 
     $.fn.liteAccordion = function(method) {
         var elem = this,
             instance = elem.data('liteAccordion');
-        
+
         // if creating a new instance
         if (typeof method === 'object' || !method) {
             return elem.each(function() {
@@ -305,14 +313,19 @@
                 // if plugin already instantiated, return
                 if (instance) return;
 
-                // else create a new instance
+                // otherwise create a new instance
                 liteAccordion = new LiteAccordion(elem, method);
-                elem.data('liteAccordion', liteAccordion);              
+				elem.data('liteAccordion', liteAccordion);
+				
             });
             
         // otherwise, call method on current instance
-        } else if (typeof method === 'string' && instance.methods[method]) {
-            return instance.methods[method].apply(elem, Array.prototype.slice.call(arguments, 1));
+        } else if (typeof method === 'string' && instance[method]) {
+			if (method === 'current') {
+				return instance[method];
+			} else {
+            	return instance[method].apply(elem, Array.prototype.slice.call(arguments, 1));				
+			}
         }
     };
 
