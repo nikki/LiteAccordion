@@ -41,76 +41,66 @@
 		
 	    // 'globals'
 	        accordion = $(elem),
-	        slides = accordion.find('li'),
+	        slides = accordion.children('ol').children('li'),
 	        header = slides.children('h2'),
 	        slideLen = slides.length,
-	        slideWidth,		
+	        slideWidth = settings.containerWidth - slideLen * settings.headerWidth,	
 
 		// public methods    
 		    methods = {
-				// return index of current slide
-				current : function() {
-					//console.log(this);
-					//return this.data('current');
+			
+				// convenience method for current slide index
+		        current : function() {
+					return elem.data('liteAccordion').current;
 				},
-
-		        // start accordion animation
-		        play : function(speed) {
-					//var header = this.find('li h2');
-
-					//return methods.current();
-
-		            //return setInterval(function() {
-						// header.eq(methods.current() + 1).click();				
-		            //}, settings.cycleSpeed);
+		
+				// start accordion animation
+		        play : function() {
+					var next = core.nextSlide();
+						
+					core.playing = setInterval(function() {
+						header.eq(next()).trigger('click.liteAccordion');
+					}, settings.cycleSpeed);
 		        },
-
-		        // pause for specified duration
-		        pause : function(duration) {            
-		            methods.stop();
-
-		            return setTimeout(function() {
-		                // methods.play();
-		            }, duration);
-		        },
-
+			
 		        // stop accordion animation
-		        stop : function() {          
-		            return clearInterval(methods.play());
+		        stop : function() {
+		            return clearInterval(core.playing);
 		        },
 
-		        // move to next slide
+		        // trigger next slide
 		        next : function() {
-		        	//var slide = methods.current(),
-					//	slideLen = this.find('li h2').length;
 
-					return function() {
-						return slide++ % slideLen;
-					}
 		        },
 
-		        // move to previous slide
+		        // trigger previous slide
 		        prev : function() {
-		        	//var slide = index - 1 || settings.firstSlide,
-					//	slideLen = this.find('li h2').length;
 
-					return function() {
-						return slide-- % slideLen;
-					}
 		        },
 
-		        init : function() {
-		            //liteAccordion.apply(this, arguments);
-		        },
-
+				// destroy plugin instance
 		        destroy : function() {
-					// destroys behaviours but not styles
-		            accordion.removeClass().addClass('accordion').removeData('liteAccordion').find('li > h2').unbind('.liteAccordion');  // need to namespace events
-		            // clearInterval
+					
+					// stop autoplay
+					methods.stop();
+
+					// destroy behaviours, data, unbind events & remove styles
+		            accordion
+						.removeClass()
+						.removeData('liteAccordion')
+						.find('li > h2')
+						.unbind('.liteAccordion')
+						.attr('style', '');
+					
+					// remove programmatically generated styles
+					slides.children().attr('style', '');
+
 		        },
 
+				// poke around the internals
 		        debug : function() {
 					return {
+						elem : elem,
 		                defaults : defaults,
 						settings : settings,
 		                methods : methods,
@@ -120,44 +110,39 @@
 		    },
 
        	// core utility and animation methods
-            core = {	
-                // trigger next slide (?)
-                activateSlide : function() {
-
-                },
-
-                // maintains index of next slide
-                nextSlide : function() {
-
-                },
-
-                // calculate container height
-                calcHeight : function(height) {
-                    return height === 'auto' ? accordion.parent().height() : height;            
-                },
-
-                // calculate container width
-                calcWidth : function(width) {
-                    return width === 'auto' ? accordion.parent().width() : width;
-                },
-
+            core = {
+				
+				// next slide index
+				nextSlide : function() {
+					var slide = settings.firstSlide;
+					
+					// nomnomnom tasty closure
+					return function() {
+						return slide++ % slideLen;
+					}
+				},	
+	
+				// holds interval counter
+				playing : 0,	
+		
                 // set style properties
                 setStyles : function() {
-                    var width = core.calcWidth(settings.containerWidth),
-                        height = core.calcHeight(settings.containerHeight);
-
-                    // set container heights, widths, theme & corner style      
+                    
+					// set container heights, widths, theme & corner style      
                     accordion
-                        .width(width)
-                        .height(height)
+                        .width(settings.containerWidth)
+                        .height(settings.containerHeight)
                         .addClass('accordion')
                         .addClass(settings.theme)
                         .addClass(settings.rounded && 'rounded');
 
+					// add slide class to list items for css
+					slides.addClass('slide');
+
                     // set tab width, height and selected class
                     header
-                        .width(settings.theme === 'stitch' ? height - parseInt(header.css('borderTopWidth'), 10) * 2 : height) // TODO: this is counterintuitive, rewrite css
-                        .height(settings.theme === 'stitch' ? settings.headerWidth - parseInt(header.css('borderLeftWidth'), 10) * 2 : settings.headerWidth) 
+                        .width(settings.containerHeight) // TODO: sort css out
+                        .height(settings.headerWidth) 
                         .eq(settings.firstSlide - 1).addClass('selected');
                         
                     // set initial positions for each slide             
@@ -177,22 +162,30 @@
                         settings.enumerateSlides && $this.append('<b>' + (index + 1) + '</b>');
 
                     });
+
+					// ie9 css fix
+					if ($.browser.msie && $.browser.version.substr(0,1) > 8) accordion.addClass('ie9');					
+
                 },
 
-                // set optional behaviours
-                setBehaviours : function() {
-                    if (settings.activateOn === 'click') {
-						// namespaced click event
+                // set behaviours
+                setBehaviours : function() {                    
+					
+					// trigger click
+					if (settings.activateOn === 'click') {
                         header.bind('click.liteAccordion', core.triggerClick);
 
-                        if (settings.pauseOnHover) {}
-
+                        if (settings.pauseOnHover) {
+	
+						}
+					
+					// trigger hover
                     } else if (settings.activateOn === 'hover') {
-                        // namespaced hover
 						header.bind('mouseover.liteAccordion', core.triggerHover);               
                     }
 
-                    if (settings.autoPlay) {}
+					// init autoplay
+                    settings.autoPlay && methods.play();
 
                 },
                 
@@ -263,8 +256,8 @@
                         pos = slides.pos,
                         wrap = group.parent();
 
-						// set data
-						accordion.data('current', header.index($this));
+						// set data for method.current
+						elem.data('liteAccordion').current = header.index($this);
 
             			// remove, then add selected class
             			header.removeClass('selected').filter($this).addClass('selected');
@@ -287,13 +280,8 @@
                 },
 
         		init : function() {
-        		    slideWidth = core.calcWidth(settings.containerWidth) - (slideLen * settings.headerWidth);
-
                     core.setStyles();                  
                     core.setBehaviours();
-		
-					accordion.data('current', settings.firstSlide - 1); // zero index
-		
         		}
             };
 

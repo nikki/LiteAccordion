@@ -9,40 +9,58 @@
 /*************************************************/
 /****************************************** Core */
 .accordion { text-align: left; font: 'Helvetica Neue', Verdana, Arial, sans-serif; }
-.accordion ol { position: relative; overflow: hidden; height: 100%; margin: 0; padding: 0; list-style-type: none; }
-.accordion li > h2 { color: black; font-weight: normal; margin: 0; z-index: 2; position: absolute; top: 0; left: 0; -webkit-transform: translateX(-100%) rotate(-90deg); -webkit-transform-origin: right top; -moz-transform: translateX(-100%) rotate(-90deg); -moz-transform-origin: right top; 
-	-o-transform: translateX(-100%) rotate(-90deg); -o-transform-origin: right top; -ms-transform: translateX(-100%) rotate(-90deg); -ms-transform-origin: right top; transform: translateX(-100%) rotate(-90deg); transform-origin: right top; filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); }
-.accordion li > h2 span { display: block; padding-right: 8%; text-align: right; height: 90%; margin-top: 5px; }
-.accordion li > h2 b { display: inline-block; position: absolute; top: 10%; top: 42%\9; left: 10%; left: 5%\9; text-align: center; -webkit-transform: rotate(90deg); -moz-transform: rotate(90deg); -o-transform: rotate(90deg); transform: rotate(90deg); filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1); }
-.accordion li > h2:hover { cursor: pointer; }
-.accordion li > div { height: 100%; position: absolute; top: 0; z-index: 1; overflow: hidden; background: white }
+.accordion > ol { position: relative; overflow: hidden; height: 100%; margin: 0; padding: 0; list-style-type: none; }
+.accordion .slide {}
+.accordion .slide h2 { 
+	color: black; 
+	font-weight: normal;
+	margin: 0; 
+	z-index: 100; 
+	position: absolute; 
+	top: 0; 
+	left: 0; 
+	-webkit-transform: translateX(-100%) rotate(-90deg); 
+	-webkit-transform-origin: right top; 
+	-moz-transform: translateX(-100%) rotate(-90deg);
+	-moz-transform-origin: right top; 
+	-o-transform: translateX(-100%) rotate(-90deg); 
+	-o-transform-origin: right top; 
+	transform: translateX(-100%) rotate(-90deg); 
+	transform-origin: right top; 
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); 
+}
+.accordion.ie9 .slide h2 { filter: none; -ms-transform: translateX(-100%) rotate(-90deg); -ms-transform-origin: right top }
+.accordion .slide h2 span { display: block; padding-right: 8%; text-align: right; height: 90%; margin-top: 5px; }
+.accordion .slide h2 b { display: inline-block; position: absolute; top: 10%; top: 42%\9; left: 10%; left: 5%\9; text-align: center; -webkit-transform: rotate(90deg); -moz-transform: rotate(90deg); -o-transform: rotate(90deg); transform: rotate(90deg); filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1); }
+.accordion .slide h2:hover { cursor: pointer; }
+.accordion .slide div { height: 100%; position: absolute; top: 0; z-index: 10; overflow: hidden; background: white }
 .accordion .wrap { position: relative; height: 100% }
 .accordion noscript p { padding: 10px; margin: 0; background: white; }
 
 /****************************************** Basic */
-.basic li > h2 { background: #333; color: white; line-height: 1.8em; }
-.basic li > div p { margin: 10px; font-size: 14px; }
+.basic .slide h2, .basic .wrap li h2 { background: #333; color: white; line-height: 1.8em; }
+.basic .slide div p { margin: 10px; font-size: 14px; }
 
 /****************************************** Dark */
 .dark { border: 9px solid #353535; border-bottom-width: 8px; padding: 5px 5px 6px 0; background: #030303; -webkit-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); -moz-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); -o-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); 
 	box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); }
-.dark li > h2 { background: #030303; font-size: 16px; line-height: 2.7em; text-shadow: 0 -1px 0 #030303; }
-.dark li > h2 span { background: #353535; color: white; }
-.dark li > h2 b { background: #353535\9; color: #030303; font-size: 20px; text-shadow: -1px 1px 0 #5b5b5b; }
-.dark h2.selected span, .dark h2.selected span:hover { background: #434343; background: -webkit-gradient(linear, left top, right top, color-stop(0, #353535), color-stop(1, #555555)); background: -moz-linear-gradient(top left, #353535 0%, #555555 100%); }
-.dark h2.selected b { background: #434343\9; }
-.dark li > div { background: #030303; margin-left: 5px; }
+.dark .slide h2 { background: #030303; font-size: 16px; line-height: 2.7em; text-shadow: 0 -1px 0 #030303; }
+.dark .slide h2 span { background: #353535; color: white; }
+.dark .slide h2 b { background: #353535\9; color: #030303; font-size: 20px; text-shadow: -1px 1px 0 #5b5b5b; }
+.dark .slide h2.selected span, .dark .slide h2.selected span:hover { background: #434343; background: -webkit-gradient(linear, left top, right top, color-stop(0, #353535), color-stop(1, #555555)); background: -moz-linear-gradient(top left, #353535 0%, #555555 100%); }
+.dark .slide h2.selected b { background: #434343\9; }
+.dark .slide div { background: #030303; margin-left: 5px; }
 
 /**************************************** Stitch */
 .stitch { background: #353535; border-width: 9px; -webkit-border-image: url('bg_stitch_2.png') 9 repeat; -moz-border-image: url('bg_stitch_2.png') 9 repeat; border-image: url('bg_stitch_2.png') 9 repeat }
-.stitch li > h2 { background: #353535; border-width: 9px; -webkit-border-image: url('bg_stitch_2.png') 9 repeat; -moz-border-image: url('bg_stitch_2.png') 9 repeat; border-image: url('bg_stitch_2.png') 9 repeat }
-.stitch li:nth-child(1) > h2 { background: #c25252 }
-.stitch li:nth-child(2) > h2 { background: #ca9859 }
-.stitch li:nth-child(3) > h2 { background: #96ba5f }
-.stitch li:nth-child(4) > h2 { background: #59abb7 }
-.stitch li:nth-child(5) > h2 { background: #bb6098 }
-.stitch li > h2 span { margin-top: 2px }
+.stitch .slide h2 { background: #353535; border-width: 9px; -webkit-border-image: url('bg_stitch_2.png') 9 repeat; -moz-border-image: url('bg_stitch_2.png') 9 repeat; border-image: url('bg_stitch_2.png') 9 repeat }
+.stitch .slide:nth-child(1) > h2 { background: #c25252 }
+.stitch .slide:nth-child(2) > h2 { background: #ca9859 }
+.stitch .slide:nth-child(3) > h2 { background: #96ba5f }
+.stitch .slide:nth-child(4) > h2 { background: #59abb7 }
+.stitch .slide:nth-child(5) > h2 { background: #bb6098 }
+.stitch .slide h2 span { margin-top: 2px }
 
 /*************************************** Rounded */
 .rounded { -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; }
-.rounded li > h2 span { -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; }
+.rounded .slide h2 span { -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; }

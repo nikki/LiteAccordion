@@ -23,7 +23,12 @@
 			input[type='text'] { width: 40px }
 			textarea { width: 50%; height: 100px; display: none; font-family: monospace }
 		</style>
-		<link rel="stylesheet" href="css/liteaccordion.css">	
+		<link rel="stylesheet" href="css/liteaccordion.css">
+		
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script src="js/jquery.easing.1.3.js"></script>
+		<script src="js/liteaccordion.jquery.js"></script>
+					
 	</head>
 	<body>
 		
@@ -79,59 +84,6 @@
 				<p>Please enable JavaScript to get the full experience.</p>
 			</noscript>
 		</div>
-		
-		<div id="demo2">
-		    <ol>
-				<li name="one">
-				    <h2><span>Slide One</span></h2>
-				    <div>
-						<figure>
-							<img src="img-demo/1.jpg" alt="image" />
-							<figcaption>I can haz big caek?</figcaption>
-						</figure>
-					</div>
-				</li>
-				<li name="two">
-				    <h2><span>Slide Two</span></h2>
-				    <div>
-						<figure>
-							<img src="img-demo/3.jpg" alt="image" />
-							<figcaption>Whoops.</figcaption>
-						</figure>
-					</div>
-				</li>
-				<li name="three">
-				    <h2><span>Slide Three</span></h2>
-				    <div>
-						<figure>
-							<img src="img-demo/2a.jpg" alt="image" />
-							<figcaption>Some caption text goes in here...</figcaption>
-						</figure>
-					</div>
-				</li>
-				<li name="four">
-				    <h2><span>Slide Four</span></h2>
-				    <div>
-						<figure>
-							<img src="img-demo/5.jpg" width="768" alt="image" />
-							<figcaption>Pew pew pew!</figcaption>
-						</figure>
-					</div>
-				</li>
-				<li name="five">
-				    <h2><span>Slide Five</span></h2>
-				    <div>
-						<figure>
-							<img src="img-demo/2.jpg" alt="image" />
-							<figcaption>More caption text here!</figcaption>
-						</figure>
-					</div>
-				</li>
-		    </ol>
-			<noscript>
-				<p>Please enable JavaScript to get the full experience.</p>
-			</noscript>
-		</div>		
 		
 		<div class="options">
 			<h2>Live Demo Suite</h2>
@@ -241,90 +193,11 @@
 			</p>
 			<div class="output">
 				<h2>Output<a href="#">toggle code view</a></h2>
-				<textarea>code output here - currently set to defaults.</textarea>
+				<textarea>$("#yourAccordion").liteAccordion();</textarea>
 			</div>																									
 		</div>
 				
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-		<script src="js/jquery.easing.1.3.js"></script>
-		<script src="js/liteaccordion.jquery.js"></script>
-		<script>
-		// Code for the demo suite		
-			(function() {
-				var demo = $('#demo'),
-					selects = $('.options select'),
-					easing = $('#easing'),
-					outputToggle = $('.output h2 a'),
-					resetBtn = $('#reset'),
-					options,
-					update = function() {
-						options = {};
-
-						selects.each(function() { 
-							var current = this.value,
-								value;
-
-							if (!isNaN(parseInt(current, 10))) {
-								value = parseInt(current, 10); 
-							} else if (current === 'custom') {
-								value = parseInt($(this).next().val());
-							} else if (current === 'true') {
-								value = true;
-							} else if (current === 'false') {
-								value = false;
-							} else {
-								value = current;
-							}
-
-							options[this.name] = value;																	
-						});					
-
-						demo.liteAccordion('destroy');
-						demo.liteAccordion(options);
-						
-						$('.output textarea').text('$("#yourAccordion").liteAccordion(' + JSON.stringify(options) + ');');
-						
-					},
-					reset = function() {
-						options = {};
-						demo.liteAccordion('destroy');
-						demo.liteAccordion();
-					};
-					
-				// create easing select options from plugin
-				for (item in $.easing) { // should probably use a frag for this, but it's just a demo...
-					if (item !== 'def') {
-						easing.append($('<option>').attr('value', item).text(item));						
-					}
-				}					
-				easing.find('option[value=swing]').attr('selected', true);
+	<script src="js/demosuite.js"></script>			
 				
-				// init accordion
-				demo.liteAccordion();
-				$('#demo2').liteAccordion();				
-
-				// get new options on change event
-				selects.change(function() {		
-					this.value === 'custom' ? $(this).after('<input type="text" />') : update();
-				});
-				
-				// new opts on enter
-				$(window).keyup(function(e) {
-					if (e.keyCode === 13) update();
-				});
-				
-				// reset
-				resetBtn.click(function(e) {
-					reset();
-					e.preventDefault();
-				});
-				
-				// show/hide code output						
-				outputToggle.click(function() {
-					$(this).parent().next().slideToggle();
-				});
-		
-			})();	
-		</script>
 	</body>
 </html>
