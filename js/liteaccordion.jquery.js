@@ -13,122 +13,122 @@
 ;(function($) {
     
     var LiteAccordion = function(elem, options) {
-		
-		var defaults = {
-	        containerWidth : 960,   		// fixed (px)
-	        containerHeight : 320,  		// fixed (px)
-	        headerWidth: 48,				// fixed (px)
+        
+        var defaults = {
+            containerWidth : 960,           // fixed (px)
+            containerHeight : 320,          // fixed (px)
+            headerWidth: 48,                // fixed (px)
 
-	        activateOn : 'click',   		// click or mouseover
-	        firstSlide : 1,					// displays slide n on page load
-	        slideSpeed : 800,				// slide animation speed
-	        onActivate : function() {},		// callback on slide activate
-	        slideCallback : function() {},	// callback on slide anim complete
+            activateOn : 'click',           // click or mouseover
+            firstSlide : 1,                 // displays slide n on page load
+            slideSpeed : 800,               // slide animation speed
+            onActivate : function() {},     // callback on slide activate
+            slideCallback : function() {},  // callback on slide anim complete
 
-	        autoPlay : false,				// automatically cycle through slides
-	        pauseOnHover : false,			// pause on hover
-	        cycleSpeed : 6000,				// time between slide cycles
-	        easing : 'swing',       		// custom easing function
+            autoPlay : false,               // automatically cycle through slides
+            pauseOnHover : false,           // pause on hover
+            cycleSpeed : 6000,              // time between slide cycles
+            easing : 'swing',               // custom easing function
 
-	        theme : 'basic',        		// basic, dark, light, or stitch
-	        rounded : false,				// square or rounded corners
-	        enumerateSlides : false,		// put numbers on slides 
-	        linkable : false       			// link slides via hash
-	    },
+            theme : 'basic',                // basic, dark, light, or stitch
+            rounded : false,                // square or rounded corners
+            enumerateSlides : false,        // put numbers on slides 
+            linkable : false                // link slides via hash
+        },
 
-		// merge defaults with options in new settings object	
-			settings = $.extend({}, defaults, options),
-		
-	    // 'globals'
-	        accordion = $(elem),
-	        slides = accordion.children('ol').children('li'),
-	        header = slides.children('h2'),
-	        slideLen = slides.length,
-	        slideWidth = settings.containerWidth - slideLen * settings.headerWidth,	
+        // merge defaults with options in new settings object   
+            settings = $.extend({}, defaults, options),
+        
+        // 'globals'
+            accordion = $(elem),
+            slides = accordion.children('ol').children('li'),
+            header = slides.children('h2'),
+            slideLen = slides.length,
+            slideWidth = settings.containerWidth - slideLen * settings.headerWidth, 
 
-		// public methods    
-		    methods = {
-			
-				// convenience method for current slide index
-		        current : function() {
-					return elem.data('liteAccordion').current;
-				},
-		
-				// start accordion animation
-		        play : function() {
-					var next = core.nextSlide();
-						
-					core.playing = setInterval(function() {
-						header.eq(next()).trigger('click.liteAccordion');
-					}, settings.cycleSpeed);
-		        },
-			
-		        // stop accordion animation
-		        stop : function() {
-		            return clearInterval(core.playing);
-		        },
+        // public methods    
+            methods = {
+            
+                // convenience method for current slide index
+                current : function() {
+                    return elem.data('liteAccordion').current;
+                },
+        
+                // start accordion animation
+                play : function() {
+                    var next = core.nextSlide();
+                        
+                    core.playing = setInterval(function() {
+                        header.eq(next()).trigger('click.liteAccordion');
+                    }, settings.cycleSpeed);
+                },
+            
+                // stop accordion animation
+                stop : function() {
+                    return clearInterval(core.playing);
+                },
 
-		        // trigger next slide
-		        next : function() {
+                // trigger next slide
+                next : function() {
 
-		        },
+                },
 
-		        // trigger previous slide
-		        prev : function() {
+                // trigger previous slide
+                prev : function() {
 
-		        },
+                },
 
-				// destroy plugin instance
-		        destroy : function() {
-					
-					// stop autoplay
-					methods.stop();
+                // destroy plugin instance
+                destroy : function() {
+                    
+                    // stop autoplay
+                    methods.stop();
 
-					// destroy behaviours, data, unbind events & remove styles
-		            accordion
-						.removeClass()
-						.removeData('liteAccordion')
-						.find('li > h2')
-						.unbind('.liteAccordion')
-						.attr('style', '');
-					
-					// remove programmatically generated styles
-					slides.children().attr('style', '');
+                    // destroy behaviours, data, unbind events & remove styles
+                    accordion
+                        .removeClass()
+                        .removeData('liteAccordion')
+                        .find('li > h2')
+                        .unbind('.liteAccordion')
+                        .attr('style', '');
+                    
+                    // remove programmatically generated styles
+                    slides.children().attr('style', '');
 
-		        },
+                },
 
-				// poke around the internals
-		        debug : function() {
-					return {
-						elem : elem,
-		                defaults : defaults,
-						settings : settings,
-		                methods : methods,
-						core : core
-		            }
-		        }       
-		    },
+                // poke around the internals
+                debug : function() {
+                    return {
+                        elem : elem,
+                        defaults : defaults,
+                        settings : settings,
+                        methods : methods,
+                        core : core
+                    }
+                }       
+            },
 
-       	// core utility and animation methods
+        // core utility and animation methods
             core = {
-				
-				// next slide index
-				nextSlide : function() {
-					var slide = settings.firstSlide;
-					
-					// nomnomnom tasty closure
-					return function() {
-						return slide++ % slideLen;
-					}
-				},	
-	
-				// holds interval counter
-				playing : 0,	
-		
+                
+                // next slide index
+                nextSlide : function() {
+                    var slide = settings.firstSlide;
+                    
+                    // nomnomnom tasty closure
+                    return function() {
+                        return slide++ % slideLen;
+                    }
+                },  
+    
+                // holds interval counter
+                playing : 0,    
+        
                 // set style properties
                 setStyles : function() {
                     
-					// set container heights, widths, theme & corner style      
+                    // set container heights, widths, theme & corner style      
                     accordion
                         .width(settings.containerWidth)
                         .height(settings.containerHeight)
@@ -136,8 +136,8 @@
                         .addClass(settings.theme)
                         .addClass(settings.rounded && 'rounded');
 
-					// add slide class to list items for css
-					slides.addClass('slide');
+                    // add slide class to list items for css
+                    slides.addClass('slide');
 
                     // set tab width, height and selected class
                     header
@@ -150,7 +150,7 @@
                         var $this = $(this),
                             left = index * settings.headerWidth;
 
-						if (index >= settings.firstSlide) left += slideWidth;
+                        if (index >= settings.firstSlide) left += slideWidth;
 
                         $this
                             .css('left', left)
@@ -163,28 +163,28 @@
 
                     });
 
-					// ie9 css fix
-					if ($.browser.msie && $.browser.version.substr(0,1) > 8) accordion.addClass('ie9');					
+                    // ie9 css fix
+                    if ($.browser.msie && $.browser.version.substr(0,1) > 8) accordion.addClass('ie9');                 
 
                 },
 
                 // set behaviours
                 setBehaviours : function() {                    
-					
-					// trigger click
-					if (settings.activateOn === 'click') {
+                    
+                    // trigger click
+                    if (settings.activateOn === 'click') {
                         header.bind('click.liteAccordion', core.triggerClick);
 
                         if (settings.pauseOnHover) {
-	
-						}
-					
-					// trigger hover
+    
+                        }
+                    
+                    // trigger hover
                     } else if (settings.activateOn === 'hover') {
-						header.bind('mouseover.liteAccordion', core.triggerHover);               
+                        header.bind('mouseover.liteAccordion', core.triggerHover);               
                     }
 
-					// init autoplay
+                    // init autoplay
                     settings.autoPlay && methods.play();
 
                 },
@@ -256,11 +256,11 @@
                         pos = slides.pos,
                         wrap = group.parent();
 
-						// set data for method.current
-						elem.data('liteAccordion').current = header.index($this);
+                        // set data for method.current
+                        elem.data('liteAccordion').current = header.index($this);
 
-            			// remove, then add selected class
-            			header.removeClass('selected').filter($this).addClass('selected');
+                        // remove, then add selected class
+                        header.removeClass('selected').filter($this).addClass('selected');
 
                         // animate wrapped set
                         wrap
@@ -279,41 +279,41 @@
 
                 },
 
-        		init : function() {
+                init : function() {
                     core.setStyles();                  
                     core.setBehaviours();
-        		}
+                }
             };
 
-		// expose methods
-		this.methods = methods;
+        // expose methods
+        this.methods = methods;
 
-		// init plugin
-		core.init();
+        // init plugin
+        core.init();
        
     };
 
     $.fn.liteAccordion = function(method) {
-		var elem = this,
-			instance = elem.data('liteAccordion');
-		
-		// if creating a new instance
-		if (typeof method === 'object' || !method) {
-       		return elem.each(function() {
-				var liteAccordion;
-	
-				// if plugin already instantiated, return
-				if (instance) return;
+        var elem = this,
+            instance = elem.data('liteAccordion');
+        
+        // if creating a new instance
+        if (typeof method === 'object' || !method) {
+            return elem.each(function() {
+                var liteAccordion;
+    
+                // if plugin already instantiated, return
+                if (instance) return;
 
-				// else create a new instance
-				liteAccordion = new LiteAccordion(elem, method);
-				elem.data('liteAccordion', liteAccordion);				
-			});
-			
-		// otherwise, call method on current instance
-		} else if (typeof method === 'string' && instance.methods[method]) {
-			return instance.methods[method].apply(elem, Array.prototype.slice.call(arguments, 1));
-		}
+                // else create a new instance
+                liteAccordion = new LiteAccordion(elem, method);
+                elem.data('liteAccordion', liteAccordion);              
+            });
+            
+        // otherwise, call method on current instance
+        } else if (typeof method === 'string' && instance.methods[method]) {
+            return instance.methods[method].apply(elem, Array.prototype.slice.call(arguments, 1));
+        }
     };
 
 })(jQuery);
