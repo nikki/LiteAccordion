@@ -67,7 +67,7 @@
     easing.find('option[value=swing]').attr('selected', true);
     
     // init accordion
-    demo.liteAccordion({ autoPlay : true });
+    demo.liteAccordion({ firstSlide : 2, linkable : true });
 
     // get new options on change event
     selects.change(function() {     

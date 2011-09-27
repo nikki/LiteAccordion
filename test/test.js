@@ -1,55 +1,87 @@
-/*
 module('Instantiation', {
     setup : function() {
-        var $test = $('#test');
+        this.test = $('#test').liteAccordion();
     },
     teardown : function() {
-        $test.remove();
+        this.test.liteAccordion('destroy');
     }
 });
-*/
 
 test('jQuery in page', function() {
-    expect(1);
     ok(typeof jQuery === 'function');
 });
 
-test('liteAccordion plugin in page', function() {
-    expect(1);
+test('liteAccordion.js in page', function() {
     ok(typeof $.fn.liteAccordion === 'function');
 });
 
-/*
-test('Init with no options', function() {
-    expect(1);
-    $test.liteAccordion();
-    ok(typeof )
+test('liteAccordion.css in page', function() {
+	var stylesheet = $('link', document.head).each(function() {
+		// return this.href.match('liteaccordion');
+	});
 });
-*/
 
-//module('Methods');
-//test('')
+test('DOM element returned on single instance', function() {
+	ok(typeof this.test === 'object');
+	ok(this.test[0].nodeType === 1); // instanceof HTMLElement doesn't work in IE7 (it doesn't support DOM L2)
+	ok(this.test[0].id === 'test');
+});
+
+test('Unique DOM elements returned on multiple instances', function() {
+	var test2 = $('#test2').liteAccordion();
+	ok(typeof test2 === 'object');
+	ok(test2[0].nodeType === 1); // instanceof HTMLElement doesn't work in IE7 (it doesn't support DOM L2)
+	ok(test2[0].id === 'test2');
+	
+	test2.liteAccordion('destroy').remove(); // teardown
+});
+
+module('Methods', {
+    setup : function() {
+        this.test = $('#test').liteAccordion();
+    },
+    teardown : function() {
+        this.test.liteAccordion('destroy');
+    }
+});
+
+test('Current property on init', function() {
+    console.log(this.test.liteAccordion('debug'));
+	//console.log(this.test);
+});
+
 
 /*
 methods
+	current
 	play
-	pause
 	stop
 	next
 	prev
-	init
-	// destroy?
+	destroy
+	debug
+*/
+module('Core', {
+    setup : function() {
+        this.test = $('#test').liteAccordion();
+    },
+    teardown : function() {
+        this.test.liteAccordion('destroy');
+    }
+});
 
-utils
-	activateSlide
-	nextSlide
-	calcHeight
-	calcWidth
-	groupSlides
+
+/*
+core
 	setStyles
 	setBehaviours
+	linkable	
+	nextSlide
+	playing
+	getSlidePositions
 	groupSlides
 	ungroupSlides
 	triggerClick
 	triggerHover
+	init
 */

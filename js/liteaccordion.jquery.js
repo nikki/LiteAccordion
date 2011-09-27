@@ -1,8 +1,8 @@
 /*************************************************
 *
-*   project:    liteAccordion - horizontal accordion plugin for jQuery
+*   project:    liteAccordion - horizontal elem plugin for jQuery
 *   author:     Nicola Hibbert
-*   url:        http://nicolahibbert.com/horizontal-accordion-jquery-plugin
+*   url:        http://nicolahibbert.com/horizontal-elem-jquery-plugin
 *   demo:       http://www.nicolahibbert.com/demo/liteAccordion
 *
 *   Version:    2.0a
@@ -40,19 +40,15 @@
             settings = $.extend({}, defaults, options),
         
         // 'globals'
-            accordion = elem,
-            slides = accordion.children('ol').children('li'),
+            slides = elem.children('ol').children('li'),
             header = slides.children('h2'),
             slideLen = slides.length,
             slideWidth = settings.containerWidth - slideLen * settings.headerWidth, 
 
         // public methods    
             methods = {
-            
-                // current slide index
-                current : settings.firstSlide - 1,
-        
-                // start accordion animation
+                    
+                // start elem animation
                 play : function() {
                     var next = core.nextSlide();
 
@@ -61,7 +57,7 @@
                     }, settings.cycleSpeed);
                 },
             
-                // stop accordion animation
+                // stop elem animation
                 stop : function() {
                     return clearInterval(core.playing);
                 },
@@ -69,21 +65,21 @@
                 // trigger next slide
                 next : function() {
 
-					// stop autoplay
-					methods.stop();
-					
-					// trigger
-					header.eq(methods.current + 1).trigger('click.liteAccordion');
+                    // stop autoplay
+                    methods.stop();
+                    
+                    // trigger
+                    header.eq(core.currentSlide + 1).trigger('click.liteAccordion');
                 },
 
                 // trigger previous slide
                 prev : function() {
 
-					// stop autoplay
-					methods.stop();
-					
-					// trigger
-					header.eq(methods.current - 1).trigger('click.liteAccordion');	
+                    // stop autoplay
+                    methods.stop();
+                    
+                    // trigger
+                    header.eq(core.currentSlide - 1).trigger('click.liteAccordion');  
                 },
 
                 // destroy plugin instance
@@ -93,7 +89,7 @@
                     methods.stop();
 
                     // destroy behaviours, data, unbind events & remove styles
-                    accordion
+                    elem
                         .removeClass()
                         .removeData('liteAccordion')
                         .find('li > h2')
@@ -108,7 +104,6 @@
                 debug : function() {
                     return {
                         elem : elem,
-                        defaults : defaults,
                         settings : settings,
                         methods : methods,
                         core : core
@@ -118,25 +113,12 @@
 
         // core utility and animation methods
             core = {
-                
-                // next slide index
-                nextSlide : function() {
-                    var slide = settings.firstSlide;
-                    
-                    // nomnomnom tasty closure
-                    return function() {
-                        return slide++ % slideLen;
-                    }
-                },  
-    
-                // holds interval counter
-                playing : 0,    
         
                 // set style properties
                 setStyles : function() {
                     
                     // set container heights, widths, theme & corner style      
-                    accordion
+                    elem
                         .width(settings.containerWidth)
                         .height(settings.containerHeight)
                         .addClass('accordion')
@@ -171,7 +153,7 @@
                     });
 
                     // ie9 css fix
-                    if ($.browser.msie && $.browser.version.substr(0,1) > 8) accordion.addClass('ie9');                 
+                    if ($.browser.msie && $.browser.version.substr(0,1) > 8) elem.addClass('ie9');                 
 
                 },
 
@@ -191,10 +173,42 @@
                         header.bind('mouseover.liteAccordion', core.triggerHover);               
                     }
 
+					// init hash links
+					settings.linkable && core.linkable();
+
                     // init autoplay
                     settings.autoPlay && methods.play();
-
                 },
+
+				linkable : function() { // TODO!
+					var linked = function() {
+						slides.each(function() {
+							if ($(this).attr('name') === location.hash.slice(1)) {
+								// settings.firstSlide = slides.index($(this)) + 1;
+								console.log(location.hash);
+							}
+						});						
+					};
+
+					// $(window).bind('hashchange', linked());
+
+				},
+				
+                // current slide index
+                currentSlide : settings.firstSlide - 1,				
+
+                // next slide index
+                nextSlide : function() {
+                    var slide = settings.firstSlide;
+                    
+                    // nomnomnom tasty closure
+                    return function() {
+                        return slide++ % slideLen;
+                    }
+                },  
+    
+                // holds interval counter
+                playing : 0,
                 
                 // TODO
                 getSlidePositions : function(slide) {
@@ -257,18 +271,21 @@
                     var $this = $(this), slides, group, pos, wrap, index;
 
                     // if anim has not started
-                    if (!accordion.find('.wrap').length) {
+                    if (!elem.find('.wrap').length) {
                         slides = core.groupSlides($this),
                         group = slides.group,
                         pos = slides.pos,
                         wrap = group.parent(),
-						index = header.index($this);
+                        index = header.index($this);
 
-                        // set data for method.current
-                        methods.current = index === slideLen - 1 ? -1 : index;
+                        // set data for core.currentSlide
+                        core.currentSlide = index === slideLen - 1 ? -1 : index;
 
                         // remove, then add selected class
                         header.removeClass('selected').filter($this).addClass('selected');
+
+						// set location.hash
+						if (settings.linkable) location.hash = $this.parent().attr('name');
 
                         // animate wrapped set
                         wrap
@@ -288,16 +305,18 @@
                 },
 
                 init : function() {
-                    core.setStyles();                  
+	
+	// console.log(settings.firstSlide);
                     core.setBehaviours();
+                    core.setStyles();
                 }
             };
 
         // init plugin
         core.init();
 
-		// expose methods
-		return methods;
+        // expose methods
+        return methods;
        
     };
 
@@ -315,16 +334,17 @@
 
                 // otherwise create a new instance
                 liteAccordion = new LiteAccordion(elem, method);
-				elem.data('liteAccordion', liteAccordion);
-				
+                elem.data('liteAccordion', liteAccordion);
             });
-            
+
         // otherwise, call method on current instance
         } else if (typeof method === 'string' && instance[method]) {
-			if (method === 'current') {
-				return instance[method];
-			} else {
-            	return instance[method].apply(elem, Array.prototype.slice.call(arguments, 1));				
+			// debug method isn't chainable b/c we need the debug object to be returned
+			if (method === 'debug') {
+				return instance[method].apply(elem, Array.prototype.slice.call(arguments, 1));
+			} else { // the rest of the methods are chainable though
+            	instance[method].apply(elem, Array.prototype.slice.call(arguments, 1));
+				return elem;				
 			}
         }
     };
