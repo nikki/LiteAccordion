@@ -55,6 +55,7 @@
 					// if already playing...
 					if (core.playing) return;
 
+					// start autoplay
                     core.playing = setInterval(function() {
                         header.eq(next()).trigger('click.liteAccordion');
                     }, settings.cycleSpeed);
@@ -68,7 +69,6 @@
 
                 // trigger next slide
                 next : function() {
-
                     // stop autoplay
                     methods.stop();
                     
@@ -78,7 +78,6 @@
 
                 // trigger previous slide
                 prev : function() {
-
                     // stop autoplay
                     methods.stop();
                     
@@ -87,21 +86,24 @@
                 },
 
                 // destroy plugin instance
-                destroy : function() {
-                    
+                destroy : function() {                    
                     // stop autoplay
                     methods.stop();
 
-                    // destroy behaviours, data, unbind events & remove styles
+					// remove hashchange event bound to window
+					$(window).unbind('.liteAccordion');
+
+                    // remove generated styles, classes, data, events
                     elem
-                        .removeClass()
+                        .attr('style', '')
+						.removeClass('accordion basic dark light stitch')
                         .removeData('liteAccordion')
                         .find('li > h2')
                         .unbind('.liteAccordion')
-                        .attr('style', '');
-                    
-                    // remove generated styles
-                    slides.children().attr('style', '');
+						.filter('.selected')
+						.removeClass('selected');
+						
+                    slides.removeClass('slide').children().attr('style', '');
                 },
 
                 // poke around the internals (NOT CHAINABLE)
@@ -119,8 +121,7 @@
             core = {
         
                 // set style properties
-                setStyles : function() {
-                    
+                setStyles : function() {                    
                     // set container heights, widths, theme & corner style      
                     elem
                         .width(settings.containerWidth)
@@ -161,47 +162,46 @@
 
                 },
 
-                // set behaviours
-                setBehaviours : function() {                    
-                    
+                // bind click and mouseover events
+                bindEvents : function() {                                        
                     // trigger click
                     if (settings.activateOn === 'click') {
-                        header.bind('click.liteAccordion', core.triggerClick);
+                        header.bind('click.liteAccordion', core.triggerSlide);
 
                         if (settings.pauseOnHover) {
     
                         }
                     
                     // trigger hover
-                    } else if (settings.activateOn === 'hover') {
+                    } else if (settings.activateOn === 'mouseover') {
                         header.bind({
-							'mouseover.liteAccordion' : core.triggerHover,
-							'click.liteAccordion' : core.triggerClick
+							'mouseover.liteAccordion' : core.triggerSlide,
+							'click.liteAccordion' : core.triggerSlide						
 						});               
                     }
-
-					// init hash links
-					settings.linkable && core.linkable();
-
-                    // init autoplay
-                    settings.autoPlay && methods.play();
                 },
 
-				linkable : function() { // TODO!
+				linkable : function() {
+					var triggerHash = function() {
+						var $this = $(this);
+
+						if ($this.attr('name') === location.hash.slice(1)) {
+							header.eq(slides.index($this)).trigger('click.liteAccordion');
+						}						
+					};
+									
+					// trigger on page load
+					// chrome exhibits some weirdness here if you manually type the hash in (chrome bug?), otherwise it's fine
+					location.hash && slides.each(triggerHash);
+
+					// trigger on hash change
 					$(window).bind('hashchange.liteAccordion', function() {
 						
 						// stop autoplay
 						methods.stop();
-						
-						// iterate through slides, check if hash matches slide name
-						// if so, trigger slide
-						slides.each(function() {
-							var $this = $(this)
-							
-							if ($this.attr('name') === location.hash.slice(1)) {
-								header.eq(slides.index($this)).trigger('click.liteAccordion');
-							}
-						});
+
+						// iterate through slides, check if hash matches slide name -> trigger slide
+						slides.each(triggerHash);
 					});
 
 				},
@@ -212,11 +212,11 @@
 
                 // next slide index
                 nextSlide : function() {
-                    var slide = core.currentSlide + 1;
+                    var next = core.currentSlide + 1;
 
                     // nomnomnom tasty closure
                     return function() {
-                        return slide++ % slideLen;
+                        return next++ % slideLen;
                     }
                 },  
     
@@ -267,6 +267,7 @@
                     }
                 },                    
 
+				// TODO remove group, doesn't perform as well as previous version oddly?
                 // ungroups slides after animation complete
                 ungroupSlides : function(group, newPos) {
                     group.each(function(index) {
@@ -280,7 +281,7 @@
                 },
                 
                 // animation for click event
-                triggerClick : function(e) {
+                triggerSlide : function(e) {
                     var $this = $(this), slides, group, pos, wrap, index;
 
                     // if anim has not started
@@ -315,16 +316,16 @@
                     }
                 },
                 
-                // animation for hover event
-                triggerHover : function(e) {
-
-                },
-
                 init : function() {
-	
-	// console.log(settings.firstSlide);
-                    core.setBehaviours();
                     core.setStyles();
+                    core.bindEvents();
+
+					// init hash links
+					settings.linkable && core.linkable();
+
+                    // init autoplay
+                    settings.autoPlay && methods.play();
+
                 }
             };
 

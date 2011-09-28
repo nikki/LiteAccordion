@@ -53,13 +53,13 @@ test('Current property on init', function() {
 
 /*
 methods
-	current
 	play
 		test that play->stop->play works
 	stop
 	next
 	prev
 	destroy
+		check destroys window bound events as well as slide bound ones
 	debug
 */
 module('Core', {
@@ -75,14 +75,14 @@ module('Core', {
 /*
 core
 	setStyles
-	setBehaviours
+	bindEvents
 	linkable	
+	currentSlide
 	nextSlide
 	playing
-	getSlidePositions
-	groupSlides
-	ungroupSlides
-	triggerClick
-	triggerHover
+	getSlidePositions *rewrite
+	groupSlides *rewrite
+	ungroupSlides *rewrite
+	triggerSlide
 	init
 */
