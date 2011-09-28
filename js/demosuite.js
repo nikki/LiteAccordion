@@ -28,9 +28,11 @@
                     value = current;
                 }
                 
-                if (defaults[this.name] !== value) {
+				// console.log(value);
+
+                //if (defaults[this.name] !== value) {
                     options[this.name] = value; 
-                }
+                //}
                         
             });                 
 
@@ -57,17 +59,17 @@
         };
         
     // create easing select options from plugin
-    /*
+	// TODO: doesn't work in IE?
     for (item in $.easing) {
         if (item !== 'def') {
             easing.append($('<option>').attr('value', item).text(item)); // should use a frag...                        
         }
     }
-    */                  
+                
     easing.find('option[value=swing]').attr('selected', true);
     
     // init accordion
-    demo.liteAccordion({ firstSlide : 2, linkable : true });
+    demo.liteAccordion({ linkable : true });
 
     // get new options on change event
     selects.change(function() {     

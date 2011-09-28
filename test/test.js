@@ -55,6 +55,7 @@ test('Current property on init', function() {
 methods
 	current
 	play
+		test that play->stop->play works
 	stop
 	next
 	prev

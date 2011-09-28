@@ -52,6 +52,9 @@
                 play : function() {
                     var next = core.nextSlide();
 
+					// if already playing...
+					if (core.playing) return;
+
                     core.playing = setInterval(function() {
                         header.eq(next()).trigger('click.liteAccordion');
                     }, settings.cycleSpeed);
@@ -59,7 +62,8 @@
             
                 // stop elem animation
                 stop : function() {
-                    return clearInterval(core.playing);
+                    clearInterval(core.playing);
+					core.playing = 0;
                 },
 
                 // trigger next slide
@@ -96,11 +100,11 @@
                         .unbind('.liteAccordion')
                         .attr('style', '');
                     
-                    // remove programmatically generated styles
+                    // remove generated styles
                     slides.children().attr('style', '');
                 },
 
-                // poke around the internals
+                // poke around the internals (NOT CHAINABLE)
                 debug : function() {
                     return {
                         elem : elem,
@@ -170,7 +174,10 @@
                     
                     // trigger hover
                     } else if (settings.activateOn === 'hover') {
-                        header.bind('mouseover.liteAccordion', core.triggerHover);               
+                        header.bind({
+							'mouseover.liteAccordion' : core.triggerHover,
+							'click.liteAccordion' : core.triggerClick
+						});               
                     }
 
 					// init hash links
@@ -181,26 +188,32 @@
                 },
 
 				linkable : function() { // TODO!
-					var linked = function() {
+					$(window).bind('hashchange.liteAccordion', function() {
+						
+						// stop autoplay
+						methods.stop();
+						
+						// iterate through slides, check if hash matches slide name
+						// if so, trigger slide
 						slides.each(function() {
-							if ($(this).attr('name') === location.hash.slice(1)) {
-								// settings.firstSlide = slides.index($(this)) + 1;
-								console.log(location.hash);
+							var $this = $(this)
+							
+							if ($this.attr('name') === location.hash.slice(1)) {
+								header.eq(slides.index($this)).trigger('click.liteAccordion');
 							}
-						});						
-					};
-
-					// $(window).bind('hashchange', linked());
+						});
+					});
 
 				},
 				
                 // current slide index
+				// zero index firstSlide setting on init
                 currentSlide : settings.firstSlide - 1,				
 
                 // next slide index
                 nextSlide : function() {
-                    var slide = settings.firstSlide;
-                    
+                    var slide = core.currentSlide + 1;
+
                     // nomnomnom tasty closure
                     return function() {
                         return slide++ % slideLen;
@@ -278,14 +291,17 @@
                         wrap = group.parent(),
                         index = header.index($this);
 
-                        // set data for core.currentSlide
-                        core.currentSlide = index === slideLen - 1 ? -1 : index;
+						// if triggered by user, stop autoplay
+						e.originalEvent && methods.stop();
 
-                        // remove, then add selected class
-                        header.removeClass('selected').filter($this).addClass('selected');
+                        // set core.currentSlide
+                        core.currentSlide = index;
 
 						// set location.hash
 						if (settings.linkable) location.hash = $this.parent().attr('name');
+						
+                        // remove, then add selected class
+                        header.removeClass('selected').filter($this).addClass('selected');
 
                         // animate wrapped set
                         wrap
