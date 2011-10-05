@@ -169,10 +169,8 @@
                     // pause on hover (can't use custom events with $.hover())		
             		if (settings.pauseOnHover) {
             			elem.bind('mouseenter.liteAccordion', function() {
-            			    console.log('stop');
             				//methods.stop();
             			}).bind('mouseleave.liteAccordion', function() {
-            				console.log('play');
             				//methods.play();
             			});
             		} 
