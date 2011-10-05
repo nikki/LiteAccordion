@@ -20,9 +20,9 @@ test('liteAccordion.css in page', function() {
 });
 
 test('DOM element returned', function() {
-	strictEqual(typeof this.test, 'object');
-	strictEqual(this.test[0].nodeType, 1); // instanceof HTMLElement doesn't work in IE7 (it doesn't support DOM L2)
-	strictEqual(this.test[0].id, 'test');
+	strictEqual(typeof this.test, 'object', 'elem is an object');
+	strictEqual(this.test[0].nodeType, 1, 'elem is a DOM object'); // instanceof HTMLElement doesn't work in IE7 (it doesn't support DOM L2)
+	strictEqual(this.test[0].id, 'test', 'elem has ID of "test"');
 });
 
 module('Methods', {
@@ -114,9 +114,6 @@ test('Prev -> Next', function() {
     this.test.liteAccordion('prev');
     this.test.liteAccordion('next');   
 });
-
-
-
 
 test('All methods except Debug return DOM element', function() {
     strictEqual(this.test.liteAccordion('play')[0].id, 'test', 'Original DOM element returned');

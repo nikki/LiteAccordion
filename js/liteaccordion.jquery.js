@@ -116,16 +116,19 @@
         
                 // set style properties
                 setStyles : function() {                    
-                    // set container heights, widths, theme & corner style      
+                    // set container heights, widths, theme & corner style
                     elem
                         .width(settings.containerWidth)
                         .height(settings.containerHeight)
                         .addClass('accordion')
-                        .addClass(settings.theme)
-                        .addClass(settings.rounded && 'rounded');
-
+                        .addClass(settings.rounded && 'rounded')                  
+                        .addClass(settings.theme);
+                        
                     // add slide class to list items for css
                     slides.addClass('slide');
+
+                    // compensate for borders on 'light' theme
+                    if (settings.theme === 'light') slideWidth -= parseInt(elem.children('ol').css('borderTopWidth'), 10);
 
                     // set tab width, height and selected class
                     header
@@ -137,7 +140,7 @@
                     header.each(function(index) {
                         var $this = $(this),
                             left = index * settings.headerWidth;
-
+                            
                         if (index >= settings.firstSlide) left += slideWidth;
 
                         $this
@@ -163,15 +166,16 @@
                         header.bind('click.liteAccordion', core.triggerSlide);                    
                     // trigger hover
                     } else if (settings.activateOn === 'mouseover') {
+                        // how to get pause on hover to work with mouseover activation?
                         header.bind('mouseover.liteAccordion', core.triggerSlide);               
                     }
                     
                     // pause on hover (can't use custom events with $.hover())		
             		if (settings.pauseOnHover) {
             			elem.bind('mouseenter.liteAccordion', function() {
-            				//methods.stop();
+            			    methods.stop();
             			}).bind('mouseleave.liteAccordion', function() {
-            				//methods.play();
+            			    methods.play();
             			});
             		} 
                 },

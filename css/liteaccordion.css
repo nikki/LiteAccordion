@@ -51,6 +51,19 @@
 .dark .slide h2.selected b { background: #434343\9; }
 .dark .slide div { background: #030303; margin-left: 5px; }
 
+/***************************************** Light */
+.light { border: 1px solid white; background: #f0f0f0; padding: 8px 8px 18px 8px; -webkit-box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4); -moz-box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4); -o-box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4); 
+	box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4) }
+.light > ol { overflow: hidden; border: 5px solid #a0a0a0; border-left: none; -webkit-box-shadow: 0 1px #909090; -moz-box-shadow: 0 1px #909090 }
+.light .slide h2 { background: #a0a0a0; font-size: 16px; line-height: 2.7em; text-shadow: 0 -1px 0 white }
+.light .slide h2 span { background: #e0e0e0; color: #909090; background: -webkit-gradient(linear, left top, right top, color-stop(0, #e0e0e0), color-stop(1, #f0f0f0)); background: -moz-linear-gradient(top left, #e0e0e0 0%, #f0f0f0 100%);
+    -webkit-box-shadow: -1px -1px 0 #909090 inset, 1px 1px 0 #909090 inset; -moz-box-shadow: -1px -1px 0 #909090 inset, 1px 1px 0 #909090 inset }
+.light .slide h2 b { background: #e0e0e0; color: #909090; font-size: 20px; text-shadow: -1px 1px 0 white }
+.light .slide h2.selected span, .light .slide h2.selected span:hover { background: #f0f0f0 }
+.light .slide h2.selected b { background: #f0f0f0; }
+.light .slide:nth-child(1) > h2 { background: #a0a0a0 }
+.light .slide div { background: #a0a0a0; margin-left: 5px }
+
 /**************************************** Stitch */
 .stitch { background: #353535; border-width: 9px; -webkit-border-image: url('bg_stitch_2.png') 9 repeat; -moz-border-image: url('bg_stitch_2.png') 9 repeat; border-image: url('bg_stitch_2.png') 9 repeat }
 .stitch .slide h2 { background: #353535; border-width: 9px; -webkit-border-image: url('bg_stitch_2.png') 9 repeat; -moz-border-image: url('bg_stitch_2.png') 9 repeat; border-image: url('bg_stitch_2.png') 9 repeat }
@@ -62,5 +75,5 @@
 .stitch .slide h2 span { margin-top: 2px }
 
 /*************************************** Rounded */
-.rounded { -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; }
+.rounded, .rounded > ol { -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px }
 .rounded .slide h2 span { -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; }

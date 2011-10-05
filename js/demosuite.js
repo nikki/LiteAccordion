@@ -71,7 +71,7 @@
     easing.find('option[value=swing]').attr('selected', true);
     
     // init accordion
-    demo.liteAccordion();
+    demo.liteAccordion({ theme : 'light' });
 
     // get new options on change event
     selects.change(function() {     
