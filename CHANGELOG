@@ -1,4 +1,33 @@
-v1.1 21/03/2011
-Added a pause on hover feature to the plugin.
+v2.0
+    - new methods:
+        - play
+        - stop
+        - next
+        - prev
+        - destroy
+        - debug    
 
-v1
+    - rewrote plugin to expose methods
+    - refactored core
+    - refactored css, styles no longer cascade into slide content divs
+    - h2 header now replaceable with any element
+    - mouseover activation
+    - easing support
+    - linkable slides via hashchange
+    - created a test suite
+    - two new themes:
+        - light
+        - stitch
+
+
+v1.1.3 06/04/2011
+    - IE bug fixes
+
+v1.1.1, v1.1.2 27/03/2011
+    - IE bug fixes
+
+v1.1 21/03/2011
+    - Added a pause on hover feature
+
+v1.0 02/03/2011
+    - First release

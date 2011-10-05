@@ -8,67 +8,172 @@ module('Instantiation', {
 });
 
 test('jQuery in page', function() {
-    ok(typeof jQuery === 'function');
+    strictEqual(typeof jQuery, 'function');
 });
 
 test('liteAccordion.js in page', function() {
-    ok(typeof $.fn.liteAccordion === 'function');
+    strictEqual(typeof $.fn.liteAccordion, 'function');
 });
 
 test('liteAccordion.css in page', function() {
-	var stylesheet = $('link', document.head).each(function() {
-		// return this.href.match('liteaccordion');
-	});
+	ok($('link[href*="liteaccordion"]', document.head).length);
 });
 
-test('DOM element returned on single instance', function() {
-	ok(typeof this.test === 'object');
-	ok(this.test[0].nodeType === 1); // instanceof HTMLElement doesn't work in IE7 (it doesn't support DOM L2)
-	ok(this.test[0].id === 'test');
-});
-
-test('Unique DOM elements returned on multiple instances', function() {
-	var test2 = $('#test2').liteAccordion();
-	ok(typeof test2 === 'object');
-	ok(test2[0].nodeType === 1); // instanceof HTMLElement doesn't work in IE7 (it doesn't support DOM L2)
-	ok(test2[0].id === 'test2');
-	
-	test2.liteAccordion('destroy').remove(); // teardown
+test('DOM element returned', function() {
+	strictEqual(typeof this.test, 'object');
+	strictEqual(this.test[0].nodeType, 1); // instanceof HTMLElement doesn't work in IE7 (it doesn't support DOM L2)
+	strictEqual(this.test[0].id, 'test');
 });
 
 module('Methods', {
     setup : function() {
         this.test = $('#test').liteAccordion();
+        this.debug = this.test.liteAccordion('debug');
     },
     teardown : function() {
         this.test.liteAccordion('destroy');
     }
 });
 
-test('Current property on init', function() {
-    console.log(this.test.liteAccordion('debug'));
-	//console.log(this.test);
+test('Play', function() {
+    this.test.liteAccordion('play');
+    strictEqual(typeof this.debug.core.playing, 'number', 'On Play, core.playing has a setInterval ID');   
+});
+
+test('Play -> Stop', function() {
+    this.test.liteAccordion('play');
+    this.test.liteAccordion('stop');
+    strictEqual(this.debug.core.playing, 0, 'On Stop, core.playing is zero');       
+});
+
+test('Play -> Stop -> Play', function() {
+    this.test.liteAccordion('play');
+    this.test.liteAccordion('stop');
+    this.test.liteAccordion('play');
+    strictEqual(typeof this.debug.core.playing, 'number', 'On Play, core.playing has a setInterval ID');      
+});
+
+test('AutoPlay -> Stop -> Play', function() {
+    // destroy instance created in setup
+    this.test.liteAccordion('destroy');
+    this.test = null;
+    this.debug = null;
+
+    // create new instance with autoplay option
+    this.test = $('#test').liteAccordion({ autoPlay : true });
+    this.debug = this.test.liteAccordion('debug');
+    ok(this.debug.settings.autoPlay, 'AutoPlay enabled');
+    strictEqual(typeof this.debug.core.playing, 'number', 'On AutoPlay, core.playing has a setInterval ID'); 
+    
+    // stop autoPlay
+    this.test.liteAccordion('stop');
+    strictEqual(this.debug.core.playing, 0, 'On Stop, core.playing is zero');
+
+    // manually play
+    this.test.liteAccordion('play');
+    strictEqual(typeof this.debug.core.playing, 'number', 'On Play, core.playing has a setInterval ID');
+});
+
+test('Stop', function() {
+    this.test.liteAccordion('stop');
+    strictEqual(this.debug.core.playing, 0, 'On Stop, core.playing is zero'); 
+});
+
+test('Next', function() {
+    strictEqual(this.debug.core.currentSlide, this.debug.settings.firstSlide - 1);    
+    this.test.liteAccordion('prev');
+    this.test.liteAccordion('next');   
+});
+
+test('Next -> Next', function() {
+    strictEqual(this.debug.core.currentSlide, this.debug.settings.firstSlide - 1);    
+    this.test.liteAccordion('prev');
+    this.test.liteAccordion('next');   
+});
+
+test('Next -> Prev', function() {
+    strictEqual(this.debug.core.currentSlide, this.debug.settings.firstSlide - 1);    
+    this.test.liteAccordion('prev');
+    this.test.liteAccordion('next');   
+});
+
+test('Prev', function() {
+    strictEqual(this.debug.core.currentSlide, this.debug.settings.firstSlide - 1);    
+    this.test.liteAccordion('prev');
+    this.test.liteAccordion('next');   
+});
+
+test('Prev -> Prev', function() {
+    strictEqual(this.debug.core.currentSlide, this.debug.settings.firstSlide - 1);    
+    this.test.liteAccordion('prev');
+    this.test.liteAccordion('next');   
+});
+
+test('Prev -> Next', function() {
+    strictEqual(this.debug.core.currentSlide, this.debug.settings.firstSlide - 1);    
+    this.test.liteAccordion('prev');
+    this.test.liteAccordion('next');   
 });
 
 
+
+
+test('All methods except Debug return DOM element', function() {
+    strictEqual(this.test.liteAccordion('play')[0].id, 'test', 'Original DOM element returned');
+    strictEqual(this.test.liteAccordion('stop')[0].id, 'test', 'Original DOM element returned');
+    strictEqual(this.test.liteAccordion('next')[0].id, 'test', 'Original DOM element returned');
+    strictEqual(this.test.liteAccordion('prev')[0].id, 'test', 'Original DOM element returned');
+    strictEqual(this.test.liteAccordion('destroy')[0].id, 'test', 'Original DOM element returned');
+    strictEqual(this.test.liteAccordion()[0].id, 'test', 'Original DOM element returned'); // init needed for teardown                   
+    strictEqual(typeof this.debug, 'object', 'Debug returns an object');   
+    ok(this.debug.settings, 'Debug has a settings property');
+});
+
+
+
+    // strictEqual(this.debug.core.currentSlide, this.debug.settings.firstSlide - 1);
 /*
 methods
 	play
-		test that play->stop->play works
-	stop
+		autoplay, stop, prev, next, play ->check index		
+
+				
+
+			
 	next
+		next * x -> check current index
+		next -> prev -> check index
+
+			
 	prev
+		prev * rand x -> check current index
+		prev -> next -> prev -> check index
+		
+	
 	destroy
-		check destroys window bound events as well as slide bound ones
-	debug
+		destroys all styles
+		destroys events on header and window (hashchange)
+
+		
+
+
 */
 module('Core', {
     setup : function() {
         this.test = $('#test').liteAccordion();
+        this.debug = this.test.liteAccordion('debug');
     },
     teardown : function() {
         this.test.liteAccordion('destroy');
     }
+});
+
+test('Play counter on init', function() {
+    strictEqual(this.debug.core.playing, 0, 'core.playing is zero');    
+});
+
+test('CurrentSlide set on init', function() {
+    strictEqual(this.debug.core.currentSlide, this.debug.settings.firstSlide - 1); // firstSlide isn't zero indexed
 });
 
 

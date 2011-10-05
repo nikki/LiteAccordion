@@ -41,7 +41,7 @@
         
         // 'globals'
             slides = elem.children('ol').children('li'),
-            header = slides.children('h2'),
+            header = slides.children(':first-child'),
             slideLen = slides.length,
             slideWidth = settings.containerWidth - slideLen * settings.headerWidth, 
 
@@ -52,7 +52,6 @@
                 play : function() {
                     var next = core.nextSlide();
 
-					// if already playing...
 					if (core.playing) return;
 
 					// start autoplay
@@ -69,19 +68,13 @@
 
                 // trigger next slide
                 next : function() {
-                    // stop autoplay
                     methods.stop();
-                    
-                    // trigger
                     header.eq(core.currentSlide + 1).trigger('click.liteAccordion');
                 },
 
                 // trigger previous slide
                 prev : function() {
-                    // stop autoplay
                     methods.stop();
-                    
-                    // trigger
                     header.eq(core.currentSlide - 1).trigger('click.liteAccordion');  
                 },
 
@@ -98,6 +91,7 @@
                         .attr('style', '')
 						.removeClass('accordion basic dark light stitch')
                         .removeData('liteAccordion')
+                        .unbind('.liteAccordion')
                         .find('li > h2')
                         .unbind('.liteAccordion')
 						.filter('.selected')
@@ -166,19 +160,22 @@
                 bindEvents : function() {                                        
                     // trigger click
                     if (settings.activateOn === 'click') {
-                        header.bind('click.liteAccordion', core.triggerSlide);
-
-                        if (settings.pauseOnHover) {
-    
-                        }
-                    
+                        header.bind('click.liteAccordion', core.triggerSlide);                    
                     // trigger hover
                     } else if (settings.activateOn === 'mouseover') {
-                        header.bind({
-							'mouseover.liteAccordion' : core.triggerSlide,
-							'click.liteAccordion' : core.triggerSlide						
-						});               
+                        header.bind('mouseover.liteAccordion', core.triggerSlide);               
                     }
+                    
+                    // pause on hover (can't use custom events with $.hover())		
+            		if (settings.pauseOnHover) {
+            			elem.bind('mouseenter.liteAccordion', function() {
+            			    console.log('stop');
+            				//methods.stop();
+            			}).bind('mouseleave.liteAccordion', function() {
+            				console.log('play');
+            				//methods.play();
+            			});
+            		} 
                 },
 
 				linkable : function() {
@@ -223,77 +220,49 @@
                 // holds interval counter
                 playing : 0,
                 
-                // TODO
-                getSlidePositions : function(slide) {
-                    var index = header.index(slide),
-                        pos = {
-                            offset : slide.position().left,
-                            left : index * settings.headerWidth,
-                            right : index * settings.headerWidth + slideWidth,
-                            newPos : 0
-                        };
-
-                    if (pos.offset === pos.left) {
-                        pos.newPos = slideWidth;                                   
-                    } else if (pos.offset === pos.right) {
-                        pos.newPos = -slideWidth;
-                    }
-
-                    return pos;                      
-                },                    
-                
                 // groups slides together for animation
-                groupSlides : function(slide) {
-                    var index = header.index(slide),
-                        group,
-                        pos = {
-                            offset : slide.position().left,
-                            left : index * settings.headerWidth,
-                            right : index * settings.headerWidth + slideWidth,
-                            newPos : 0
-                        };
-
-                    if (pos.offset === pos.left) {
-                        pos.newPos = slideWidth;                            
-                        group = header.slice(index + 1, slideLen).filter(function() { return this.offsetLeft === header.index(this) * settings.headerWidth }).parent().wrapAll('<div class="wrap"></div>');         
-                    } else if (pos.offset === pos.right) {
-                        pos.newPos = -slideWidth;                            
-                        group = header.slice(0, index + 1).filter(function() { return this.offsetLeft === slideWidth + (header.index(this) * settings.headerWidth) }).parent().wrapAll('<div class="wrap"></div>');
-                    }
-
-                    return {
-                        pos : pos,
-                        group : group
-                    }
+                groupSlides : function(index) {                    
+                    var slide = {
+    					left : index * settings.headerWidth,
+    					right : index * settings.headerWidth + slideWidth,
+    					newPos : 0                     
+                    };                 
+                    
+                    // set animation direction & group slides
+					if (this.offsetLeft === slide.left) {
+					    slide.newPos = slideWidth;
+					    // slide.siblings = header.slice(index + 1, slideLen);
+						slide.group = header.slice(index + 1, slideLen).filter(function() { return this.offsetLeft === header.index(this) * settings.headerWidth }); // group to animate
+					} else if (this.offsetLeft === slide.right) {
+					    slide.newPos = -slideWidth;
+					    // slide.siblings = header.slice(0, index + 1);
+						slide.group = header.slice(0, index + 1).filter(function() { return this.offsetLeft === slideWidth + (header.index(this) * settings.headerWidth) }); // group to animate
+					}
+					
+					return {
+					    newPos : slide.newPos,
+					    siblings : slide.siblings,
+					    group : slide.group
+					}
                 },                    
-
-				// TODO remove group, doesn't perform as well as previous version oddly?
-                // ungroups slides after animation complete
-                ungroupSlides : function(group, newPos) {
-                    group.each(function(index) {
-                        var $this = $(this).children('h2'),
-                            left = parseInt($this.css('left'), 10) + newPos;
-                            
-                        $this.css('left', left).next().css('left', left);                                                                              
-                    });
-
-                    group.unwrap();
-                },
                 
                 // animation for click event
                 triggerSlide : function(e) {
-                    var $this = $(this), slides, group, pos, wrap, index;
+                    var $this = $(this), 
+                        index = header.index($this),
+                        next = $this.next(),
+                        slide = core.groupSlides.call(this, index);
 
-                    // if anim has not started
-                    if (!elem.find('.wrap').length) {
-                        slides = core.groupSlides($this),
-                        group = slides.group,
-                        pos = slides.pos,
-                        wrap = group.parent(),
-                        index = header.index($this);
+        			// check if animation in progress
+        			if (!$this.is(':animated')) {
+        			    
+        			    // TODO!!!
+        			    // console.log(slide.group);
 
-						// if triggered by user, stop autoplay
-						e.originalEvent && methods.stop();
+						// if triggered by user, stop autoplay & trigger callback in context of sibling div
+						e.originalEvent && methods.stop(); 
+						
+						// settings.onActivate.call(next); // CHECK
 
                         // set core.currentSlide
                         core.currentSlide = index;
@@ -304,15 +273,14 @@
                         // remove, then add selected class
                         header.removeClass('selected').filter($this).addClass('selected');
 
-                        // animate wrapped set
-                        wrap
-                            .animate({ left : '+=' + pos.newPos }, 
+                        // animate group
+                        slide.group
+                            .animate({ left : '+=' + slide.newPos }, 
                                 settings.slideSpeed, 
                                 settings.easing, 
-                                function() {                                    
-                                    core.ungroupSlides(group, pos.newPos);
-                                    /*settings.slideBack.call( // callback ) */ 
-                                });                            
+                                function() { settings.slideCallback.call(next) }) // callback in ctx of sibling div   
+                            .next()
+            				.animate({ left : '+=' + slide.newPos }, settings.slideSpeed);                           
                     }
                 },
                 
@@ -325,7 +293,6 @@
 
                     // init autoplay
                     settings.autoPlay && methods.play();
-
                 }
             };
 

@@ -60,16 +60,18 @@
         
     // create easing select options from plugin
 	// TODO: doesn't work in IE?
+    /*
     for (item in $.easing) {
         if (item !== 'def') {
             easing.append($('<option>').attr('value', item).text(item)); // should use a frag...                        
         }
     }
+    */
                 
     easing.find('option[value=swing]').attr('selected', true);
     
     // init accordion
-    demo.liteAccordion({ linkable : true });
+    demo.liteAccordion();
 
     // get new options on change event
     selects.change(function() {     
