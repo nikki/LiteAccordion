@@ -52,9 +52,9 @@
                 play : function() {
                     var next = core.nextSlide();
 
-					if (core.playing) return;
+                    if (core.playing) return;
 
-					// start autoplay
+                    // start autoplay
                     core.playing = setInterval(function() {
                         header.eq(next()).trigger('click.liteAccordion');
                     }, settings.cycleSpeed);
@@ -63,7 +63,7 @@
                 // stop elem animation
                 stop : function() {
                     clearInterval(core.playing);
-					core.playing = 0;
+                    core.playing = 0;
                 },
 
                 // trigger next slide
@@ -83,20 +83,20 @@
                     // stop autoplay
                     methods.stop();
 
-					// remove hashchange event bound to window
-					$(window).unbind('.liteAccordion');
+                    // remove hashchange event bound to window
+                    $(window).unbind('.liteAccordion');
 
                     // remove generated styles, classes, data, events
                     elem
                         .attr('style', '')
-						.removeClass('accordion basic dark light stitch')
+                        .removeClass('accordion basic dark light stitch')
                         .removeData('liteAccordion')
                         .unbind('.liteAccordion')
                         .find('li > h2')
                         .unbind('.liteAccordion')
-						.filter('.selected')
-						.removeClass('selected');
-						
+                        .filter('.selected')
+                        .removeClass('selected');
+                        
                     slides.removeClass('slide').children().attr('style', '');
                 },
 
@@ -170,44 +170,44 @@
                         header.bind('mouseover.liteAccordion', core.triggerSlide);               
                     }
                     
-                    // pause on hover (can't use custom events with $.hover())		
-            		if (settings.pauseOnHover) {
-            			elem.bind('mouseenter.liteAccordion', function() {
-            			    methods.stop();
-            			}).bind('mouseleave.liteAccordion', function() {
-            			    methods.play();
-            			});
-            		} 
+                    // pause on hover (can't use custom events with $.hover())      
+                    if (settings.pauseOnHover) {
+                        elem.bind('mouseenter.liteAccordion', function() {
+                            methods.stop();
+                        }).bind('mouseleave.liteAccordion', function() {
+                            methods.play();
+                        });
+                    } 
                 },
 
-				linkable : function() {
-					var triggerHash = function() {
-						var $this = $(this);
+                linkable : function() {
+                    var triggerHash = function() {
+                        var $this = $(this);
 
-						if ($this.attr('name') === location.hash.slice(1)) {
-							header.eq(slides.index($this)).trigger('click.liteAccordion');
-						}						
-					};
-									
-					// trigger on page load
-					// chrome exhibits some weirdness here if you manually type the hash in (chrome bug?), otherwise it's fine
-					location.hash && slides.each(triggerHash);
+                        if ($this.attr('name') === location.hash.slice(1)) {
+                            header.eq(slides.index($this)).trigger('click.liteAccordion');
+                        }                       
+                    };
+                                    
+                    // trigger on page load
+                    // chrome exhibits some weirdness here if you manually type the hash in (chrome bug?), otherwise it's fine
+                    location.hash && slides.each(triggerHash);
 
-					// trigger on hash change
-					$(window).bind('hashchange.liteAccordion', function() {
-						
-						// stop autoplay
-						methods.stop();
+                    // trigger on hash change
+                    $(window).bind('hashchange.liteAccordion', function() {
+                        
+                        // stop autoplay
+                        methods.stop();
 
-						// iterate through slides, check if hash matches slide name -> trigger slide
-						slides.each(triggerHash);
-					});
+                        // iterate through slides, check if hash matches slide name -> trigger slide
+                        slides.each(triggerHash);
+                    });
 
-				},
-				
+                },
+                
                 // current slide index
-				// zero index firstSlide setting on init
-                currentSlide : settings.firstSlide - 1,				
+                // zero index firstSlide setting on init
+                currentSlide : settings.firstSlide - 1,             
 
                 // next slide index
                 nextSlide : function() {
@@ -225,27 +225,27 @@
                 // groups slides together for animation
                 groupSlides : function(index) {                    
                     var slide = {
-    					left : index * settings.headerWidth,
-    					right : index * settings.headerWidth + slideWidth,
-    					newPos : 0                     
+                        left : index * settings.headerWidth,
+                        right : index * settings.headerWidth + slideWidth,
+                        newPos : 0                     
                     };                 
                     
                     // set animation direction & group slides
-					if (this.offsetLeft === slide.left) {
-					    slide.newPos = slideWidth;
-					    // slide.siblings = header.slice(index + 1, slideLen);
-						slide.group = header.slice(index + 1, slideLen).filter(function() { return this.offsetLeft === header.index(this) * settings.headerWidth }); // group to animate
-					} else if (this.offsetLeft === slide.right) {
-					    slide.newPos = -slideWidth;
-					    // slide.siblings = header.slice(0, index + 1);
-						slide.group = header.slice(0, index + 1).filter(function() { return this.offsetLeft === slideWidth + (header.index(this) * settings.headerWidth) }); // group to animate
-					}
-					
-					return {
-					    newPos : slide.newPos,
-					    siblings : slide.siblings,
-					    group : slide.group
-					}
+                    if (this.offsetLeft === slide.left) {
+                        slide.newPos = slideWidth;
+                        // slide.siblings = header.slice(index + 1, slideLen);
+                        slide.group = header.slice(index + 1, slideLen).filter(function() { return this.offsetLeft === header.index(this) * settings.headerWidth }); // group to animate
+                    } else if (this.offsetLeft === slide.right) {
+                        slide.newPos = -slideWidth;
+                        // slide.siblings = header.slice(0, index + 1);
+                        slide.group = header.slice(0, index + 1).filter(function() { return this.offsetLeft === slideWidth + (header.index(this) * settings.headerWidth) }); // group to animate
+                    }
+                    
+                    return {
+                        newPos : slide.newPos,
+                        siblings : slide.siblings,
+                        group : slide.group
+                    }
                 },                    
                 
                 // animation for click event
@@ -255,23 +255,23 @@
                         next = $this.next(),
                         slide = core.groupSlides.call(this, index);
 
-        			// check if animation in progress
-        			if (!$this.is(':animated')) {
-        			    
-        			    // TODO!!!
-        			    // console.log(slide.group);
+                    // check if animation in progress
+                    if (!$this.is(':animated')) {
+                        
+                        // TODO!!!
+                        // console.log(slide.group);
 
-						// if triggered by user, stop autoplay & trigger callback in context of sibling div
-						e.originalEvent && methods.stop(); 
-						
-						// settings.onActivate.call(next); // CHECK
+                        // if triggered by user, stop autoplay & trigger callback in context of sibling div
+                        e.originalEvent && methods.stop(); 
+                        
+                        // settings.onActivate.call(next); // CHECK
 
                         // set core.currentSlide
                         core.currentSlide = index;
 
-						// set location.hash
-						if (settings.linkable) location.hash = $this.parent().attr('name');
-						
+                        // set location.hash
+                        if (settings.linkable) location.hash = $this.parent().attr('name');
+                        
                         // remove, then add selected class
                         header.removeClass('selected').filter($this).addClass('selected');
 
@@ -282,7 +282,7 @@
                                 settings.easing, 
                                 function() { settings.slideCallback.call(next) }) // callback in ctx of sibling div   
                             .next()
-            				.animate({ left : '+=' + slide.newPos }, settings.slideSpeed);                           
+                            .animate({ left : '+=' + slide.newPos }, settings.slideSpeed);                           
                     }
                 },
                 
@@ -290,8 +290,8 @@
                     core.setStyles();
                     core.bindEvents();
 
-					// init hash links
-					settings.linkable && core.linkable();
+                    // init hash links
+                    settings.linkable && core.linkable();
 
                     // init autoplay
                     settings.autoPlay && methods.play();
@@ -325,13 +325,13 @@
 
         // otherwise, call method on current instance
         } else if (typeof method === 'string' && instance[method]) {
-			// debug method isn't chainable b/c we need the debug object to be returned
-			if (method === 'debug') {
-				return instance[method].apply(elem, Array.prototype.slice.call(arguments, 1));
-			} else { // the rest of the methods are chainable though
-            	instance[method].apply(elem, Array.prototype.slice.call(arguments, 1));
-				return elem;				
-			}
+            // debug method isn't chainable b/c we need the debug object to be returned
+            if (method === 'debug') {
+                return instance[method].apply(elem, Array.prototype.slice.call(arguments, 1));
+            } else { // the rest of the methods are chainable though
+                instance[method].apply(elem, Array.prototype.slice.call(arguments, 1));
+                return elem;                
+            }
         }
     };
 
