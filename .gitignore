@@ -1,3 +1,5 @@
 .sass-cache/
 *.scss
 *.psd
+.DS_Store
+Thumbs.db

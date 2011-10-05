@@ -65,8 +65,8 @@
 .light .slide div { background: #a0a0a0; margin-left: 5px }
 
 /**************************************** Stitch */
-.stitch { background: #353535; border-width: 9px; -webkit-border-image: url('bg_stitch_2.png') 9 repeat; -moz-border-image: url('bg_stitch_2.png') 9 repeat; border-image: url('bg_stitch_2.png') 9 repeat }
-.stitch .slide h2 { background: #353535; border-width: 9px; -webkit-border-image: url('bg_stitch_2.png') 9 repeat; -moz-border-image: url('bg_stitch_2.png') 9 repeat; border-image: url('bg_stitch_2.png') 9 repeat }
+.stitch { background: #353535; border-width: 9px; -webkit-border-image: url('bg_stitch.png') 9 repeat; -moz-border-image: url('bg_stitch.png') 9 repeat; border-image: url('bg_stitch.png') 9 repeat }
+.stitch .slide h2 { background: #353535; border-width: 9px; -webkit-border-image: url('bg_stitch.png') 9 repeat; -moz-border-image: url('bg_stitch.png') 9 repeat; border-image: url('bg_stitch.png') 9 repeat }
 .stitch .slide:nth-child(1) > h2 { background: #c25252 }
 .stitch .slide:nth-child(2) > h2 { background: #ca9859 }
 .stitch .slide:nth-child(3) > h2 { background: #96ba5f }
