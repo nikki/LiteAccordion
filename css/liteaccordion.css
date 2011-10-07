@@ -8,8 +8,8 @@
 *
 /*************************************************/
 /****************************************** Core */
-.accordion { text-align: left; font: 'Helvetica Neue', Verdana, Arial, sans-serif; }
-.accordion > ol { position: relative; overflow: hidden; height: 100%; margin: 0; padding: 0; list-style-type: none; }
+.accordion { text-align: left; font: 'Helvetica Neue', Verdana, Arial, sans-serif }
+.accordion > ol { position: relative; overflow: hidden; height: 100%; margin: 0; padding: 0; list-style-type: none }
 .accordion .slide {}
 .accordion .slide h2 { 
 	color: black; 
@@ -27,46 +27,113 @@
 	-o-transform-origin: right top; 
 	transform: translateX(-100%) rotate(-90deg); 
 	transform-origin: right top; 
-	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); 
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); 
 }
+.accordion.ie8 .slide h2 { filter: none; -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)" }
 .accordion.ie9 .slide h2 { filter: none; -ms-transform: translateX(-100%) rotate(-90deg); -ms-transform-origin: right top }
-.accordion .slide h2 span { display: block; padding-right: 8%; text-align: right; height: 90%; margin-top: 5px; }
-.accordion .slide h2 b { display: inline-block; position: absolute; top: 10%; top: 42%\9; left: 10%; left: 5%\9; text-align: center; -webkit-transform: rotate(90deg); -moz-transform: rotate(90deg); -o-transform: rotate(90deg); transform: rotate(90deg); filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1); }
-.accordion .slide h2:hover { cursor: pointer; }
+.accordion .slide h2 span { display: block; padding-right: 8%; text-align: right; height: 90%; margin-top: 5px }
+.accordion .slide h2 b { 
+    display: inline-block; 
+    position: absolute; 
+    top: 10%; 
+    top: 42%\9; 
+    left: 10%; 
+    left: 5%\9; 
+    text-align: center; 
+    -webkit-transform: rotate(90deg); 
+    -moz-transform: rotate(90deg); 
+    -o-transform: rotate(90deg); 
+    transform: rotate(90deg);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+}
+.accordion .slide h2:hover { cursor: pointer }
 .accordion .slide div { height: 100%; position: absolute; top: 0; z-index: 10; overflow: hidden; background: white }
 .accordion .wrap { position: relative; height: 100% }
-.accordion noscript p { padding: 10px; margin: 0; background: white; }
+.accordion noscript p { padding: 10px; margin: 0; background: white }
 
 /****************************************** Basic */
-.basic .slide h2, .basic .wrap li h2 { background: #333; color: white; line-height: 1.8em; }
-.basic .slide div p { margin: 10px; font-size: 14px; }
+.basic .slide h2, .basic .wrap li h2 { background: #333; color: white; line-height: 1.8em }
+.basic .slide div p { margin: 10px; font-size: 14px }
 
 /****************************************** Dark */
-.dark { border: 9px solid #353535; border-bottom-width: 8px; padding: 5px 5px 6px 0; background: #030303; -webkit-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); -moz-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); -o-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); 
-	box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); }
-.dark .slide h2 { background: #030303; font-size: 16px; line-height: 2.7em; text-shadow: 0 -1px 0 #030303; }
-.dark .slide h2 span { background: #353535; color: white; }
-.dark .slide h2 b { background: #353535\9; color: #030303; font-size: 20px; text-shadow: -1px 1px 0 #5b5b5b; }
-.dark .slide h2.selected span, .dark .slide h2.selected span:hover { background: #434343; background: -webkit-gradient(linear, left top, right top, color-stop(0, #353535), color-stop(1, #555555)); background: -moz-linear-gradient(top left, #353535 0%, #555555 100%); }
-.dark .slide h2.selected b { background: #434343\9; }
-.dark .slide div { background: #030303; margin-left: 5px; }
+.dark { 
+    border: 9px solid #353535; 
+    border-bottom-width: 8px; 
+    padding: 5px 5px 6px 0; 
+    background: #030303; 
+    -webkit-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); 
+    -moz-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); 
+    -o-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); 
+	box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4) 
+}
+.dark .slide h2 { background: #030303; font-size: 16px; line-height: 2.7em; text-shadow: 0 -1px 0 #030303 }
+.dark .slide h2 span { background: #353535; color: white }
+.dark .slide h2 b { background: #353535; color: #030303; font-size: 20px; text-shadow: -1px 1px 0 #5b5b5b }
+.dark .slide h2.selected span, .dark .slide h2.selected span:hover { 
+    background: #434343;
+    background: linear-gradient(left top, rgb(53,53,53) 0%, rgb(85,85,85) 100%);
+    background: -o-linear-gradient(left top, rgb(53,53,53) 0%, rgb(85,85,85) 100%);
+    background: -moz-linear-gradient(left top, rgb(53,53,53) 0%, rgb(85,85,85) 100%);
+    background: -webkit-linear-gradient(left top, rgb(53,53,53) 0%, rgb(85,85,85) 100%);
+    background: -ms-linear-gradient(left top, rgb(53,53,53) 0%, rgb(85,85,85) 100%);
+}
+.dark .slide h2.selected b { background: #434343\9 }
+.dark .slide div { background: #030303; margin-left: 5px }
 
 /***************************************** Light */
-.light { border: 1px solid white; background: #f0f0f0; padding: 8px 8px 18px 8px; -webkit-box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4); -moz-box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4); -o-box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4); 
-	box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4) }
-.light > ol { overflow: hidden; border: 5px solid #a0a0a0; border-left: none; -webkit-box-shadow: 0 1px #909090; -moz-box-shadow: 0 1px #909090 }
+.light { 
+    background: #f0f0f0; 
+    -webkit-box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4); 
+    -moz-box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4); 
+    -o-box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4); 
+	box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4);
+    border: 1px solid white; 
+    padding: 8px 8px 18px 8px; 
+}
+.light > ol { 
+    overflow: hidden; 
+    border: 5px solid #a0a0a0; 
+    border-left: none; 
+    -webkit-box-shadow: 0 1px #909090; 
+    -moz-box-shadow: 0 1px #909090;
+    -o-box-shadow: 0 1px #909090;
+	box-shadow: 0 1px #909090;
+}
 .light .slide h2 { background: #a0a0a0; font-size: 16px; line-height: 2.7em; text-shadow: 0 -1px 0 white }
-.light .slide h2 span { background: #e0e0e0; color: #909090; background: -webkit-gradient(linear, left top, right top, color-stop(0, #e0e0e0), color-stop(1, #f0f0f0)); background: -moz-linear-gradient(top left, #e0e0e0 0%, #f0f0f0 100%);
-    -webkit-box-shadow: -1px -1px 0 #909090 inset, 1px 1px 0 #909090 inset; -moz-box-shadow: -1px -1px 0 #909090 inset, 1px 1px 0 #909090 inset }
+.light .slide h2 span { 
+    background: #e0e0e0;
+    background: linear-gradient(left top, rgb(224,224,224) 0%, rgb(240,240,240) 100%);
+    background: -o-linear-gradient(left top, rgb(224,224,224) 0%, rgb(240,240,240) 100%);
+    background: -moz-linear-gradient(left top, rgb(224,224,224) 0%, rgb(240,240,240) 100%);
+    background: -webkit-linear-gradient(left top, rgb(224,224,224) 0%, rgb(240,240,240) 100%);
+    background: -ms-linear-gradient(left top, rgb(224,224,224) 0%, rgb(240,240,240) 100%);
+    -webkit-box-shadow: -1px -1px 0 #909090 inset, 1px 1px 0 #909090 inset; 
+    -moz-box-shadow: -1px -1px 0 #909090 inset, 1px 1px 0 #909090 inset;
+    -o-box-shadow: -1px -1px 0 #909090 inset, 1px 1px 0 #909090 inset;
+	box-shadow: -1px -1px 0 #909090 inset, 1px 1px 0 #909090 inset;
+    color: #909090;
+}
 .light .slide h2 b { background: #e0e0e0; color: #909090; font-size: 20px; text-shadow: -1px 1px 0 white }
 .light .slide h2.selected span, .light .slide h2.selected span:hover { background: #f0f0f0 }
-.light .slide h2.selected b { background: #f0f0f0; }
+.light .slide h2.selected b { background: #f0f0f0 }
 .light .slide:nth-child(1) > h2 { background: #a0a0a0 }
 .light .slide div { background: #a0a0a0; margin-left: 5px }
 
 /**************************************** Stitch */
-.stitch { background: #353535; border-width: 9px; -webkit-border-image: url('bg_stitch.png') 9 repeat; -moz-border-image: url('bg_stitch.png') 9 repeat; border-image: url('bg_stitch.png') 9 repeat }
-.stitch .slide h2 { background: #353535; border-width: 9px; -webkit-border-image: url('bg_stitch.png') 9 repeat; -moz-border-image: url('bg_stitch.png') 9 repeat; border-image: url('bg_stitch.png') 9 repeat }
+.stitch { 
+    background: #353535; 
+    border-width: 9px; 
+    -webkit-border-image: url('bg_stitch.png') 9 repeat; 
+    -moz-border-image: url('bg_stitch.png') 9 repeat; 
+    border-image: url('bg_stitch.png') 9 repeat 
+}
+.stitch .slide h2 { 
+    background: #353535; 
+    border-width: 9px; 
+    -webkit-border-image: url('bg_stitch.png') 9 repeat; 
+    -moz-border-image: url('bg_stitch.png') 9 repeat; 
+    border-image: url('bg_stitch.png') 9 repeat 
+}
 .stitch .slide:nth-child(1) > h2 { background: #c25252 }
 .stitch .slide:nth-child(2) > h2 { background: #ca9859 }
 .stitch .slide:nth-child(3) > h2 { background: #96ba5f }
@@ -76,4 +143,4 @@
 
 /*************************************** Rounded */
 .rounded, .rounded > ol { -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px }
-.rounded .slide h2 span { -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; }
+.rounded .slide h2 span { -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px }

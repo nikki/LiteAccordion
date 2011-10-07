@@ -20,7 +20,7 @@
             headerWidth: 48,                // fixed (px)
 
             activateOn : 'click',           // click or mouseover
-            firstSlide : 1,                 // displays slide n on page load
+            firstSlide : 1,                 // displays slide (n) on page load
             slideSpeed : 800,               // slide animation speed
             onActivate : function() {},     // callback on slide activate
             slideCallback : function() {},  // callback on slide anim complete
@@ -104,6 +104,7 @@
                 debug : function() {
                     return {
                         elem : elem,
+                        defaults : defaults,
                         settings : settings,
                         methods : methods,
                         core : core
@@ -154,9 +155,8 @@
 
                     });
 
-                    // ie9 css fix
-                    if ($.browser.msie && $.browser.version.substr(0,1) > 8) elem.addClass('ie9');                 
-
+                    // ie css fixes
+                    if ($.browser.msie) core.ieTransformTest();
                 },
 
                 // bind click and mouseover events
@@ -264,7 +264,8 @@
                         // if triggered by user, stop autoplay & trigger callback in context of sibling div
                         e.originalEvent && methods.stop(); 
                         
-                        // settings.onActivate.call(next); // CHECK
+                        console.log(next);
+                        settings.onActivate.call(next); // CHECK
 
                         // set core.currentSlide
                         core.currentSlide = index;
@@ -279,11 +280,25 @@
                         slide.group
                             .animate({ left : '+=' + slide.newPos }, 
                                 settings.slideSpeed, 
-                                settings.easing, 
-                                function() { settings.slideCallback.call(next) }) // callback in ctx of sibling div   
+                                settings.easing,
+                                function() { /*console.log(next); settings.slideCallback.call($this)*/ }) // callback in ctx of sibling div   
                             .next()
-                            .animate({ left : '+=' + slide.newPos }, settings.slideSpeed);                           
+                            .animate({ left : '+=' + slide.newPos }, 
+                                settings.slideSpeed, 
+                                settings.easing);                           
                     }
+                },
+                
+                ieTransformTest : function() {
+                    var div = document.createElement('div');
+                    
+                    if (typeof div.style.msTransform === 'string') {
+                        elem.addClass('ie9');
+                    } else if (typeof div.style.msFilter === 'string') {
+                        elem.addClass('ie8');
+                    }
+                    
+                    div = null;
                 },
                 
                 init : function() {

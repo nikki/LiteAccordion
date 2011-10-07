@@ -3,6 +3,7 @@
     var demo = $('#demo'),
         selects = $('.options select'),
         easing = $('#easing'),
+        easingFn,
         outputToggle = $('.output h2 a'),
         resetBtn = $('#reset'),
         options,
@@ -28,11 +29,9 @@
                     value = current;
                 }
                 
-				// console.log(value);
-
-                //if (defaults[this.name] !== value) {
+                if (defaults[this.name] !== value) {
                     options[this.name] = value; 
-                //}
+                }
                         
             });                 
 
@@ -59,19 +58,16 @@
         };
         
     // create easing select options from plugin
-	// TODO: doesn't work in IE?
-    /*
-    for (item in $.easing) {
-        if (item !== 'def') {
-            easing.append($('<option>').attr('value', item).text(item)); // should use a frag...                        
+    for (easingFn in $.easing) {
+        if (easingFn !== 'def') {
+            easing.append($('<option value="' + easingFn + '">' + easingFn +'</option>')); // should use a frag, cba tho.                    
         }
     }
-    */
                 
     easing.find('option[value=swing]').attr('selected', true);
     
     // init accordion
-    demo.liteAccordion({ theme : 'light' });
+    demo.liteAccordion({ onActivate : function() { alert('do something!') } });
 
     // get new options on change event
     selects.change(function() {     
