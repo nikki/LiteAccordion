@@ -1,39 +1,39 @@
-/*************************************************
+/*************************************************!
 *
-*   project:    liteAccordion - horizontal elem plugin for jQuery
+*   project:    liteAccordion v2 - horizontal accordion plugin for jQuery
 *   author:     Nicola Hibbert
-*   url:        http://nicolahibbert.com/horizontal-elem-jquery-plugin
+*   url:        http://nicolahibbert.com/liteAccordion-v2/
 *   demo:       http://www.nicolahibbert.com/demo/liteAccordion
 *
 *   Version:    2.0a
 *   Copyright:  (c) 2010-2011 Nicola Hibbert
 *
-/*************************************************/
+**************************************************/
 
 ;(function($) {
     
     var LiteAccordion = function(elem, options) {
         
         var defaults = {
-            containerWidth : 960,           // fixed (px)
-            containerHeight : 320,          // fixed (px)
-            headerWidth: 48,                // fixed (px)
+            containerWidth : 960,                   // fixed (px)
+            containerHeight : 320,                  // fixed (px)
+            headerWidth: 48,                        // fixed (px)
+                                                    
+            activateOn : 'click',                   // click or mouseover
+            firstSlide : 1,                         // displays slide (n) on page load
+            slideSpeed : 800,                       // slide animation speed
+            onTriggerSlide : function() {},         // callback on slide activate
+            onSlideAnimComplete : function() {},    // callback on slide anim complete
 
-            activateOn : 'click',           // click or mouseover
-            firstSlide : 1,                 // displays slide (n) on page load
-            slideSpeed : 800,               // slide animation speed
-            onActivate : function() {},     // callback on slide activate
-            slideCallback : function() {},  // callback on slide anim complete
-
-            autoPlay : false,               // automatically cycle through slides
-            pauseOnHover : false,           // pause on hover
-            cycleSpeed : 6000,              // time between slide cycles
-            easing : 'swing',               // custom easing function
-
-            theme : 'basic',                // basic, dark, light, or stitch
-            rounded : false,                // square or rounded corners
-            enumerateSlides : false,        // put numbers on slides 
-            linkable : false                // link slides via hash
+            autoPlay : false,                       // automatically cycle through slides
+            pauseOnHover : false,                   // pause on hover
+            cycleSpeed : 6000,                      // time between slide cycles
+            easing : 'swing',                       // custom easing function
+                                                    
+            theme : 'basic',                        // basic, dark, light, or stitch
+            rounded : false,                        // square or rounded corners
+            enumerateSlides : false,                // put numbers on slides 
+            linkable : false                        // link slides via hash
         },
 
         // merge defaults with options in new settings object   
@@ -49,8 +49,8 @@
             methods = {
                     
                 // start elem animation
-                play : function() {
-                    var next = core.nextSlide();
+                play : function(index) {
+                    var next = core.nextSlide(index && index);
 
                     if (core.playing) return;
 
@@ -108,7 +108,7 @@
                         settings : settings,
                         methods : methods,
                         core : core
-                    }
+                    };
                 }       
             },
 
@@ -133,7 +133,7 @@
 
                     // set tab width, height and selected class
                     header
-                        .width(settings.containerHeight) // TODO: sort css out
+                        .width(settings.containerHeight)
                         .height(settings.headerWidth) 
                         .eq(settings.firstSlide - 1).addClass('selected');
                         
@@ -161,62 +161,61 @@
 
                 // bind click and mouseover events
                 bindEvents : function() {                                        
-                    // trigger click
                     if (settings.activateOn === 'click') {
-                        header.bind('click.liteAccordion', core.triggerSlide);                    
-                    // trigger hover
+                        header.bind('click.liteAccordion', core.triggerSlide);
                     } else if (settings.activateOn === 'mouseover') {
-                        // how to get pause on hover to work with mouseover activation?
-                        header.bind('mouseover.liteAccordion', core.triggerSlide);               
+                        header.bind({
+                            'mouseover.liteAccordion' : core.triggerSlide,
+                            'click.liteAccordion' : core.triggerSlide                          
+                        });
                     }
                     
                     // pause on hover (can't use custom events with $.hover())      
                     if (settings.pauseOnHover) {
-                        elem.bind('mouseenter.liteAccordion', function() {
+                        elem.bind('mouseover.liteAccordion', function() {
                             methods.stop();
-                        }).bind('mouseleave.liteAccordion', function() {
+                        }).bind('mouseout.liteAccordion', function() {
                             methods.play();
                         });
                     } 
                 },
+                
+                cacheSlideNames : function() {
+                    var slideNames = [];
+
+                    slides.each(function() {
+                        slideNames.push($(this).attr('name'));
+                    });
+                    
+                    core.cacheSlideNames = slideNames;
+                },
 
                 linkable : function() {
-                    var triggerHash = function() {
-                        var $this = $(this);
+                    var triggerHash = function(e) {
+                        if (e.type === 'load' && !window.location.hash) return;
 
-                        if ($this.attr('name') === location.hash.slice(1)) {
-                            header.eq(slides.index($this)).trigger('click.liteAccordion');
-                        }                       
+                        if (window.location.hash.slice(1)) {
+                            // header.eq(slides.index($this)).trigger('click.liteAccordion');
+                        }
                     };
-                                    
-                    // trigger on page load
-                    // chrome exhibits some weirdness here if you manually type the hash in (chrome bug?), otherwise it's fine
-                    location.hash && slides.each(triggerHash);
 
-                    // trigger on hash change
-                    $(window).bind('hashchange.liteAccordion', function() {
-                        
-                        // stop autoplay
-                        methods.stop();
-
-                        // iterate through slides, check if hash matches slide name -> trigger slide
-                        slides.each(triggerHash);
+                    $(window).bind({
+                        'hashchange' : triggerHash,
+                        'load.liteAccordion' : triggerHash
                     });
-
                 },
                 
-                // current slide index
-                // zero index firstSlide setting on init
+                // counter for autoPlay (zero index firstSlide on init)
                 currentSlide : settings.firstSlide - 1,             
 
                 // next slide index
-                nextSlide : function() {
-                    var next = core.currentSlide + 1;
+                nextSlide : function(index) {
+                    var next = index + 1 || core.currentSlide + 1;
 
-                    // nomnomnom tasty closure
+                    // closure
                     return function() {
                         return next++ % slideLen;
-                    }
+                    };
                 },  
     
                 // holds interval counter
@@ -233,43 +232,37 @@
                     // set animation direction & group slides
                     if (this.offsetLeft === slide.left) {
                         slide.newPos = slideWidth;
-                        // slide.siblings = header.slice(index + 1, slideLen);
-                        slide.group = header.slice(index + 1, slideLen).filter(function() { return this.offsetLeft === header.index(this) * settings.headerWidth }); // group to animate
+                        slide.group = header.slice(index + 1, slideLen).filter(function() { return this.offsetLeft === header.index(this) * settings.headerWidth; }); // group to animate
                     } else if (this.offsetLeft === slide.right) {
                         slide.newPos = -slideWidth;
-                        // slide.siblings = header.slice(0, index + 1);
-                        slide.group = header.slice(0, index + 1).filter(function() { return this.offsetLeft === slideWidth + (header.index(this) * settings.headerWidth) }); // group to animate
+                        slide.group = header.slice(0, index + 1).filter(function() { return this.offsetLeft === slideWidth + (header.index(this) * settings.headerWidth); }); // group to animate
                     }
                     
                     return {
                         newPos : slide.newPos,
-                        siblings : slide.siblings,
                         group : slide.group
-                    }
+                    };
                 },                    
                 
                 // animation for click event
                 triggerSlide : function(e) {
                     var $this = $(this), 
                         index = header.index($this),
-                        next = $this.next(),
                         slide = core.groupSlides.call(this, index);
 
                     // check if animation in progress
-                    if (!$this.is(':animated')) {
+                    if (!header.is(':animated')) {
+              
+                        // trigger callback in context of sibling div
+                        // settings.onTriggerSlide.call($this); // CHECK
+                    
+                        // reset current slide index in core.nextSlide closure
+                        /*
+                        if (e.originalEvent && settings.autoPlay) {
+                            methods.stop();
+                            methods.play(index);
+                        }*/
                         
-                        // TODO!!!
-                        // console.log(slide.group);
-
-                        // if triggered by user, stop autoplay & trigger callback in context of sibling div
-                        e.originalEvent && methods.stop(); 
-                        
-                        console.log(next);
-                        settings.onActivate.call(next); // CHECK
-
-                        // set core.currentSlide
-                        core.currentSlide = index;
-
                         // set location.hash
                         if (settings.linkable) location.hash = $this.parent().attr('name');
                         
@@ -277,11 +270,16 @@
                         header.removeClass('selected').filter($this).addClass('selected');
 
                         // animate group
-                        slide.group
+                        slide
+                            .group
                             .animate({ left : '+=' + slide.newPos }, 
                                 settings.slideSpeed, 
                                 settings.easing,
-                                function() { /*console.log(next); settings.slideCallback.call($this)*/ }) // callback in ctx of sibling div   
+                                function(e) { 
+                                    // animate is called for each element, we only want the callback fn to trigger once TODO
+                                    console.log(e);
+                                    // settings.onSlideAnimComplete.call($this.next());
+                                })
                             .next()
                             .animate({ left : '+=' + slide.newPos }, 
                                 settings.slideSpeed, 
@@ -292,12 +290,7 @@
                 ieTransformTest : function() {
                     var div = document.createElement('div');
                     
-                    if (typeof div.style.msTransform === 'string') {
-                        elem.addClass('ie9');
-                    } else if (typeof div.style.msFilter === 'string') {
-                        elem.addClass('ie8');
-                    }
-                    
+                    typeof div.style.msTransform === 'string' && elem.addClass('ie9');                
                     div = null;
                 },
                 
@@ -305,8 +298,14 @@
                     core.setStyles();
                     core.bindEvents();
 
+                    // check slide speed is not faster than cycle speed
+                    if (settings.cycleSpeed < settings.slideSpeed) settings.cycleSpeed = settings.slideSpeed;
+
                     // init hash links
-                    settings.linkable && core.linkable();
+                    if (settings.linkable && 'onhashchange' in window) {
+                        core.cacheSlideNames();
+                        core.linkable();
+                    }
 
                     // init autoplay
                     settings.autoPlay && methods.play();
@@ -342,9 +341,9 @@
         } else if (typeof method === 'string' && instance[method]) {
             // debug method isn't chainable b/c we need the debug object to be returned
             if (method === 'debug') {
-                return instance[method].apply(elem, Array.prototype.slice.call(arguments, 1));
+                return instance[method].call(elem);
             } else { // the rest of the methods are chainable though
-                instance[method].apply(elem, Array.prototype.slice.call(arguments, 1));
+                instance[method].call(elem);
                 return elem;                
             }
         }

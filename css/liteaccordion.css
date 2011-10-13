@@ -1,5 +1,5 @@
 @charset 'utf-8';
-/*************************************************
+/*************************************************!
 *
 *	project:  	liteAccordion - horizontal accordion plugin for jQuery
 *	author:   	Nicola Hibbert
@@ -26,10 +26,10 @@
 	-o-transform: translateX(-100%) rotate(-90deg); 
 	-o-transform-origin: right top; 
 	transform: translateX(-100%) rotate(-90deg); 
-	transform-origin: right top; 
+	transform-origin: right top;
+	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); 
 }
-.accordion.ie8 .slide h2 { filter: none; -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)" }
 .accordion.ie9 .slide h2 { filter: none; -ms-transform: translateX(-100%) rotate(-90deg); -ms-transform-origin: right top }
 .accordion .slide h2 span { display: block; padding-right: 8%; text-align: right; height: 90%; margin-top: 5px }
 .accordion .slide h2 b { 
@@ -44,6 +44,7 @@
     -moz-transform: rotate(90deg); 
     -o-transform: rotate(90deg); 
     transform: rotate(90deg);
+	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
 }
 .accordion .slide h2:hover { cursor: pointer }

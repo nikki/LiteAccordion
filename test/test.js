@@ -178,6 +178,7 @@ test('CurrentSlide set on init', function() {
 core
 	setStyles
 	bindEvents
+	    test clicks!
 	linkable	
 	currentSlide
 	nextSlide
@@ -188,3 +189,7 @@ core
 	triggerSlide
 	init
 */
+
+
+
+

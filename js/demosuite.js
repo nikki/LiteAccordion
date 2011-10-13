@@ -20,7 +20,7 @@
                 if (!isNaN(parseInt(current, 10))) {
                     value = parseInt(current, 10); 
                 } else if (current === 'custom') {
-                    value = parseInt($(this).next().val());
+                    value = parseInt($(this).next().val(), 10);
                 } else if (current === 'true') {
                     value = true;
                 } else if (current === 'false') {
@@ -35,8 +35,7 @@
                         
             });                 
 
-            demo.liteAccordion('destroy');
-            demo.liteAccordion(options);
+            demo.liteAccordion('destroy').liteAccordion(options);
             
             $('.output textarea').text('$("#yourAccordion").liteAccordion(' + JSON.stringify(options) + ');');
             
@@ -67,7 +66,7 @@
     easing.find('option[value=swing]').attr('selected', true);
     
     // init accordion
-    demo.liteAccordion({ onActivate : function() { alert('do something!') } });
+    demo.liteAccordion({ /*onSlideAnimComplete : function() { console.log(this)*/ linkable : true });
 
     // get new options on change event
     selects.change(function() {     
