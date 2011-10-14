@@ -120,11 +120,7 @@
 .light .slide:nth-child(1) > h2 { background: #a0a0a0 }
 .light .slide div { background: #a0a0a0; margin-left: 5px }
 
-/**************************************** Colour */
-
 /**************************************** Stitch */
-/* Still under development */
-/*
 .stitch { 
     background: #353535; 
     border-width: 9px; 
@@ -145,7 +141,7 @@
 .stitch .slide:nth-child(4) > h2 { background: #59abb7 }
 .stitch .slide:nth-child(5) > h2 { background: #bb6098 }
 .stitch .slide h2 span { margin-top: 2px }
-*/
+
 /*************************************** Rounded */
 .rounded, .rounded > ol { -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px }
 .rounded .slide h2 span { -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px }
