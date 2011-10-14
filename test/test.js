@@ -151,6 +151,16 @@ methods
 		destroys all styles
 		destroys events on header and window (hashchange)
 
+
+
+TEST:
+	autoplay -> stop -> hashchange = correct slide
+	autoplay -> pauseonhover = next slide is correct slide
+	linkable on load
+	linkable on hashchange
+	autoplay -> stop -> hashchange
+	autoplay -> pauseon hover -> hashchange	
+	
 		
 
 

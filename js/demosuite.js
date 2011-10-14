@@ -36,7 +36,7 @@
             });                 
 
             demo.liteAccordion('destroy').liteAccordion(options);
-            
+
             $('.output textarea').text('$("#yourAccordion").liteAccordion(' + JSON.stringify(options) + ');');
             
         },
@@ -66,7 +66,14 @@
     easing.find('option[value=swing]').attr('selected', true);
     
     // init accordion
-    demo.liteAccordion({ /*onSlideAnimComplete : function() { console.log(this)*/ linkable : true });
+    demo.liteAccordion({ 
+        onTriggerSlide : function() { console.log('trigger'); }, 
+        onSlideAnimComplete : function() { console.log('complete'); },
+        linkable : true,
+        autoPlay : true, 
+        cycleSpeed : 2000,
+        pauseOnHover : true
+    });
 
     // get new options on change event
     selects.change(function() {     

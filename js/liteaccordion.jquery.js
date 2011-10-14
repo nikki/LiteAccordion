@@ -92,12 +92,18 @@
                         .removeClass('accordion basic dark light stitch')
                         .removeData('liteAccordion')
                         .unbind('.liteAccordion')
-                        .find('li > h2')
+                        .find('li > :first-child')
                         .unbind('.liteAccordion')
                         .filter('.selected')
-                        .removeClass('selected');
+                        .removeClass('selected')
+                        .end()
+                        .find('b')
+                        .remove();
                         
-                    slides.removeClass('slide').children().attr('style', '');
+                    slides
+                        .removeClass('slide')
+                        .children()
+                        .attr('style', '');
                 },
 
                 // poke around the internals (NOT CHAINABLE)
@@ -171,36 +177,42 @@
                     }
                     
                     // pause on hover (can't use custom events with $.hover())      
-                    if (settings.pauseOnHover) {
+                    if (settings.pauseOnHover && settings.autoPlay) {
                         elem.bind('mouseover.liteAccordion', function() {
-                            methods.stop();
+                            core.playing && methods.stop();
                         }).bind('mouseout.liteAccordion', function() {
-                            methods.play();
+                            !core.playing && methods.play(core.currentSlide);
                         });
                     } 
                 },
                 
-                cacheSlideNames : function() {
-                    var slideNames = [];
-
-                    slides.each(function() {
-                        slideNames.push($(this).attr('name'));
-                    });
-                    
-                    core.cacheSlideNames = slideNames;
-                },
-
                 linkable : function() {
-                    var triggerHash = function(e) {
-                        if (e.type === 'load' && !window.location.hash) return;
+                    var cacheSlideNames = (function() {
+                        var slideNames = [];
 
-                        if (window.location.hash.slice(1)) {
-                            // header.eq(slides.index($this)).trigger('click.liteAccordion');
+                        slides.each(function() {
+                            slideNames.push(($(this).attr('name')).toLowerCase());
+                        });
+
+                        // memoize
+                        return cacheSlideNames = slideNames;                        
+                    })();
+                    
+                    var triggerHash = function(e) {
+                        var index;
+                        
+                        if (e.type === 'load' && !window.location.hash) return;
+                        if (e.type === 'hashchange' && core.playing) return;
+                                                                     
+                        index = cacheSlideNames.indexOf((window.location.hash.slice(1)).toLowerCase());
+                        
+                        if (index > -1 && index < cacheSlideNames.length) {
+                            header.eq(index).trigger('click.liteAccordion');
                         }
                     };
 
                     $(window).bind({
-                        'hashchange' : triggerHash,
+                        'hashchange.liteAccordion' : triggerHash,
                         'load.liteAccordion' : triggerHash
                     });
                 },
@@ -227,8 +239,8 @@
                         left : index * settings.headerWidth,
                         right : index * settings.headerWidth + slideWidth,
                         newPos : 0                     
-                    };                 
-                    
+                    };
+
                     // set animation direction & group slides
                     if (this.offsetLeft === slide.left) {
                         slide.newPos = slideWidth;
@@ -248,23 +260,27 @@
                 triggerSlide : function(e) {
                     var $this = $(this), 
                         index = header.index($this),
-                        slide = core.groupSlides.call(this, index);
+                        next = $this.next(),
+                        slide = core.groupSlides.call(this, index),
+                        flag = false;
 
                     // check if animation in progress
                     if (!header.is(':animated')) {
-              
-                        // trigger callback in context of sibling div
-                        // settings.onTriggerSlide.call($this); // CHECK
-                    
+                                                   
+                        // update core.currentSlide
+                        core.currentSlide = index;
+                        
+                        // set location.hash
+                        if (settings.linkable) window.location.hash = $this.parent().attr('name');                           
+                     
                         // reset current slide index in core.nextSlide closure
-                        /*
                         if (e.originalEvent && settings.autoPlay) {
                             methods.stop();
                             methods.play(index);
-                        }*/
-                        
-                        // set location.hash
-                        if (settings.linkable) location.hash = $this.parent().attr('name');
+                        }
+
+                        // trigger callback in context of sibling div
+                        settings.onTriggerSlide.call(next);
                         
                         // remove, then add selected class
                         header.removeClass('selected').filter($this).addClass('selected');
@@ -276,9 +292,12 @@
                                 settings.slideSpeed, 
                                 settings.easing,
                                 function(e) { 
-                                    // animate is called for each element, we only want the callback fn to trigger once TODO
-                                    console.log(e);
-                                    // settings.onSlideAnimComplete.call($this.next());
+                                    // animate is called for each element, we only want the callback fn to trigger once
+                                    // flag ensures that fn is only called one time per triggerSlide
+                                    if (!flag) {
+                                        settings.onSlideAnimComplete.call(next);
+                                        flag = true;
+                                    }
                                 })
                             .next()
                             .animate({ left : '+=' + slide.newPos }, 
@@ -302,10 +321,7 @@
                     if (settings.cycleSpeed < settings.slideSpeed) settings.cycleSpeed = settings.slideSpeed;
 
                     // init hash links
-                    if (settings.linkable && 'onhashchange' in window) {
-                        core.cacheSlideNames();
-                        core.linkable();
-                    }
+                    if (settings.linkable && 'onhashchange' in window) core.linkable();
 
                     // init autoplay
                     settings.autoPlay && methods.play();
