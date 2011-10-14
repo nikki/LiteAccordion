@@ -54,7 +54,6 @@
 
 /****************************************** Basic */
 .basic .slide h2, .basic .wrap li h2 { background: #333; color: white; line-height: 1.8em }
-.basic .slide div p { margin: 10px; font-size: 14px }
 
 /****************************************** Dark */
 .dark { 
@@ -120,27 +119,13 @@
 .light .slide:nth-child(1) > h2 { background: #a0a0a0 }
 .light .slide div { background: #a0a0a0; margin-left: 5px }
 
-/**************************************** Stitch */
-.stitch { 
-    background: #353535; 
-    border-width: 9px; 
-    -webkit-border-image: url('bg_stitch.png') 9 repeat; 
-    -moz-border-image: url('bg_stitch.png') 9 repeat; 
-    border-image: url('bg_stitch.png') 9 repeat 
-}
-.stitch .slide h2 { 
-    background: #353535; 
-    border-width: 9px; 
-    -webkit-border-image: url('bg_stitch.png') 9 repeat; 
-    -moz-border-image: url('bg_stitch.png') 9 repeat; 
-    border-image: url('bg_stitch.png') 9 repeat 
-}
-.stitch .slide:nth-child(1) > h2 { background: #c25252 }
-.stitch .slide:nth-child(2) > h2 { background: #ca9859 }
-.stitch .slide:nth-child(3) > h2 { background: #96ba5f }
-.stitch .slide:nth-child(4) > h2 { background: #59abb7 }
-.stitch .slide:nth-child(5) > h2 { background: #bb6098 }
-.stitch .slide h2 span { margin-top: 2px }
+/**************************************** Colour */
+.basic .slide h2, .basic .wrap li h2 { line-height: 1.8em }
+.colour .slide:nth-child(1) > h2 { background: #c25252 }
+.colour .slide:nth-child(2) > h2 { background: #ca9859 }
+.colour .slide:nth-child(3) > h2 { background: #96ba5f }
+.colour .slide:nth-child(4) > h2 { background: #59abb7 }
+.colour .slide:nth-child(5) > h2 { background: #bb6098 }
 
 /*************************************** Rounded */
 .rounded, .rounded > ol { -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px }
