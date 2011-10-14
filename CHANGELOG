@@ -14,11 +14,10 @@ v2.0
     - mouseover activation
     - easing support
     - linkable slides via hashchange
-    - created a test suite
     - two new themes:
         - light
-        - stitch
-
+        - colour
+    - demo suite available
 
 v1.1.3 06/04/2011
     - IE bug fixes

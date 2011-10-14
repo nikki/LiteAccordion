@@ -30,7 +30,7 @@
             cycleSpeed : 6000,                      // time between slide cycles
             easing : 'swing',                       // custom easing function
                                                     
-            theme : 'basic',                        // basic, dark, light, or stitch
+            theme : 'basic',                        // basic, dark, light, or colour
             rounded : false,                        // square or rounded corners
             enumerateSlides : false,                // put numbers on slides 
             linkable : false                        // link slides via hash
@@ -89,7 +89,7 @@
                     // remove generated styles, classes, data, events
                     elem
                         .attr('style', '')
-                        .removeClass('accordion basic dark light stitch')
+                        .removeClass('accordion basic dark light colour')
                         .removeData('liteAccordion')
                         .unbind('.liteAccordion')
                         .find('li > :first-child')

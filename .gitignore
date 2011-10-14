@@ -3,3 +3,6 @@
 *.psd
 .DS_Store
 Thumbs.db
+css/bg_stitch.png
+css/stitch.css
+js/demosuite.js

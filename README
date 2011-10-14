@@ -24,7 +24,7 @@ pauseOnHover : false,                   // pause on hover
 cycleSpeed : 6000,                      // time between slide cycles
 easing : 'swing',                       // custom easing function
                                         
-theme : 'basic',                        // basic, dark, light, or stitch
+theme : 'basic',                        // basic, dark, light, or colour
 rounded : false,                        // square or rounded corners
 enumerateSlides : false,                // put numbers on slides 
 linkable : false                        // link slides via hash
