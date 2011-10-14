@@ -4,41 +4,55 @@
 		<meta charset="utf-8" />
 		<title>liteAccordion - a horizontal accordion plugin for jQuery</title>
 		<style>
-			html { overflow-y: scroll }
 			body { font: 14px/24px 'Helvetica Neue', Arial, sans-serif; color: #333; width: 960px; margin: 30px auto 60px; background: #eee }
+			body > h2 { margin: 30px 0 15px; text-shadow: 1px 1px 0 white; border-bottom: 2px solid #333; padding-bottom: 5px }
 			h1 { text-align: center; margin-bottom: 30px; text-shadow: 1px 1px 0 white }
 			dt { font-weight: bold }
 			dd { margin: 0 }
 			figure { display: block; width: 100%; height: 100%; margin: 0 }
 			figcaption { padding: 10px 15px; position: absolute; bottom: 20px; right: 30px; z-index: 3; background: black; background: rgba(0,0,0,0.7); color: white;
 				-webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px }
-			.options h2 { margin: 30px 0 15px; text-shadow: 1px 1px 0 white; border-bottom: 2px solid #333; padding-bottom: 5px }
-			.options p { width: 48%; float: left; margin: 5px 0 }
-			p.heading, p.reset, .output { width: 100%; float: left; clear: left }
-			.output { position: relative }
-			.output h2 a { content: ''; position: absolute; top: 30px; right: 0; font-size: 14px; font-weight: normal; color: #333; text-decoration: none }
-			.output h2 a:hover { text-decoration: underline }
-			label { display: inline-block; width: 160px }
-			select { width: 160px; margin-right: 20px }
-			input[type='text'] { width: 40px }
-			textarea { width: 50%; height: 100px; font-family: monospace }
-			.ie9 .basic .slide div { background: #333 !important }
 		</style>
 		<link rel="stylesheet" href="css/liteaccordion.css">
-		
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-		<script src="js/jquery.easing.1.3.js"></script>
+		<link href="http://alexgorbatchev.com.s3.amazonaws.com/pub/sh/3.0.83/styles/shCore.css" rel="stylesheet" />
+		<link href="http://alexgorbatchev.com.s3.amazonaws.com/pub/sh/3.0.83/styles/shThemeDefault.css" rel="stylesheet" />
+				
+		<!--[if lt IE 9]>
+			<script>
+				document.createElement('figure');
+				document.createElement('figcaption');			
+			</script>
+		<![endif]-->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
 		<script src="js/liteaccordion.jquery.js"></script>
-        <!--[if lt IE 8]>
-            <script src="http://cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.js"></script>
-        <![endif]-->		
-					
+		<script>
+			$(function() {
+    			// liteAccordion demos
+    			$('#one').liteAccordion({
+    					onActivate : function() {
+    						this.find('figcaption').fadeOut();
+    					},
+    					slideCallback : function() {	
+    						this.find('figcaption').fadeIn();
+    					},
+    					autoPlay : true,
+    					pauseOnHover : true,
+    					theme : 'dark',
+    					rounded : true,
+    					enumerateSlides : true					
+    			}).find('figcaption:first').show();
+    			$('#two').liteAccordion();
+    			$('#three').liteAccordion({ theme : 'dark', containerWidth : 600, containerHeight : 200, slideSpeed : 600, firstSlide : 2 });			    
+			});
+		</script>
+			
 	</head>
 	<body>
-		
-		<div id="demo">
+
+		<h1>liteAccordion - a horizontal accordion plugin for jQuery</h1>
+		<div id="one">
 		    <ol>
-				<li name="one">
+				<li>
 				    <h2><span>Slide One</span></h2>
 				    <div>
 						<figure>
@@ -47,7 +61,7 @@
 						</figure>
 					</div>
 				</li>
-				<li name="two">
+				<li>
 				    <h2><span>Slide Two</span></h2>
 				    <div>
 						<figure>
@@ -56,7 +70,7 @@
 						</figure>
 					</div>
 				</li>
-				<li name="three">
+				<li>
 				    <h2><span>Slide Three</span></h2>
 				    <div>
 						<figure>
@@ -65,7 +79,7 @@
 						</figure>
 					</div>
 				</li>
-				<li name="four">
+				<li>
 				    <h2><span>Slide Four</span></h2>
 				    <div>
 						<figure>
@@ -74,7 +88,7 @@
 						</figure>
 					</div>
 				</li>
-				<li name="five">
+				<li>
 				    <h2><span>Slide Five</span></h2>
 				    <div>
 						<figure>
@@ -88,130 +102,226 @@
 				<p>Please enable JavaScript to get the full experience.</p>
 			</noscript>
 		</div>
-		
-		<div class="options">
-			<h2>Live Demo Suite</h2>
-			<p class="heading">
-				Test the options for the liteAccordion plugin by changing the options below.<br />
-				Hit <b>enter</b> to see changes when entering a custom value, and use <b>reset</b> to start again.<br />
-				Toggle the output view to get the code for your custom settings object.
-			</p>
-			<p class="reset">
-				<input id='reset' type='button' value='reset' />							
-			</p>
-			<p>
-			    <label for="theme">theme</label>
-				<select id="theme" name="theme">
-			    	<option value="basic">basic</option>
-					<option value="dark">dark</option>
-					<option value="light">light</option>					
-					<option value="colour">colour</option>						
-			    </select>
-			</p>						
-			<p>
-			    <label for="easing">easing</label>
-				<select id="easing" name="easing"></select>
-			</p>
-			<p>
-			    <label for="containerWidth">containerWidth</label>
-				<select id="containerWidth" name="containerWidth">
-			    	<option value="960">default (960px)</option>
-					<option value="custom">... or enter a custom value</option>
-			    </select>
-			</p>
-			<p>
-				<label for="containerHeight">containerHeight</label>
-			    <select id="containerHeight" name="containerHeight">
-			    	<option value="320">fixed (320px)</option>
-					<option value="custom">... or enter a custom numeric value</option>
-			    </select>
-			</p>				
-			<p>
-			    <label for="headerWidth">headerWidth</label>
-				<select id="headerWidth" name="headerWidth">
-			    	<option value="48">fixed (48px)</option>
-					<option value="custom">... or enter a custom numeric value</option>
-			    </select>
-			</p>
-			<p>
-			    <label for="activateOn">activateOn</label>
-				<select id="activateOn" name="activateOn">
-			    	<option value="click">click</option>
-					<option value="mouseover">mouseover</option>
-			    </select>
-			</p>
-			<p>
-			    <label for="firstSlide">firstSlide</label>
-				<select id="firstSlide" name="firstSlide">
-			    	<option value="1">1</option>
-					<option value="custom">... or enter a custom numeric value</option>
-			    </select>
-			</p>
-			<p>
-			    <label for="slideSpeed">slideSpeed</label>
-				<select id="slideSpeed" name="slideSpeed">
-			    	<option value="800">800</option>
-					<option value="custom">... or enter a custom numeric value</option>
-			    </select>
-			</p>
-			<p>
-			    <label for="autoPlay">autoPlay</label>
-				<select id="autoPlay" name="autoPlay">
-			    	<option value="false">false</option>
-					<option value="true">true</option>
-			    </select>
-			</p>
-			<p>
-			    <label for="pauseOnHover">pauseOnHover</label>
-				<select id="pauseOnHover" name="pauseOnHover">
-			    	<option value="false">false</option>
-					<option value="true">true</option>
-			    </select>
-			</p>
-			<p>
-			    <label for="cycleSpeed">cycleSpeed</label>
-				<select id="cycleSpeed" name="cycleSpeed">
-			    	<option value="6000">6000</option>
-					<option value="custom">... or enter a custom numeric value</option>
-			    </select>
-			</p>
-			<p>
-			    <label for="rounded">rounded</label>
-				<select id="rounded" name="rounded">
-			    	<option value="false">false</option>
-					<option value="true">true</option>					
-			    </select>
-			</p>
-			<p>
-			    <label for="enumerateSlides">enumerateSlides</label>
-				<select id="enumerateSlides" name="enumerateSlides">
-			    	<option value="false">false</option>
-					<option value="true">true</option>					
-			    </select>
-			</p>
-			<p>
-			    <label for="linkable">linkable</label>
-				<select id="linkable" name="linkable">
-			    	<option value="false">false</option>
-					<option value="true">true</option>						
-				</select>
-			</p>
-			<p>&nbsp;</p>
-			<p>
-			    (slide 
-			    <a href="#one">#one</a>
-			    <a href="#two">#two</a> 
-			    <a href="#three">#three</a>
-			    <a href="#four">#four</a> 
-			    <a href="#five">#five</a>)
-			</p>
-			<div class="output">
-				<h2>Output<a href="#">toggle code view</a></h2>
-				<textarea>$("#yourAccordion").liteAccordion();</textarea>
-			</div>																									
+
+		<h2>Download</h2>
+		<p>More details and download <a href="http://http://liteaccordion.nicolahibbert.com">here</a></p>
+
+		<h2>FAQ</h2>
+		<dl>
+			<dt>Q. Why is this plugin called 'liteAccordion'?</dt>
+			<dd>A. It is called liteAccordion because the raw JavaScript source only weighs a (heavily commented!) 4.7kb, and the themes don't use any background images. If you minify and gzip the JS, you can get the file size down to ~1.4kb!</dd>
+			<dt>Q. What can I use it for?</dt>
+			<dd>A. Anything you like! Text, images, video - anything you can put in a div, you can put in a slide.</dd>
+			<dt>Q. But my page isn't 960px wide...</dt>
+			<dd>A. Not a problem. The plugin has a range of options, and I've tried to use relative measurements in the css so that the styles scale.</dd>
+			<dt>Q. What themes are available?</dt>
+			<dd>A. There are currently two themes available, 'basic' and 'dark', though I plan to add a light theme and a stitch theme based on Orman Clark's <a href="http://www.premiumpixels.com/stitched-fabric-accordion/">stitch</a> theme for SlideDeck in the very near future.  If these themes aren't suitable, you can always customise the css :)</dd>
+			<dt>Q. Does it work in...</dt>
+			<dd>A. It's been tested on the latest versions of Firefox, Chrome, Safari and Opera on both OSX and W7.  It has also been tested on IE7, IE8 &amp; IE9 on W7, and IE8 on WinXP.  Unfortunately IE6 is not supported - you will need to provide your own css if you plan to support IE6.</dd>
+			<dt>Q. Sounds good! Can I use it for commercial projects?</dt>
+			<dd>A. liteAccordion is free to use for commercial and personal projects.  As long as you're not trying to sell this plugin 'as is', feel free to do with it as you please.</dd>
+		</dl>
+		<p>If you find any bugs, please <a href="https://github.com/nikki/liteAccordion/issues">file a ticket on Github</a> and I'll fix it as soon as possible.  Thanks!</p>
+
+		<h2>New in 1.1!</h2>
+		<p>In version 1.1 (released 21/03/2011), a pause on hover function was added to the plugin.</p>
+
+		<h2>Basic Implementation</h2>
+		<p>1. Include jQuery, the liteAccordion CSS and the liteAccordion JavaScript files in your page:</p>
+		<pre class="brush: xml">
+			&lt;head&gt;
+				&lt;link rel="stylesheet" href="liteAccordion.css"&gt;
+			&lt;/head&gt;
+			&lt;body&gt;
+				... <!-- Before the closing body tag -->
+				&lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"&gt;&lt;/script&gt;
+				&lt;script src="liteaccordion.jquery.js"&gt;&lt;/script&gt;
+			&lt;/body&gt;</pre>
+		<p>2. Insert the basic liteAccordion markup into your page:</p>
+		<pre class="brush: xml">
+		<div>
+		    <ol>
+				<li>
+				    <h2><span>Slide One</span></h2>
+				    <div></div>
+				</li>
+				<li>
+				    <h2><span>Slide Two</span></h2>
+				    <div></div>
+				</li>
+				<li>
+				    <h2><span>Slide Three</span></h2>
+				    <div></div>
+				</li>
+				<li>
+				    <h2><span>Slide Four</span></h2>
+				    <div></div>
+				</li>
+				<li>
+				    <h2><span>Slide Five</span></h2>
+				    <div></div>
+				</li>
+		    </ol>
+			<noscript>
+				<p>Please enable JavaScript to get the full experience.</p>
+			</noscript>
+		</div></pre>
+		<p>3. Call the plugin</p>
+		<pre class="brush: xml">
+			&lt;script&gt;
+				$('#yourdiv').liteAccordion();
+			&lt;/script&gt;</pre>
+
+		<h2>Basic Example</h2>
+		<p>This is a demonstration of the default implementation above, but with some text content added to the slides.</p>
+		<div id="two">
+		    <ol>
+				<li>
+				    <h2><span>Slide One</span></h2>
+				    <div>
+				    	<h3>This is Slide One.</h3>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+							magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+							consequat. <a href="#">Link somewhere</a>
+						</p>
+				    </div>
+				</li>
+				<li>
+				    <h2><span>Slide Two</span></h2>
+				    <div>
+				    	<h3>This is Slide Two.</h3>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+							magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi. <br /><a href="#">Link somewhere</a>
+						</p>
+				    </div>
+				</li>
+				<li>
+				    <h2><span>Slide Three</span></h2>
+				    <div>
+				    	<h3>This is Slide Three.</h3>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+							magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+							consequat. <a href="#">Link somewhere</a>
+						</p>
+				    </div>
+				</li>
+				<li>
+				    <h2><span>Slide Four</span></h2>
+				    <div>
+				    	<h3>This is Slide Four.</h3>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+							magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi. <br /><a href="#">Link somewhere</a>
+						</p>
+				    </div>
+				</li>
+				<li>
+				    <h2><span>Slide Five</span></h2>
+				    <div>
+				    	<h3>This is Slide Five.</h3>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+							magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+							consequat. <a href="#">Link somewhere</a>
+						</p>
+				    </div>
+				</li>
+		    </ol>
+			<noscript>
+				<p>Please enable JavaScript to get the full experience.</p>
+			</noscript>
 		</div>
-				
-	<script src="js/demosuite.js"></script>			
-				
+
+		<h2>Options</h2>
+		<p>These are the default settings for the liteAccordion plugin:</p>
+		<pre class="brush: js">			
+			containerWidth : 960, 			// width of accordion (px)
+			containerHeight : 320, 			// height of accordion (px)
+			headerWidth : 48, 				// width of tabs (px)
+
+			firstSlide : 1, 				// number of the first active slide (integer)
+			onActivate : function() {},		// callback function triggered on tab click/mouseover (function)
+			slideSpeed : 800,				// speed of slide animation (time/ms)
+			slideCallback : function() {},	// callback function triggered after slide animation is complete (function)
+
+			autoPlay : false, 				// automatically scroll through the slides, if true with pause on user click (boolean)
+			pauseOnHover : false, 			// *NEW in 1.1* - pause slides on hover
+			cycleSpeed : 6000,				// time between slide activation (time/ms)
+
+			theme : 'basic', 				// which theme to use ('basic', 'light'*, 'dark', or 'stitch'*)
+			rounded : false,				// whether to use rounded corners or not** (boolean)
+			enumerateSlides : false			// show slide number in tab</pre>
+		<p>(* coming soon, **doesn't work in IE)</p>
+		<p>Simply pass options into the liteAccordion function with an object literal, for example, below is the code for the accordion at the top of the page.</p>
+		<pre class="brush: js">
+			$('#one').liteAccordion({
+				onActivate : function() {
+					this.find('figcaption').fadeOut();
+				},
+				slideCallback : function() {	
+					this.find('figcaption').fadeIn();
+				},
+				autoPlay : true,
+				pauseOnHover : true,
+				theme : 'dark',
+				rounded : true,
+				enumerateSlides : true				
+			}).find('figcaption:first').show();</pre>
+
+		<h2>More Examples</h2>
+		<div id="three">
+		    <ol>
+				<li>
+				    <h2><span>Slide One</span></h2>
+				    <div>
+						<img src="img-demo/1.jpg" alt="image" />
+					</div>
+				</li>
+				<li>
+				    <h2><span>Slide Two</span></h2>
+				    <div>
+						<img src="img-demo/2.jpg" alt="image" />
+					</div>
+				</li>
+				<li>
+				    <h2><span>Slide Three</span></h2>
+				    <div>
+						<img src="img-demo/3.jpg" alt="image" />
+					</div>
+				</li>
+				<li>
+				    <h2><span>Slide Four</span></h2>
+				    <div>
+						<img src="img-demo/5.jpg" width="768" alt="image" />
+					</div>
+				</li>
+				<li>
+				    <h2><span>Slide Five</span></h2>
+				    <div>
+						<img src="img-demo/2.jpg" alt="image" />
+					</div>
+				</li>
+		    </ol>
+			<noscript>
+				<p>Please enable JavaScript to get the full experience.</p>
+			</noscript>
+		</div>
+		<pre class="brush: js">$('#yourdiv').liteAccordion({ 
+	theme : 'dark', 
+	containerWidth : 600, 
+	containerHeight : 200, 
+	slideSpeed : 600, 
+	firstSlide : 2 
+});</pre>
+
+		<h2>Licence</h2>
+
+		<h2>Attribution</h2>
+
+		<!-- Syntax Highlighter -->
+		<script src="http://alexgorbatchev.com.s3.amazonaws.com/pub/sh/3.0.83/scripts/shCore.js"></script>
+		<script src="http://alexgorbatchev.com.s3.amazonaws.com/pub/sh/3.0.83/scripts/shBrushXml.js"></script>
+		<script src="http://alexgorbatchev.com.s3.amazonaws.com/pub/sh/3.0.83/scripts/shBrushJScript.js"></script>
+		<script>SyntaxHighlighter.all();</script>
+		<!-- end Syntax Highlighter -->
+
 	</body>
 </html>
