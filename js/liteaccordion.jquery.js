@@ -1,9 +1,9 @@
 /*************************************************!
 *
-*   project:    liteAccordion v2 - horizontal accordion plugin for jQuery
+*   project:    liteAccordion - a horizontal accordion plugin for jQuery
 *   author:     Nicola Hibbert
-*   url:        http://nicolahibbert.com/liteAccordion-v2/
-*   demo:       http://www.nicolahibbert.com/demo/liteAccordion
+*   url:        http://liteaccordion.nicolahibbert.com
+*   demo:       http://liteaccordion.nicolahibbert.com/examples
 *
 *   Version:    2.0a
 *   Copyright:  (c) 2010-2011 Nicola Hibbert
@@ -131,18 +131,18 @@
                         .addClass(settings.rounded && 'rounded')                  
                         .addClass(settings.theme);
                         
-                    // add slide class to list items for css
-                    slides.addClass('slide');
+                    // set tab width, height and selected class
+                    slides
+                        .addClass('slide')
+                        .children(':first-child')
+                        .width(settings.containerHeight)
+                        .height(settings.headerWidth)
+                        .eq(settings.firstSlide - 1)
+                        .addClass('selected');
 
                     // compensate for borders on 'light' theme
                     if (settings.theme === 'light') slideWidth -= parseInt(elem.children('ol').css('borderTopWidth'), 10);
 
-                    // set tab width, height and selected class
-                    header
-                        .width(settings.containerHeight)
-                        .height(settings.headerWidth) 
-                        .eq(settings.firstSlide - 1).addClass('selected');
-                        
                     // set initial positions for each slide             
                     header.each(function(index) {
                         var $this = $(this),
@@ -233,77 +233,64 @@
                 // holds interval counter
                 playing : 0,
                 
-                // groups slides together for animation
-                groupSlides : function(index) {                    
-                    var slide = {
-                        left : index * settings.headerWidth,
-                        right : index * settings.headerWidth + slideWidth,
-                        newPos : 0                     
-                    };
+                // if side is true, calculates left side position
+                animSlideGroup : function(index, next, side) {
+                    var filterExpr = side ? ':lt(' + (index + 1) + ')' : ':gt(' + index + ')';
 
-                    // set animation direction & group slides
-                    if (this.offsetLeft === slide.left) {
-                        slide.newPos = slideWidth;
-                        slide.group = header.slice(index + 1, slideLen).filter(function() { return this.offsetLeft === header.index(this) * settings.headerWidth; }); // group to animate
-                    } else if (this.offsetLeft === slide.right) {
-                        slide.newPos = -slideWidth;
-                        slide.group = header.slice(0, index + 1).filter(function() { return this.offsetLeft === slideWidth + (header.index(this) * settings.headerWidth); }); // group to animate
+                    slides
+                        .filter(filterExpr)
+                        .each(function() {
+                            var $this = $(this),
+                                slideIndex = slides.index($this);
+                                
+                            $this
+                                .children()
+                                .stop(true)
+                                .animate({
+                                    left : (side ? 0 : slideWidth) + slideIndex * settings.headerWidth
+                                }, 
+                                    settings.slideSpeed, 
+                                    settings.easing,
+                                    function(e) { 
+                                        // flag ensures that fn is only called one time per triggerSlide
+                                        if (!core.slideAnimCompleteFlag) {
+                                            settings.onSlideAnimComplete.call(next);
+                                            core.slideAnimCompleteFlag = true;
+                                        }
+                                    });                                     
+                        });
+                },
+                
+                slideAnimCompleteFlag : false,
+                
+                // trigger slide animation
+                triggerSlide : function(e) {
+                    var $this = $(this),
+                        index = header.index($this),
+                        next = $this.next();                          
+                                                                   
+                    // update core.currentSlide
+                    core.currentSlide = index;
+                    core.slideAnimCompleteFlag = false;
+
+                    // remove, then add selected class
+                    header.removeClass('selected').filter($this).addClass('selected');               
+                 
+                    // reset current slide index in core.nextSlide closure
+                    if (e.originalEvent && settings.autoPlay) {
+                        methods.stop();
+                        methods.play(index);
                     }
                     
-                    return {
-                        newPos : slide.newPos,
-                        group : slide.group
-                    };
-                },                    
-                
-                // animation for click event
-                triggerSlide : function(e) {
-                    var $this = $(this), 
-                        index = header.index($this),
-                        next = $this.next(),
-                        slide = core.groupSlides.call(this, index),
-                        flag = false;
+                    // set location.hash
+                    if (settings.linkable) window.location.hash = $this.parent().attr('name');
 
-                    // check if animation in progress
-                    if (!header.is(':animated')) {
-                                                   
-                        // update core.currentSlide
-                        core.currentSlide = index;
-                        
-                        // set location.hash
-                        if (settings.linkable) window.location.hash = $this.parent().attr('name');                           
-                     
-                        // reset current slide index in core.nextSlide closure
-                        if (e.originalEvent && settings.autoPlay) {
-                            methods.stop();
-                            methods.play(index);
-                        }
+                    // trigger callback in context of sibling div
+                    settings.onTriggerSlide.call(next);
 
-                        // trigger callback in context of sibling div
-                        settings.onTriggerSlide.call(next);
-                        
-                        // remove, then add selected class
-                        header.removeClass('selected').filter($this).addClass('selected');
-
-                        // animate group
-                        slide
-                            .group
-                            .animate({ left : '+=' + slide.newPos }, 
-                                settings.slideSpeed, 
-                                settings.easing,
-                                function(e) { 
-                                    // animate is called for each element, we only want the callback fn to trigger once
-                                    // flag ensures that fn is only called one time per triggerSlide
-                                    if (!flag) {
-                                        settings.onSlideAnimComplete.call(next);
-                                        flag = true;
-                                    }
-                                })
-                            .next()
-                            .animate({ left : '+=' + slide.newPos }, 
-                                settings.slideSpeed, 
-                                settings.easing);                           
-                    }
+                    // animate groups
+                    core.animSlideGroup(index, next, true);
+                    core.animSlideGroup(index, next);
                 },
                 
                 ieTransformTest : function() {

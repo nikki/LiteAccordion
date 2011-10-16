@@ -16,13 +16,13 @@ test('liteAccordion.js in page', function() {
 });
 
 test('liteAccordion.css in page', function() {
-	ok($('link[href*="liteaccordion"]', document.head).length);
+    ok($('link[href*="liteaccordion"]', document.head).length);
 });
 
 test('DOM element returned', function() {
-	strictEqual(typeof this.test, 'object', 'elem is an object');
-	strictEqual(this.test[0].nodeType, 1, 'elem is a DOM object'); // instanceof HTMLElement doesn't work in IE7 (it doesn't support DOM L2)
-	strictEqual(this.test[0].id, 'test', 'elem has ID of "test"');
+    strictEqual(typeof this.test, 'object', 'elem is an object');
+    strictEqual(this.test[0].nodeType, 1, 'elem is a DOM object'); // instanceof HTMLElement doesn't work in IE7 (it doesn't support DOM L2)
+    strictEqual(this.test[0].id, 'test', 'elem has ID of "test"');
 });
 
 module('Methods', {
@@ -131,37 +131,37 @@ test('All methods except Debug return DOM element', function() {
     // strictEqual(this.debug.core.currentSlide, this.debug.settings.firstSlide - 1);
 /*
 methods
-	play
-		autoplay, stop, prev, next, play ->check index		
+    play
+        autoplay, stop, prev, next, play ->check index      
 
-				
+                
 
-			
-	next
-		next * x -> check current index
-		next -> prev -> check index
+            
+    next
+        next * x -> check current index
+        next -> prev -> check index
 
-			
-	prev
-		prev * rand x -> check current index
-		prev -> next -> prev -> check index
-		
-	
-	destroy
-		destroys all styles
-		destroys events on header and window (hashchange)
+            
+    prev
+        prev * rand x -> check current index
+        prev -> next -> prev -> check index
+        
+    
+    destroy
+        destroys all styles
+        destroys events on header and window (hashchange)
 
 
 
 TEST:
-	autoplay -> stop -> hashchange = correct slide
-	autoplay -> pauseonhover = next slide is correct slide
-	linkable on load
-	linkable on hashchange
-	autoplay -> stop -> hashchange
-	autoplay -> pauseon hover -> hashchange	
-	
-		
+    autoplay -> stop -> hashchange = correct slide
+    autoplay -> pauseonhover = next slide is correct slide
+    linkable on load
+    linkable on hashchange
+    autoplay -> stop -> hashchange
+    autoplay -> pauseon hover -> hashchange 
+    
+        
 
 
 */
@@ -186,18 +186,18 @@ test('CurrentSlide set on init', function() {
 
 /*
 core
-	setStyles
-	bindEvents
-	    test clicks!
-	linkable	
-	currentSlide
-	nextSlide
-	playing
-	getSlidePositions *rewrite
-	groupSlides *rewrite
-	ungroupSlides *rewrite
-	triggerSlide
-	init
+    setStyles
+    bindEvents
+        test clicks!
+    linkable    
+    currentSlide
+    nextSlide
+    playing
+    getSlidePositions *rewrite
+    groupSlides *rewrite
+    ungroupSlides *rewrite
+    triggerSlide
+    init
 */
 
 

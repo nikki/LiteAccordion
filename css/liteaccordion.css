@@ -77,7 +77,7 @@
     background: -webkit-linear-gradient(left top, rgb(53,53,53) 0%, rgb(85,85,85) 100%);
     background: -ms-linear-gradient(left top, rgb(53,53,53) 0%, rgb(85,85,85) 100%);
 }
-.dark .slide h2.selected b { background: #434343\9 }
+.dark .slide h2.selected b { background: #393939 }
 .dark .slide div { background: #030303; margin-left: 5px }
 
 /***************************************** Light */
