@@ -33,7 +33,7 @@
             theme : 'basic',                        // basic, dark, light, or colour
             rounded : false,                        // square or rounded corners
             enumerateSlides : false,                // put numbers on slides 
-            linkable : false                        // link slides via hash
+            linkable : false                        // link slides via hash, *not supported in IE7
         },
 
         // merge defaults with options in new settings object   
@@ -77,7 +77,7 @@
                     methods.stop();
                     header.eq(core.currentSlide - 1).trigger('click.liteAccordion');  
                 },
-
+                
                 // destroy plugin instance
                 destroy : function() {                    
                     // stop autoplay
@@ -203,12 +203,9 @@
                         
                         if (e.type === 'load' && !window.location.hash) return;
                         if (e.type === 'hashchange' && core.playing) return;
-                                                                     
-                        index = cacheSlideNames.indexOf((window.location.hash.slice(1)).toLowerCase());
                         
-                        if (index > -1 && index < cacheSlideNames.length) {
-                            header.eq(index).trigger('click.liteAccordion');
-                        }
+                        index = $.inArray((window.location.hash.slice(1)).toLowerCase(), cacheSlideNames);
+                        if (index > -1 && index < cacheSlideNames.length) header.eq(index).trigger('click.liteAccordion');
                     };
 
                     $(window).bind({
@@ -233,7 +230,8 @@
                 // holds interval counter
                 playing : 0,
                 
-                // if side is true, calculates left side position
+                // animates left and right groups of slides
+                // side: denotes left side
                 animSlideGroup : function(index, next, side) {
                     var filterExpr = side ? ':lt(' + (index + 1) + ')' : ':gt(' + index + ')';
 
@@ -251,7 +249,7 @@
                                 }, 
                                     settings.slideSpeed, 
                                     settings.easing,
-                                    function(e) { 
+                                    function() { 
                                         // flag ensures that fn is only called one time per triggerSlide
                                         if (!core.slideAnimCompleteFlag) {
                                             settings.onSlideAnimComplete.call(next);
@@ -271,6 +269,8 @@
                                                                    
                     // update core.currentSlide
                     core.currentSlide = index;
+                    
+                    // reset onSlideAnimComplete callback flag
                     core.slideAnimCompleteFlag = false;
 
                     // remove, then add selected class
@@ -288,7 +288,7 @@
                     // trigger callback in context of sibling div
                     settings.onTriggerSlide.call(next);
 
-                    // animate groups
+                    // animate left & right groups
                     core.animSlideGroup(index, next, true);
                     core.animSlideGroup(index, next);
                 },
