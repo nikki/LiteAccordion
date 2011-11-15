@@ -1,11 +1,11 @@
-##[liteAccordion](http://liteaccordion.nicolahibbert.com)
+##[liteAccordion](http://nicolahibbert.com/demo/liteAccordion/)
 
 liteAccordion is a horizontal accordion plugin for jQuery.
 
-Please post any support or feature requests on the [support forum](http://liteaccordion.nicolahibbert.com/support).   
+Please post any support or feature requests [here](http://nicolahibbert.com/liteaccordion-v2/).   
 **Please do not post support requests on the issue tracker!**
 
-Follow me on Twitter [@nicolahibbert](http://twitter.com/nicolahibbert) for the latest liteAccordion development news.
+Follow me on Twitter [@nicolahibbert](http://twitter.com/nicolahibbert) for the liteAccordion development news.
 
 ***
 ###Options
@@ -47,7 +47,6 @@ These are the default settings for the liteAccordion plugin:
 - rewrote plugin to expose methods
 - refactored core
 - refactored css, styles no longer cascade into slide content divs
-- h2 header now replaceable with any element
 - mouseover activation
 - easing support
 - linkable slides via hashchange

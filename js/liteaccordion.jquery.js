@@ -141,7 +141,10 @@
                         .addClass('selected');
 
                     // compensate for borders on 'light' theme
-                    if (settings.theme === 'light') slideWidth -= parseInt(elem.children('ol').css('borderTopWidth'), 10);
+                    if (settings.theme === 'light') slideWidth -= parseInt(elem.children('ol').css('borderRightWidth'), 10);
+
+                    // compensate for borders on 'stitch' theme
+                    if (settings.theme === 'stitch') slideWidth -= parseInt(elem.children('ol').css('borderLeftWidth'), 10) * 2 - parseInt(header.children().first().css('marginBottom'), 10);
 
                     // set initial positions for each slide             
                     header.each(function(index) {
@@ -283,7 +286,7 @@
                     }
                     
                     // set location.hash
-                    if (settings.linkable) window.location.hash = $this.parent().attr('name');
+                    if (settings.linkable && !core.playing) window.location.hash = $this.parent().attr('name');
 
                     // trigger callback in context of sibling div
                     settings.onTriggerSlide.call(next);

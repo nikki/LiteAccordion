@@ -35,7 +35,7 @@
     display: block; 
     padding-right: 8%; 
     text-align: right; 
-    height: 90%; 
+    height: 90%;
     margin-top: 5px; 
     -moz-user-select: none;
     -khtml-user-select: none;
@@ -71,8 +71,9 @@
     background: #030303; 
     -webkit-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); 
     -moz-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); 
-    -o-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); 
-	box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4) 
+    -ms-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+    -o-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+	box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4);
 }
 .dark .slide > h2 { background: #030303; font-size: 16px; line-height: 2.7em; text-shadow: 0 -1px 0 #030303 }
 .dark .slide > h2 span { background: #353535; color: white }
@@ -92,7 +93,8 @@
 .light { 
     background: #f0f0f0; 
     -webkit-box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4); 
-    -moz-box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4); 
+    -moz-box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4);
+    -ms-box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4);    
     -o-box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4); 
 	box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4);
     border: 1px solid white; 
@@ -103,6 +105,7 @@
     border-left: none; 
     -webkit-box-shadow: 0 1px #909090; 
     -moz-box-shadow: 0 1px #909090;
+    -ms-box-shadow: 0 1px #909090;
     -o-box-shadow: 0 1px #909090;
 	box-shadow: 0 1px #909090;
 }
@@ -132,6 +135,7 @@
     padding-bottom: 18px;
     -webkit-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); 
     -moz-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); 
+    -ms-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4);
     -o-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); 
 	box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4);    
 }
@@ -139,21 +143,24 @@
     background: #353535;
     border-width: 9px; 
     -webkit-border-image: url('bg_stitch.png') 9 repeat; 
-    -moz-border-image: url('bg_stitch.png') 9 repeat; 
+    -moz-border-image: url('bg_stitch.png') 9 repeat;
+    -o-border-image: url('bg_stitch.png') 9 repeat;
     border-image: url('bg_stitch.png') 9 repeat;
 }
 .stitch .slide > h2 { background: #353535 }
 .stitch .slide > h2 span {
-    height: 53%;
+    /*height: 53%;*/
     padding-right: 5%;
     color: white;
     text-shadow: -1px 1px 0 #5b5b5b;
     border-width: 9px; 
-    -webkit-border-image: url('bg_stitch.png') 9 repeat; 
-    -moz-border-image: url('bg_stitch.png') 9 repeat; 
-    border-image: url('bg_stitch.png') 9 repeat; 
     background-image: url('bg_noise.png');
     margin-top: 0;
+    margin-bottom: 5px;
+    -webkit-border-image: url('bg_stitch.png') 9 repeat; 
+    -moz-border-image: url('bg_stitch.png') 9 repeat;
+    -o-border-image: url('bg_stitch.png') 9 repeat;
+    border-image: url('bg_stitch.png') 9 repeat;
 }
 .stitch .slide > h2.selected:after { 
     content: ''; 
@@ -173,8 +180,9 @@
     border-top: 0;
     border-left: 0; 
     -webkit-border-image: url('bg_stitch.png') 9 repeat; 
-    -moz-border-image: url('bg_stitch.png') 9 repeat; 
-    border-image: url('bg_stitch.png') 9 repeat; 
+    -moz-border-image: url('bg_stitch.png') 9 repeat;
+    -o-border-image: url('bg_stitch.png') 9 repeat;
+    border-image: url('bg_stitch.png') 9 repeat;
     background-image: url('bg_noise.png');  
 }
 
@@ -184,8 +192,8 @@
 .stitch .slide:nth-child(4) > h2 span, .stitch .slide:nth-child(4) > h2:after { background-color: #59abb7 }
 .stitch .slide:nth-child(5) > h2 span, .stitch .slide:nth-child(5) > h2:after { background-color: #bb6098 }
 .stitch .slide > h2 b { top: 24%; color: white; text-shadow: -1px 1px 0 #5b5b5b }
-.stitch.rounded > ol { -webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0 }
+.stitch.rounded > ol { -webkit-border-radius: 0; -moz-border-radius: 0; -ms-border-radius: 0; border-radius: 0 }
 
 /*************************************** Rounded */
-.rounded, .rounded > ol { -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px }
-.rounded .slide > h2 span { -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px }
+.rounded, .rounded > ol { -webkit-border-radius: 6px; -moz-border-radius: 6px; -ms-border-radius: 6px; border-radius: 6px }
+.rounded .slide > h2 span { -webkit-border-radius: 4px; -moz-border-radius: 4px; -ms-border-radius: 4px; border-radius: 4px }
