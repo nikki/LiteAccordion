@@ -53,6 +53,7 @@
                     var next = core.nextSlide(index && index);
 
                     if (core.playing) return;
+                    console.log(this);
 
                     // start autoplay
                     core.playing = setInterval(function() {
@@ -69,7 +70,8 @@
                 // trigger next slide
                 next : function() {
                     methods.stop();
-                    header.eq(core.currentSlide + 1).trigger('click.liteAccordion');
+
+                    header.eq(core.currentSlide === slideLen - 1 ? 0 : core.currentSlide + 1).trigger('click.liteAccordion');
                 },
 
                 // trigger previous slide
@@ -141,22 +143,23 @@
                         .addClass('selected');
 
                     // compensate for borders on 'light' theme
-                    if (settings.theme === 'light') slideWidth -= parseInt(elem.children('ol').css('borderRightWidth'), 10);
+                    // if (settings.theme === 'light') slideWidth -= parseInt(elem.children('ol').css('borderRightWidth'), 10);
 
                     // compensate for borders on 'stitch' theme
-                    if (settings.theme === 'stitch') slideWidth -= parseInt(elem.children('ol').css('borderLeftWidth'), 10) * 2 - parseInt(header.children().first().css('marginBottom'), 10);
+                    // if (settings.theme === 'stitch') slideWidth -= parseInt(elem.children('ol').css('borderLeftWidth'), 10) * 2 - parseInt(header.children().first().css('marginBottom'), 10);
 
                     // set initial positions for each slide             
                     header.each(function(index) {
                         var $this = $(this),
-                            left = index * settings.headerWidth;
+                            left = index * settings.headerWidth,
+                            margin = parseInt(header.first().next().css('marginLeft'), 10);
                             
                         if (index >= settings.firstSlide) left += slideWidth;
 
                         $this
                             .css('left', left)
                             .next()
-                                .width(slideWidth)
+                                .width(slideWidth - margin)
                                 .css({ left : left, paddingLeft : settings.headerWidth });
 
                         // add number to bottom of tab
@@ -268,8 +271,11 @@
                 triggerSlide : function(e) {
                     var $this = $(this),
                         index = header.index($this),
-                        next = $this.next();                          
-                                                                   
+                        next = $this.next();
+
+                    // console.log(header.is(':visible'));
+                    // console.log(header.index($this));
+                                                                                       
                     // update core.currentSlide
                     core.currentSlide = index;
                     
