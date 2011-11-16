@@ -24,8 +24,8 @@
 
         <!-- syntax highlighter -->
         <link href="http://alexgorbatchev.com.s3.amazonaws.com/pub/sh/3.0.83/styles/shCore.css" rel="stylesheet" />
-        <link href="http://alexgorbatchev.com.s3.amazonaws.com/pub/sh/3.0.83/styles/shThemeDefault.css" rel="stylesheet" />
-        
+        <link href="http://alexgorbatchev.com.s3.amazonaws.com/pub/sh/3.0.83/styles/shThemeDefault.css" rel="stylesheet" />         
+
         <!-- jQuery -->        
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 
@@ -61,7 +61,7 @@
                     <div>
                         <figure>
                             <img src="img-demo/2.jpg" alt="image" />
-                            <figcaption>That's one angry looking red dude.</figcaption>
+                            <figcaption>Couldn't find an image of a Khajit thief! Fail!</figcaption>
                         </figure>
                     </div>
                 </li>
@@ -70,7 +70,7 @@
                     <div>
                         <figure>
                             <img src="img-demo/3.jpg" alt="image" />
-                            <figcaption>Couldn't find an image of a Khajit thief! Fail!</figcaption>
+                            <figcaption>That's one angry looking red dude.</figcaption>
                         </figure>
                     </div>
                 </li>
@@ -286,17 +286,17 @@
         <p>Simply pass options into the liteAccordion function with an object literal, for example, below is the code for the accordion at the top of the page.</p>
         <pre class="brush: js">
             $('#one').liteAccordion({
-                onTriggerSlide : function() {
-                    this.find('figcaption').fadeOut();
-                },
-                onSlideAnimComplete : function() {    
-                    this.find('figcaption').fadeIn();
-                },
-                autoPlay : true,
-                pauseOnHover : true,
-                theme : 'dark',
-                rounded : true,
-                enumerateSlides : true              
+                    onTriggerSlide : function() {
+                        this.find('figcaption').fadeOut();
+                    },
+                    onSlideAnimComplete : function() {    
+                        this.find('figcaption').fadeIn();
+                    },
+                    autoPlay : true,
+                    pauseOnHover : true,
+                    theme : 'stitch',
+                    rounded : true,
+                    enumerateSlides : true                  
             }).find('figcaption:first').show();
         </pre>
 
@@ -327,7 +327,7 @@
                         <img src="img-demo/4.jpg" width="768" alt="image" />
                     </div>
                 </li>
-                <li>
+                <li name="crash">
                     <h2><span>Slide Five</span></h2>
                     <div>
                         <img src="img-demo/5.jpg" alt="image" />
@@ -342,14 +342,16 @@
             <a href="#ezio">ezio</a>
             <a href="#imperial">imperial</a>
             <a href="#zelda">zelda</a>
-            <a href="#man-down">man-down!</a>
+            <a href="#man-down">man down!</a>
+            <a href="#crash">crashy crashy</a>
         </p>
         <pre class="brush: js">$('#yourdiv').liteAccordion({ 
     theme : 'dark', 
     rounded : true, 
     enumerateSlides : true, 
     firstSlide : 2,
-    linkable : true
+    linkable : true,
+    easing: 'easeInOutQuart'
 });</pre>
 
         <div id="four">
@@ -391,7 +393,8 @@
         </div>
         <pre class="brush: js">$('#yourdiv').liteAccordion({ 
     theme : 'light',
-    firstSlide : 3
+    firstSlide : 3,
+    easing: 'easeOutBounce'
 });</pre>
 
         <h2>Licence</h2>
@@ -399,12 +402,6 @@
 
         <h2>Attribution</h2>
         <p>Themes are based on some lovely freebie designs by Orman Clark.  Thanks Orman!</p>
-
-        <!-- Syntax Highlighter -->
-        <script src="http://alexgorbatchev.com.s3.amazonaws.com/pub/sh/3.0.83/scripts/shCore.js"></script>
-        <script src="http://alexgorbatchev.com.s3.amazonaws.com/pub/sh/3.0.83/scripts/shBrushXml.js"></script>
-        <script src="http://alexgorbatchev.com.s3.amazonaws.com/pub/sh/3.0.83/scripts/shBrushJScript.js"></script>
-        <script>SyntaxHighlighter.all();</script>
 
         <!-- liteAccordion demos, social & analytics -->
         <script>
@@ -427,9 +424,8 @@
                         enumerateSlides : true                  
                 }).find('figcaption:first').show();
                 $('#two').liteAccordion();
-                $('#three').liteAccordion({ theme : 'dark', rounded : true, enumerateSlides : true, firstSlide : 2, linkable : true });
-                $('#four').liteAccordion({ theme : 'light', firstSlide : 3 });
-                $('#five').liteAccordion();  
+                $('#three').liteAccordion({ theme : 'dark', rounded : true, enumerateSlides : true, firstSlide : 2, linkable : true, easing: 'easeInOutQuart' });
+                $('#four').liteAccordion({ theme : 'light', firstSlide : 3, easing: 'easeOutBounce' });  
 
                 // social links
                 var js, id = 'facebook-jssdk'; 
@@ -460,7 +456,13 @@
                 ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
                 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
             })();
-        </script>        
+        </script>
+
+        <!-- syntax highlighter -->
+        <script src="js/shCore.js"></script>
+        <script src="http://alexgorbatchev.com.s3.amazonaws.com/pub/sh/3.0.83/scripts/shBrushXml.js"></script>
+        <script src="http://alexgorbatchev.com.s3.amazonaws.com/pub/sh/3.0.83/scripts/shBrushJScript.js"></script>
+        <script>SyntaxHighlighter.all();</script> 
 
     </body>
 </html>
