@@ -5,7 +5,7 @@
 *   url:        http://nicolahibbert.com/liteaccordion-v2/
 *   demo:       http://www.nicolahibbert.com/demo/liteAccordion/
 *
-*   Version:    2.0a
+*   Version:    2.0b
 *   Copyright:  (c) 2010-2011 Nicola Hibbert
 *   Licence:    MIT
 *
@@ -34,7 +34,7 @@
             theme : 'basic',                        // basic, dark, light, or stitch
             rounded : false,                        // square or rounded corners
             enumerateSlides : false,                // put numbers on slides 
-            linkable : false                        // link slides via hash, *not supported in IE7
+            linkable : false                        // link slides via hash
         },
 
         // merge defaults with options in new settings object   
@@ -189,7 +189,7 @@
                         var slideNames = [];
 
                         slides.each(function() {
-                            slideNames.push(($(this).attr('name')).toLowerCase());
+                            if ($(this).attr('name')) slideNames.push(($(this).attr('name')).toLowerCase());
                         });
 
                         // memoize
