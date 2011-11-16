@@ -2,11 +2,12 @@
 *
 *   project:    liteAccordion - a horizontal accordion plugin for jQuery
 *   author:     Nicola Hibbert
-*   url:        http://liteaccordion.nicolahibbert.com
-*   demo:       http://liteaccordion.nicolahibbert.com/examples
+*   url:        http://nicolahibbert.com/liteaccordion-v2/
+*   demo:       http://www.nicolahibbert.com/demo/liteAccordion/
 *
 *   Version:    2.0a
 *   Copyright:  (c) 2010-2011 Nicola Hibbert
+*   Licence:    MIT
 *
 **************************************************/
 
@@ -53,7 +54,6 @@
                     var next = core.nextSlide(index && index);
 
                     if (core.playing) return;
-                    console.log(this);
 
                     // start autoplay
                     core.playing = setInterval(function() {
@@ -142,33 +142,25 @@
                         .eq(settings.firstSlide - 1)
                         .addClass('selected');
 
-                    // compensate for borders on 'light' theme
-                    // if (settings.theme === 'light') slideWidth -= parseInt(elem.children('ol').css('borderRightWidth'), 10);
-
-                    // compensate for borders on 'stitch' theme
-                    // if (settings.theme === 'stitch') slideWidth -= parseInt(elem.children('ol').css('borderLeftWidth'), 10) * 2 - parseInt(header.children().first().css('marginBottom'), 10);
-
                     // set initial positions for each slide             
                     header.each(function(index) {
                         var $this = $(this),
                             left = index * settings.headerWidth,
-                            margin = parseInt(header.first().next().css('marginLeft'), 10);
+                            margin = header.first().next(),
+                            offset = parseInt(margin.css('marginLeft'), 10) || parseInt(margin.css('marginRight'), 10);
                             
                         if (index >= settings.firstSlide) left += slideWidth;
 
                         $this
                             .css('left', left)
                             .next()
-                                .width(slideWidth - margin)
+                                .width(slideWidth - offset)
                                 .css({ left : left, paddingLeft : settings.headerWidth });
 
                         // add number to bottom of tab
                         settings.enumerateSlides && $this.append('<b>' + (index + 1) + '</b>');
 
                     });
-
-                    // ie css fixes
-                    if ($.browser.msie) core.ieTransformTest();
                 },
 
                 // bind click and mouseover events
@@ -272,9 +264,6 @@
                     var $this = $(this),
                         index = header.index($this),
                         next = $this.next();
-
-                    // console.log(header.is(':visible'));
-                    // console.log(header.index($this));
                                                                                        
                     // update core.currentSlide
                     core.currentSlide = index;
@@ -302,14 +291,18 @@
                     core.animSlideGroup(index, next);
                 },
                 
-                ieTransformTest : function() {
-                    var div = document.createElement('div');
-                    
-                    typeof div.style.msTransform === 'string' && elem.addClass('ie9');                
-                    div = null;
+                ieClass : function() {
+                    var version = ($.browser.version).charAt(0);
+
+                    if (version === '6') methods.destroy();
+                    elem.addClass('ie ie' + version);
                 },
                 
                 init : function() {
+                    // test for ie
+                    if ($.browser.msie) core.ieClass();              
+
+                    // init styles and events
                     core.setStyles();
                     core.bindEvents();
 

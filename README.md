@@ -5,7 +5,7 @@ liteAccordion is a horizontal accordion plugin for jQuery.
 Please post any support or feature requests [here](http://nicolahibbert.com/liteaccordion-v2/).   
 **Please do not post support requests on the issue tracker!**
 
-Follow me on Twitter [@nicolahibbert](http://twitter.com/nicolahibbert) for the liteAccordion development news.
+Follow me on Twitter [@nicolahibbert](http://twitter.com/nicolahibbert) for liteAccordion development news.
 
 ***
 ###Options
@@ -35,7 +35,7 @@ These are the default settings for the liteAccordion plugin:
 ***
 ###Changelog
 
-**v2.0**
+**v2.0** - 16/11/2011
 
 - new methods:
     - play    
@@ -70,3 +70,9 @@ These are the default settings for the liteAccordion plugin:
 **v1.0** - 02/03/2011
 
 - First release
+
+###Not Supported/Won't Fix
+
+- IE6
+- IE7 & hashchange - if you need this, please use Ben Alman's [jQuery BBQ](http://benalman.com/projects/jquery-bbq-plugin/) plugin.
+- the 'stitch' theme has been stripped back for IE depending on the level of CSS support available.

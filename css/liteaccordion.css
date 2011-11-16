@@ -1,12 +1,16 @@
 @charset 'utf-8';
 /*************************************************!
 *
-*	project:  	liteAccordion - horizontal accordion plugin for jQuery
-*	author:   	Nicola Hibbert
-*	url:	  	http://nicolahibbert.com/horizontal-accordion-jquery-plugin
-*	demo:	  	http://www.nicolahibbert.com/demo/liteAccordion
+*   project:    liteAccordion - a horizontal accordion plugin for jQuery
+*   author:     Nicola Hibbert
+*   url:        http://nicolahibbert.com/liteaccordion-v2/
+*   demo:       http://www.nicolahibbert.com/demo/liteAccordion/
 *
-/*************************************************/
+*   Version:    2.0a
+*   Copyright:  (c) 2010-2011 Nicola Hibbert
+*   Licence:    MIT
+*
+**************************************************/
 /****************************************** Core */
 .accordion { text-align: left; font: 'Helvetica Neue', Verdana, Arial, sans-serif }
 .accordion > ol { position: relative; overflow: hidden; height: 100%; margin: 0; padding: 0; list-style-type: none }
@@ -30,7 +34,6 @@
 	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); 
 }
-.accordion.ie9 .slide > h2 { filter: none; -ms-transform: translateX(-100%) rotate(-90deg); -ms-transform-origin: right top }
 .accordion .slide > h2 span { 
     display: block; 
     padding-right: 8%; 
@@ -61,7 +64,7 @@
 .accordion noscript p { padding: 10px; margin: 0; background: white }
 
 /****************************************** Basic */
-.basic .slide > h2 { background: #333; color: white; line-height: 36px }
+.basic .slide > h2 { background: #333; color: white; line-height: 225% }
 
 /****************************************** Dark */
 .dark { 
@@ -75,41 +78,35 @@
     -o-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4);
 	box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4);
 }
-.dark .slide > h2 { background: #030303; font-size: 16px; line-height: 2.7em; text-shadow: 0 -1px 0 #030303 }
+.dark .slide > h2 { background: #030303; text-shadow: 0 -1px 0 #030303; line-height: 265% }
 .dark .slide > h2 span { background: #353535; color: white }
-.dark .slide > h2 b { background: #353535; color: #030303; font-size: 20px; text-shadow: -1px 1px 0 #5b5b5b }
+.dark .slide > h2 b { background: #353535; color: #030303; text-shadow: -1px 1px 0 #5b5b5b }
 .dark .slide > h2.selected span, .dark .slide > h2.selected span:hover { 
-    background: #434343;
-    background: linear-gradient(left top, rgb(53,53,53) 0%, rgb(85,85,85) 100%);
-    background: -o-linear-gradient(left top, rgb(53,53,53) 0%, rgb(85,85,85) 100%);
-    background: -moz-linear-gradient(left top, rgb(53,53,53) 0%, rgb(85,85,85) 100%);
-    background: -webkit-linear-gradient(left top, rgb(53,53,53) 0%, rgb(85,85,85) 100%);
-    background: -ms-linear-gradient(left top, rgb(53,53,53) 0%, rgb(85,85,85) 100%);
+  background-color: #353535;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#353535), to(#555555)); /* Saf4+, Chrome */
+  background-image: -webkit-linear-gradient(top, #353535, #555555); /* Chrome 10+, Saf5.1+, iOS 5+ */
+  background-image:    -moz-linear-gradient(top, #353535, #555555); /* FF3.6 */
+  background-image:     -ms-linear-gradient(top, #353535, #555555); /* IE10 */
+  background-image:      -o-linear-gradient(top, #353535, #555555); /* Opera 11.10+ */
+  background-image:         linear-gradient(top, #353535, #555555);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#353535', EndColorStr='#555555'); /* IE6-IE9 */
 }
-.dark .slide > h2.selected b { background: #393939 }
+.dark .slide > h2.selected b { background: #434343 }
 .dark .slide > div { background: #030303; margin-left: 5px }
 
 /***************************************** Light */
 .light { 
-    background: #f0f0f0; 
+    border: 9px solid white; 
+    border-bottom-width: 8px; 
+    padding: 5px 5px 6px 0; 
+    background: #a0a0a0; 
     -webkit-box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4); 
     -moz-box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4);
     -ms-box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4);    
     -o-box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4); 
 	box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4);
-    border: 1px solid white; 
-    padding: 8px 8px 18px 8px; 
 }
-.light > ol {
-    border: 5px solid #a0a0a0; 
-    border-left: none; 
-    -webkit-box-shadow: 0 1px #909090; 
-    -moz-box-shadow: 0 1px #909090;
-    -ms-box-shadow: 0 1px #909090;
-    -o-box-shadow: 0 1px #909090;
-	box-shadow: 0 1px #909090;
-}
-.light .slide > h2 { background: #a0a0a0; font-size: 16px; line-height: 2.7em; text-shadow: 0 -1px 0 white }
+.light .slide > h2 { background: #a0a0a0; text-shadow: 0 -1px 0 white; line-height: 265% }
 .light .slide > h2 span { 
     background: #e0e0e0;
     background: linear-gradient(left top, rgb(224,224,224) 0%, rgb(240,240,240) 100%);
@@ -124,39 +121,40 @@
     color: #909090;
 }
 .light .slide > h2 b { background: #e0e0e0; color: #909090; font-size: 20px; text-shadow: -1px 1px 0 white }
-.light .slide > h2.selected span, .light .slide h2.selected span:hover { background: #f0f0f0 }
-.light .slide > h2.selected b { background: #f0f0f0 }
-.light .slide:nth-child(1) > h2 { background: #a0a0a0 }
+.light .slide > h2.selected span, .light .slide h2.selected span:hover { background: #fafafa }
+.light .slide > h2.selected b { background: #fafafa }
 .light .slide > div { background: #a0a0a0; margin-left: 5px }
 
 /**************************************** Stitch */
-.stitch { 
-    border: 5px solid #353535; 
-    padding-bottom: 18px;
-    -webkit-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); 
-    -moz-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); 
-    -ms-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4);
-    -o-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); 
-	box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4);    
+.stitch {
+    position: relative;
+    padding: 5px 0 5px 5px;
+    border: 11px solid #353535;
+    background: #353535;     
 }
-.stitch > ol {
-    background: #353535;
-    border-width: 9px; 
+.stitch:before { 
+    content: ''; 
+    width: 100%; 
+    height: 100%; 
+    position: absolute; 
+    top: -9px; 
+    left: -9px; 
+    background: #353535; 
+    border-width: 9px;     
     -webkit-border-image: url('bg_stitch.png') 9 repeat; 
     -moz-border-image: url('bg_stitch.png') 9 repeat;
     -o-border-image: url('bg_stitch.png') 9 repeat;
-    border-image: url('bg_stitch.png') 9 repeat;
+    border-image: url('bg_stitch.png') 9 repeat;   
 }
 .stitch .slide > h2 { background: #353535 }
 .stitch .slide > h2 span {
-    /*height: 53%;*/
+    height: auto;
     padding-right: 5%;
     color: white;
     text-shadow: -1px 1px 0 #5b5b5b;
     border-width: 9px; 
     background-image: url('bg_noise.png');
     margin-top: 0;
-    margin-bottom: 5px;
     -webkit-border-image: url('bg_stitch.png') 9 repeat; 
     -moz-border-image: url('bg_stitch.png') 9 repeat;
     -o-border-image: url('bg_stitch.png') 9 repeat;
@@ -191,9 +189,18 @@
 .stitch .slide:nth-child(3) > h2 span, .stitch .slide:nth-child(3) > h2:after { background-color: #96ba5f }
 .stitch .slide:nth-child(4) > h2 span, .stitch .slide:nth-child(4) > h2:after { background-color: #59abb7 }
 .stitch .slide:nth-child(5) > h2 span, .stitch .slide:nth-child(5) > h2:after { background-color: #bb6098 }
-.stitch .slide > h2 b { top: 24%; color: white; text-shadow: -1px 1px 0 #5b5b5b }
+.stitch .slide > h2 b { top: 24%; color: white; text-shadow: 1px 1px 0 #5b5b5b }
+.stitch .slide > div { margin-right: 6px }
 .stitch.rounded > ol { -webkit-border-radius: 0; -moz-border-radius: 0; -ms-border-radius: 0; border-radius: 0 }
 
 /*************************************** Rounded */
 .rounded, .rounded > ol { -webkit-border-radius: 6px; -moz-border-radius: 6px; -ms-border-radius: 6px; border-radius: 6px }
 .rounded .slide > h2 span { -webkit-border-radius: 4px; -moz-border-radius: 4px; -ms-border-radius: 4px; border-radius: 4px }
+
+/******************************************** IE */
+.ie9 .slide > h2 { filter: none; -ms-transform: translateX(-100%) rotate(-90deg); -ms-transform-origin: right top }
+
+.ie.basic .slide > div, .ie.stitch .slide > div { background: #353535 }
+.ie.stitch .slide > h2 { line-height: 265% }
+.ie.stitch .slide > h2 span { height: 89%; padding-right: 8% }
+.ie.stitch .slide > h2.selected:after { display: none }

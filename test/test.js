@@ -21,7 +21,7 @@ test('liteAccordion.css in page', function() {
 
 test('DOM element returned', function() {
     strictEqual(typeof this.test, 'object', 'elem is an object');
-    strictEqual(this.test[0].nodeType, 1, 'elem is a DOM object'); // instanceof HTMLElement doesn't work in IE7 (it doesn't support DOM L2)
+    strictEqual(this.test[0].nodeType, 1, 'elem is a DOM object'); // instanceof HTMLElement won't work in IE7 (doesn't support DOM L2)
     strictEqual(this.test[0].id, 'test', 'elem has ID of "test"');
 });
 
@@ -126,45 +126,6 @@ test('All methods except Debug return DOM element', function() {
     ok(this.debug.settings, 'Debug has a settings property');
 });
 
-
-
-    // strictEqual(this.debug.core.currentSlide, this.debug.settings.firstSlide - 1);
-/*
-methods
-    play
-        autoplay, stop, prev, next, play ->check index      
-
-                
-
-            
-    next
-        next * x -> check current index
-        next -> prev -> check index
-
-            
-    prev
-        prev * rand x -> check current index
-        prev -> next -> prev -> check index
-        
-    
-    destroy
-        destroys all styles
-        destroys events on header and window (hashchange)
-
-
-
-TEST:
-    autoplay -> stop -> hashchange = correct slide
-    autoplay -> pauseonhover = next slide is correct slide
-    linkable on load
-    linkable on hashchange
-    autoplay -> stop -> hashchange
-    autoplay -> pauseon hover -> hashchange 
-    
-        
-
-
-*/
 module('Core', {
     setup : function() {
         this.test = $('#test').liteAccordion();
@@ -183,23 +144,32 @@ test('CurrentSlide set on init', function() {
     strictEqual(this.debug.core.currentSlide, this.debug.settings.firstSlide - 1); // firstSlide isn't zero indexed
 });
 
-
+/* TODO */
 /*
+methods
+    play
+        autoplay, stop, prev, next, play -> check index      
+   
+    next
+        next * x -> check current index
+        next -> prev -> check index
+   
+    prev
+        prev * rand x -> check current index
+        prev -> next -> prev -> check index
+
+    destroy
+        destroys all styles
+        destroys events on header and window (hashchange)
+
 core
-    setStyles
-    bindEvents
-        test clicks!
-    linkable    
-    currentSlide
-    nextSlide
-    playing
-    getSlidePositions *rewrite
-    groupSlides *rewrite
-    ungroupSlides *rewrite
-    triggerSlide
-    init
+    autoplay
+        autoplay -> stop -> hashchange = correct slide
+        autoplay -> pauseonhover = next slide is correct slide
+        autoplay -> stop -> hashchange
+        autoplay -> pause on hover -> hashchange 
+
+    linkable
+        linkable on load
+        linkable on hashchange
 */
-
-
-
-

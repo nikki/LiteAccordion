@@ -17,12 +17,6 @@
         <link href="http://alexgorbatchev.com.s3.amazonaws.com/pub/sh/3.0.83/styles/shCore.css" rel="stylesheet" />
         <link href="http://alexgorbatchev.com.s3.amazonaws.com/pub/sh/3.0.83/styles/shThemeDefault.css" rel="stylesheet" />
                 
-        <!--[if lt IE 9]>
-            <script>
-                document.createElement('figure');
-                document.createElement('figcaption');           
-            </script>
-        <![endif]-->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
         <script src="js/liteaccordion.jquery.js"></script>
         <script>
@@ -44,7 +38,9 @@
                 $('#three').liteAccordion({ theme : 'dark', containerWidth : 600, containerHeight : 200, slideSpeed : 600, firstSlide : 2 });               
             });
         </script>
-            
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->            
     </head>
     <body>
 
