@@ -205,7 +205,6 @@
 /******************************************** IE */
 .ie9 .slide > h2 { filter: none; -ms-transform: translateX(-100%) rotate(-90deg); -ms-transform-origin: right top }
 
-.ie.basic .slide > div, .ie.stitch .slide > div { background: #353535 }
 .ie.stitch .slide > h2 { line-height: 265% }
 .ie.stitch .slide > h2 span { height: 89%; padding-right: 8% }
 .ie.stitch .slide > h2.selected:after { display: none }
