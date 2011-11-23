@@ -394,7 +394,8 @@
         <pre class="brush: js">$('#yourdiv').liteAccordion({ 
     theme : 'light',
     firstSlide : 3,
-    easing: 'easeOutBounce'
+    easing: 'easeOutBounce',
+    activateOn: 'mouseover'
 });</pre>
 
         <h2>Licence</h2>
@@ -425,7 +426,7 @@
                 }).find('figcaption:first').show();
                 $('#two').liteAccordion();
                 $('#three').liteAccordion({ theme : 'dark', rounded : true, enumerateSlides : true, firstSlide : 2, linkable : true, easing: 'easeInOutQuart' });
-                $('#four').liteAccordion({ theme : 'light', firstSlide : 3, easing: 'easeOutBounce' });  
+                $('#four').liteAccordion({ theme : 'light', firstSlide : 3, easing: 'easeOutBounce', activateOn: 'mouseover' });  
 
                 // social links
                 var js, id = 'facebook-jssdk'; 

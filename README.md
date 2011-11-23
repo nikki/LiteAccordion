@@ -35,6 +35,11 @@ These are the default settings for the liteAccordion plugin:
 ***
 ###Changelog
 
+**v2.0** - 23/11/2011
+- added css hook on each slide for ie7 & ie8
+- css fixes for ie7 & ie8
+- css improvements for other browsers
+
 **v2.0** - 16/11/2011
 
 - new methods:

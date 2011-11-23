@@ -5,7 +5,7 @@
 *   url:        http://nicolahibbert.com/liteaccordion-v2/
 *   demo:       http://www.nicolahibbert.com/demo/liteAccordion/
 *
-*   Version:    2.0b
+*   Version:    2.0.1
 *   Copyright:  (c) 2010-2011 Nicola Hibbert
 *   Licence:    MIT
 *
@@ -292,9 +292,15 @@
                 },
                 
                 ieClass : function() {
-                    var version = ($.browser.version).charAt(0);
+                    var version = +($.browser.version).charAt(0);
 
-                    if (version === '6') methods.destroy();
+                    if (version < 7) methods.destroy();
+                    if (version === 7 || version === 8) {
+                        slides.each(function(index) {
+                            $(this).addClass('slide-' + index);
+                        });
+                    }
+
                     elem.addClass('ie ie' + version);
                 },
                 
