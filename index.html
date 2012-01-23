@@ -300,6 +300,24 @@
             }).find('figcaption:first').show();
         </pre>
 
+        <h2>Methods</h2>
+        <p>These are the methods for the liteAccordion plugin:</p>
+        <pre class="brush: js">         
+            play                                    // trigger autoPlay on a stopped accordion
+            stop                                    // stop an accordion playing
+            next                                    // trigger the next slide
+            prev                                    // trigger the previous slide
+            destroy                                 // remove the accordion, destroying all event handlers and styles (unstyled html content will remain)
+            debug                                   // returns a debug object</pre>
+
+        <p>All of these methods are chainable (i.e. they return the original DOM object) with the exception of the debug method. To call a method, use:</p>
+
+        <pre class="brush: js">$('#yourdiv').liteAccordion('play');</pre>
+
+        <p>To chain methods:</p>
+
+        <pre class="brush: js">$('#yourdiv').liteAccordion('next').liteAccordion('next');</p>
+
         <h2>More Examples</h2>
         <div id="three">
             <ol>
