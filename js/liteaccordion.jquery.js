@@ -5,7 +5,7 @@
 *   url:        http://nicolahibbert.com/liteaccordion-v2/
 *   demo:       http://www.nicolahibbert.com/demo/liteAccordion/
 *
-*   Version:    2.0.1
+*   Version:    2.0.2
 *   Copyright:  (c) 2010-2011 Nicola Hibbert
 *   Licence:    MIT
 *
@@ -147,7 +147,7 @@
                         var $this = $(this),
                             left = index * settings.headerWidth,
                             margin = header.first().next(),
-                            offset = parseInt(margin.css('marginLeft'), 10) || parseInt(margin.css('marginRight'), 10);
+                            offset = parseInt(margin.css('marginLeft'), 10) || parseInt(margin.css('marginRight'), 10) || 0;
                             
                         if (index >= settings.firstSlide) left += slideWidth;
 
