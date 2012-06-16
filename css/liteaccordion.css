@@ -15,23 +15,23 @@
 .accordion { text-align: left; font: 'Helvetica Neue', Verdana, Arial, sans-serif }
 .accordion > ol { position: relative; overflow: hidden; height: 100%; margin: 0; padding: 0; list-style-type: none }
 .accordion .slide > h2 { 
-	color: black;
-    font-size: 16px;	 
-	font-weight: normal;
-	margin: 0; 
-	z-index: 100; 
-	position: absolute; 
-	top: 0; 
-	left: 0; 
-	-webkit-transform: translateX(-100%) rotate(-90deg); 
-	-webkit-transform-origin: right top; 
-	-moz-transform: translateX(-100%) rotate(-90deg);
-	-moz-transform-origin: right top; 
-	-o-transform: translateX(-100%) rotate(-90deg); 
-	-o-transform-origin: right top; 
-	transform: translateX(-100%) rotate(-90deg); 
-	transform-origin: right top;
-	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
+    color: black;
+    font-size: 16px;     
+    font-weight: normal;
+    margin: 0; 
+    z-index: 100; 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    -webkit-transform: translateX(-100%) rotate(-90deg); 
+    -webkit-transform-origin: right top; 
+    -moz-transform: translateX(-100%) rotate(-90deg);
+    -moz-transform-origin: right top; 
+    -o-transform: translateX(-100%) rotate(-90deg); 
+    -o-transform-origin: right top; 
+    transform: translateX(-100%) rotate(-90deg); 
+    transform-origin: right top;
+    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); 
 }
 .accordion .slide > h2 span { 
@@ -54,15 +54,25 @@
     -moz-transform: rotate(90deg); 
     -o-transform: rotate(90deg); 
     transform: rotate(90deg);
-	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
+    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
 }
 .accordion .slide > h2:hover { cursor: pointer }
+.accordion .slide > h2.manual:hover { cursor: auto }
 .accordion .slide > div { height: 100%; position: absolute; top: 0; z-index: 10; overflow: hidden; background: white }
 .accordion noscript p { padding: 10px; margin: 0; background: white }
 
 /****************************************** Basic */
 .basic .slide > h2 { background: #333; color: white; line-height: 225% }
+
+/****************************************** Colorful */
+.colorful .slide > h2 { color: white; line-height: 225% }
+.colorful .slide > h2 span { margin-top: 0px;padding-top: 5px; font-size: 22px}
+.colorful .slide:nth-child(1) > h2 span, .colorful.slide:nth-child(1) > h2:after { background-color: #c25252 }
+.colorful .slide:nth-child(2) > h2 span, .colorful.slide:nth-child(2) > h2:after { background-color: #ca9859 }
+.colorful .slide:nth-child(3) > h2 span, .colorful.slide:nth-child(3) > h2:after { background-color: #96ba5f }
+.colorful .slide:nth-child(4) > h2 span, .colorful.slide:nth-child(4) > h2:after { background-color: #59abb7 }
+.colorful .slide:nth-child(5) > h2 span, .colorful.slide:nth-child(5) > h2:after { background-color: #bb6098 }
 
 /****************************************** Dark */
 .dark { 
@@ -74,7 +84,7 @@
     -moz-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); 
     -ms-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4);
     -o-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4);
-	box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4);
 }
 .dark .slide > h2 { background: #030303; text-shadow: 0 -1px 0 #030303; line-height: 265% }
 .dark .slide > h2 span { background: #353535; color: white }
@@ -110,7 +120,7 @@
     -moz-box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4);
     -ms-box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4);    
     -o-box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4); 
-	box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4);
+    box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4);
 }
 .light .slide > h2 { background: #a0a0a0; text-shadow: 0 -1px 0 white; line-height: 265% }
 .light .slide > h2 span { 
@@ -125,7 +135,7 @@
     -webkit-box-shadow: -1px -1px 0 #909090 inset, 1px 1px 0 #909090 inset; 
     -moz-box-shadow: -1px -1px 0 #909090 inset, 1px 1px 0 #909090 inset;
     -o-box-shadow: -1px -1px 0 #909090 inset, 1px 1px 0 #909090 inset;
-	box-shadow: -1px -1px 0 #909090 inset, 1px 1px 0 #909090 inset;
+    box-shadow: -1px -1px 0 #909090 inset, 1px 1px 0 #909090 inset;
     color: #909090;
 }
 .light .slide > h2 b { background: #ffffff; color: #909090; text-shadow: -1px 1px 0 white }
@@ -183,7 +193,7 @@
     -moz-transform: rotate(45deg); 
     -o-transform: rotate(45deg); 
     transform: rotate(45deg);
-	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
+    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
     border-width: 9px;
     border-top: 0;

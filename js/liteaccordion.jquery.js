@@ -31,7 +31,7 @@
             cycleSpeed : 6000,                      // time between slide cycles
             easing : 'swing',                       // custom easing function
                                                     
-            theme : 'basic',                        // basic, dark, light, or stitch
+            theme : 'basic',                        // basic, colorful, dark, light, or stitch
             rounded : false,                        // square or rounded corners
             enumerateSlides : false,                // put numbers on slides 
             linkable : false                        // link slides via hash
@@ -56,8 +56,8 @@
                     if (core.playing) return;
 
                     // start autoplay
-                    core.playing = setInterval(function() {
-                        header.eq(next()).trigger('click.liteAccordion');
+                    core.playing = setInterval(function () {
+                        methods.select(next());
                     }, settings.cycleSpeed);
                 },
             
@@ -70,14 +70,17 @@
                 // trigger next slide
                 next : function() {
                     methods.stop();
-
-                    header.eq(core.currentSlide === slideLen - 1 ? 0 : core.currentSlide + 1).trigger('click.liteAccordion');
+                    methods.select(core.currentSlide === slideLen - 1 ? 0 : core.currentSlide + 1);
                 },
 
                 // trigger previous slide
                 prev : function() {
                     methods.stop();
-                    header.eq(core.currentSlide - 1).trigger('click.liteAccordion');  
+                    methods.select(core.currentSlide - 1);
+                },
+                
+                select : function(index) {
+                    core.selectSlide(header.eq(index), false);
                 },
                 
                 // destroy plugin instance
@@ -91,7 +94,7 @@
                     // remove generated styles, classes, data, events
                     elem
                         .attr('style', '')
-                        .removeClass('accordion basic dark light stitch')
+                        .removeClass('accordion basic colorful dark light stitch')
                         .removeData('liteAccordion')
                         .unbind('.liteAccordion')
                         .find('li > :first-child')
@@ -104,6 +107,7 @@
                         
                     slides
                         .removeClass('slide')
+                        .removeClass('manual')
                         .children()
                         .attr('style', '');
                 },
@@ -172,6 +176,9 @@
                             'mouseover.liteAccordion' : core.triggerSlide,
                             'click.liteAccordion' : core.triggerSlide                          
                         });
+                    } else {
+                        // remove hover CSS from headers
+                        header.addClass('manual');
                     }
                     
                     // pause on hover (can't use custom events with $.hover())      
@@ -203,7 +210,9 @@
                         if (e.type === 'hashchange' && core.playing) return;
                         
                         index = $.inArray((window.location.hash.slice(1)).toLowerCase(), cacheSlideNames);
-                        if (index > -1 && index < cacheSlideNames.length) header.eq(index).trigger('click.liteAccordion');
+                        if (index > -1 && index < cacheSlideNames.length) {
+                            methods.select(index);
+                        }
                     };
 
                     $(window).bind({
@@ -258,28 +267,28 @@
                 },
                 
                 slideAnimCompleteFlag : false,
-                
-                // trigger slide animation
-                triggerSlide : function(e) {
-                    var $this = $(this),
-                        index = header.index($this),
+
+                // select a slide
+                selectSlide: function (slide, originalEvent) {
+                    var $this = slide,
+                        index = header.index($this);
                         next = $this.next();
-                                                                                       
+
                     // update core.currentSlide
-                    core.currentSlide = index;
-                    
+                    core.currentSlide = index ;
+
                     // reset onSlideAnimComplete callback flag
                     core.slideAnimCompleteFlag = false;
 
                     // remove, then add selected class
-                    header.removeClass('selected').filter($this).addClass('selected');               
-                 
+                    header.removeClass('selected').filter($this).addClass('selected');
+
                     // reset current slide index in core.nextSlide closure
-                    if (e.originalEvent && settings.autoPlay) {
+                    if (originalEvent && settings.autoPlay) {
                         methods.stop();
                         methods.play(index);
                     }
-                    
+
                     // set location.hash
                     if (settings.linkable && !core.playing) window.location.hash = $this.parent().attr('name');
 
@@ -289,6 +298,11 @@
                     // animate left & right groups
                     core.animSlideGroup(index, next, true);
                     core.animSlideGroup(index, next);
+                },
+                
+                // trigger slide animation
+                triggerSlide: function (e) {
+                    core.selectSlide($(this), e.originalEvent);
                 },
                 
                 ieClass : function() {
@@ -331,9 +345,11 @@
        
     };
 
-    $.fn.liteAccordion = function(method) {
+    $.fn.liteAccordion = function() {
         var elem = this,
             instance = elem.data('liteAccordion');
+
+        var method = arguments[0];
 
         // if creating a new instance
         if (typeof method === 'object' || !method) {
@@ -352,9 +368,9 @@
         } else if (typeof method === 'string' && instance[method]) {
             // debug method isn't chainable b/c we need the debug object to be returned
             if (method === 'debug') {
-                return instance[method].call(elem);
+                return instance[method].call(elem, Array.prototype.slice.call(arguments, 1));
             } else { // the rest of the methods are chainable though
-                instance[method].call(elem);
+                instance[method].call(elem, Array.prototype.slice.call(arguments, 1));
                 return elem;                
             }
         }
