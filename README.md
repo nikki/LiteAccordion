@@ -16,7 +16,7 @@ These are the default settings for the liteAccordion plugin:
     containerHeight : 320,                  // fixed (px)  
     headerWidth: 48,                        // fixed (px)  
     
-    activateOn : 'click',                   // click or mouseover  
+    activateOn : 'click',                   // click or mouseover; if '' then manual mode 
     firstSlide : 1,                         // displays slide (n) on page load  
     slideSpeed : 800,                       // slide animation speed  
     onTriggerSlide : function() {},         // callback on slide activate  
@@ -27,7 +27,7 @@ These are the default settings for the liteAccordion plugin:
     cycleSpeed : 6000,                      // time between slide cycles  
     easing : 'swing',                       // custom easing function  
                                             
-    theme : 'basic',                        // basic, dark, light, or stitch  
+    theme : 'basic',                        // basic, colorful, dark, light, or stitch  
     rounded : false,                        // square or rounded corners  
     enumerateSlides : false,                // put numbers on slides  
     linkable : false                        // link slides via hash
@@ -41,10 +41,13 @@ These are the methods for the liteAccordion plugin:
 	stop									// stop an accordion playing
 	next									// trigger the next slide
 	prev									// trigger the previous slide
+    select                                  // select a slide ('select', slidenum)
 	destroy									// remove the accordion, destroying all event handlers and styles (unstyled html content will remain)
 	debug									// returns a debug object
 
 All of these methods are chainable (i.e. they return the original DOM object) with the exception of the debug method.  To call a method, use:
+
+$('#yourdiv').liteAccordion('select', 3);
 
 $('#yourdiv').liteAccordion('play');
 
@@ -54,6 +57,11 @@ $('#yourdiv').liteAccordion('next').liteAccordion('next');
 
 ***
 ###Changelog
+
+**v2.0.3 - 15/06/2012 (Charlie Kindel)
+
+- Added 'colorful' theme
+- Added manual mode (select method and activateOn = '')
 
 **v2.0.2 - 23/01/2012
 
