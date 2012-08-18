@@ -189,7 +189,7 @@
                         var slideNames = [];
 
                         slides.each(function() {
-                            if ($(this).attr('name')) slideNames.push(($(this).attr('name')).toLowerCase());
+                            if ($(this).attr('data-slide-name')) slideNames.push(($(this).attr('data-slide-name')).toLowerCase());
                         });
 
                         // memoize
@@ -281,7 +281,7 @@
                     }
                     
                     // set location.hash
-                    if (settings.linkable && !core.playing) window.location.hash = $this.parent().attr('name');
+                    if (settings.linkable && !core.playing) window.location.hash = $this.parent().attr('data-slide-name');
 
                     // trigger callback in context of sibling div
                     settings.onTriggerSlide.call(next);
@@ -291,9 +291,7 @@
                     core.animSlideGroup(index, next);
                 },
                 
-                ieClass : function() {
-                    var version = +($.browser.version).charAt(0);
-
+                ieClass : function(version) {
                     if (version < 7) methods.destroy();
                     if (version === 7 || version === 8) {
                         slides.each(function(index) {
@@ -305,8 +303,14 @@
                 },
                 
                 init : function() {
+                    var ua = navigator.userAgent,
+                        index = ua.indexOf('MSIE');
+
                     // test for ie
-                    if ($.browser.msie) core.ieClass();              
+                    if (index !== -1) {                        
+                        ua = ua.slice(index + 5, index + 6);
+                        core.ieClass(+ua);
+                    }
 
                     // init styles and events
                     core.setStyles();
