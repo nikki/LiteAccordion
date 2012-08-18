@@ -141,7 +141,6 @@
                     slides
                         .addClass('slide')
                         .children(':first-child')
-                        .width(settings.containerHeight)
                         .height(settings.headerWidth)                        
                         .eq(settings.firstSlide - 1)
                         .addClass('selected');
@@ -165,6 +164,7 @@
 
                         $this
                             .css('left', left)
+                            .width(settings.containerHeight)
                             .next()
                                 .width(slideWidth - offset)
                                 .css({ left : left, paddingLeft : settings.headerWidth });
@@ -186,13 +186,16 @@
                         settings.containerWidth = parentWidth > settings.minContainerWidth ? parentWidth : settings.minContainerWidth;
                     }
 
+                    // set new container height
+                    settings.containerHeight = settings.containerWidth / 3 | 0;
+
                     // resize slides
                     slideWidth = settings.containerWidth - slideLen * settings.headerWidth;
 
                     // resize container
                     elem
                         .width(settings.containerWidth)
-                        .height(settings.containerWidth / 3 | 0);
+                        .height(settings.containerHeight);
 
                     // resize slides
                     slides

@@ -22,7 +22,8 @@
 	z-index: 100; 
 	position: absolute; 
 	top: 0; 
-	left: 0; 
+	left: 0;
+    -webkit-backface-visibility: hidden;
 	-webkit-transform: translateX(-100%) rotate(-90deg); 
 	-webkit-transform-origin: right top; 
 	-moz-transform: translateX(-100%) rotate(-90deg);
