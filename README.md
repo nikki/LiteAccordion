@@ -55,6 +55,10 @@ $('#yourdiv').liteAccordion('next').liteAccordion('next');
 ***
 ###Changelog
 
+**v2.0.3 - 19/08/2012
+
+- Chrome bug fix
+
 **v2.0.2 - 23/01/2012
 
 - slide width fix for IE
