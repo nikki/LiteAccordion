@@ -18,8 +18,13 @@
         var defaults = {
             containerWidth : 960,                   // fixed (px)
             containerHeight : 320,                  // fixed (px)
-            headerWidth: 48,                        // fixed (px)
-                                                    
+            headerWidth : 48,                       // fixed (px)
+            
+            responsive : false,                     // overrides the above three settings, accordion adjusts to fill container
+            autoScaleImages : false,                // if a single image is placed within the slide, this will be automatically scaled to fit
+            minContainerWidth : 300,                // minimum width the accordion will resize to
+            maxContainerWidth : 960,                // maximum width the accordion will resize to
+
             activateOn : 'click',                   // click or mouseover
             firstSlide : 1,                         // displays slide (n) on page load
             slideSpeed : 800,                       // slide animation speed
@@ -44,7 +49,7 @@
             slides = elem.children('ol').children('li'),
             header = slides.children(':first-child'),
             slideLen = slides.length,
-            slideWidth = settings.containerWidth - slideLen * settings.headerWidth, 
+            slideWidth = settings.containerWidth - slideLen * settings.headerWidth,
 
         // public methods    
             methods = {
@@ -70,7 +75,6 @@
                 // trigger next slide
                 next : function() {
                     methods.stop();
-
                     header.eq(core.currentSlide === slideLen - 1 ? 0 : core.currentSlide + 1).trigger('click.liteAccordion');
                 },
 
@@ -124,8 +128,8 @@
             core = {
         
                 // set style properties
-                setStyles : function() {                    
-                    // set container heights, widths, theme & corner style
+                setStyles : function() {
+                    // set container height and width, theme and corner style
                     elem
                         .width(settings.containerWidth)
                         .height(settings.containerHeight)
@@ -133,16 +137,24 @@
                         .addClass(settings.rounded && 'rounded')                  
                         .addClass(settings.theme);
                         
-                    // set tab width, height and selected class
+                    // set slide heights and widths, selected class
                     slides
                         .addClass('slide')
                         .children(':first-child')
                         .width(settings.containerHeight)
-                        .height(settings.headerWidth)
+                        .height(settings.headerWidth)                        
                         .eq(settings.firstSlide - 1)
                         .addClass('selected');
 
-                    // set initial positions for each slide             
+                    // set slide positions
+                    core.setSlidePositions();
+
+                    // override container and slide widths for responsive setting
+                    if (settings.responsive) core.responsive();                      
+                },
+
+                // set initial positions for each slide  
+                setSlidePositions : function() {          
                     header.each(function(index) {
                         var $this = $(this),
                             left = index * settings.headerWidth,
@@ -163,15 +175,42 @@
                     });
                 },
 
+                // responsive styles
+                responsive : function() {
+                    var parentWidth = elem.parent().width(); 
+
+                    // set new container width
+                    if (parentWidth > settings.minContainerWidth) {
+                        settings.containerWidth = parentWidth < settings.maxContainerWidth ? parentWidth : settings.maxContainerWidth;
+                    } else if (parentWidth < settings.maxContainerWidth) {
+                        settings.containerWidth = parentWidth > settings.minContainerWidth ? parentWidth : settings.minContainerWidth;
+                    }
+
+                    // resize slides
+                    slideWidth = settings.containerWidth - slideLen * settings.headerWidth;
+
+                    // resize container
+                    elem
+                        .width(settings.containerWidth)
+                        .height(settings.containerWidth / 3 | 0);
+
+                    // resize slides
+                    slides
+                        .children(':first-child')
+                        .width(settings.containerHeight);
+
+                    // set slide positions
+                    core.setSlidePositions();                       
+                },
+
                 // bind click and mouseover events
-                bindEvents : function() {                                        
+                bindEvents : function() {
+                    var resizeTimer = 0;
+
                     if (settings.activateOn === 'click') {
                         header.bind('click.liteAccordion', core.triggerSlide);
                     } else if (settings.activateOn === 'mouseover') {
-                        header.bind({
-                            'mouseover.liteAccordion' : core.triggerSlide,
-                            'click.liteAccordion' : core.triggerSlide                          
-                        });
+                        header.bind('click.liteAccordion, mouseover.liteAccordion', core.triggerSlide);
                     }
                     
                     // pause on hover (can't use custom events with $.hover())      
@@ -181,7 +220,17 @@
                         }).bind('mouseout.liteAccordion', function() {
                             !core.playing && methods.play(core.currentSlide);
                         });
-                    } 
+                    }
+
+                    // resize and orientationchange
+                    if (settings.responsive) {
+                        $(window).bind('resize.liteAccordion, orientationchange.liteAccordion', function() {
+                            clearTimeout(resizeTimer);
+                            resizeTimer = setTimeout(function() {
+                                core.responsive();
+                            }, 100);
+                        });
+                    }
                 },
                 
                 linkable : function() {
@@ -290,7 +339,7 @@
                     core.animSlideGroup(index, next, true);
                     core.animSlideGroup(index, next);
                 },
-                
+
                 ieClass : function(version) {
                     if (version < 7) methods.destroy();
                     if (version === 7 || version === 8) {

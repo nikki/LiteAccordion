@@ -55,6 +55,14 @@ $('#yourdiv').liteAccordion('next').liteAccordion('next');
 ***
 ###Changelog
 
+**v2.1
+
+- linkable now uses 'data-slide-name' instead of 'name'
+- $.browser no longer use
+* liquid layout option
+* chrome residual animation artifacts bug
+* click or hover on selected header now triggers slide
+
 **v2.0.2 - 23/01/2012
 
 - slide width fix for IE
