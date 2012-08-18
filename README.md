@@ -63,6 +63,10 @@ $('#yourdiv').liteAccordion('next').liteAccordion('next');
 * chrome residual animation artifacts bug
 * click or hover on selected header now triggers slide
 
+**v2.0.3 - 19/08/2012
+
+- Chrome bug fix
+
 **v2.0.2 - 23/01/2012
 
 - slide width fix for IE
