@@ -16,6 +16,11 @@ These are the default settings for the liteAccordion plugin:
     containerHeight : 320,                  // fixed (px)  
     headerWidth: 48,                        // fixed (px)  
     
+    responsive : false,                     // overrides the above three settings, accordion adjusts to fill container
+    autoScaleImages : false,                // if a single image is placed within the slide, this will be automatically scaled to fit
+    minContainerWidth : 300,                // minimum width the accordion will resize to
+    maxContainerWidth : 960,                // maximum width the accordion will resize to
+
     activateOn : 'click',                   // click or mouseover  
     firstSlide : 1,                         // displays slide (n) on page load  
     slideSpeed : 800,                       // slide animation speed  
@@ -27,7 +32,7 @@ These are the default settings for the liteAccordion plugin:
     cycleSpeed : 6000,                      // time between slide cycles  
     easing : 'swing',                       // custom easing function  
                                             
-    theme : 'basic',                        // basic, dark, light, or stitch  
+    theme : 'basic',                        // basic, dark, light, colorful, or stitch  
     rounded : false,                        // square or rounded corners  
     enumerateSlides : false,                // put numbers on slides  
     linkable : false                        // link slides via hash
@@ -55,16 +60,33 @@ $('#yourdiv').liteAccordion('next').liteAccordion('next');
 ***
 ###Changelog
 
+<<<<<<< HEAD
 **v2.0.3 - 19/08/2012
 
 - Chrome bug fix
 
 **v2.0.2 - 23/01/2012
+=======
+**v2.1** - 19/08/2012
+
+* added responsive layout option
+* added minContainerWidth and maxContainerWidth properties for use with responsive option
+* added autoScale images option
+* click or hover on selected header now triggers slide
+- linkable now uses 'data-slide-name' instead of 'name'
+- $.browser no longer used
+
+**v2.0.3** - 18/08/2012
+
+- Chrome residual animation artifacts bug fix
+
+**v2.0.2** - 23/01/2012
+>>>>>>> dev
 
 - slide width fix for IE
 - added documentation for methods
 
-**v2.0.1 - 23/11/2011
+**v2.0.1** - 23/11/2011
 
 - added css hook on each slide for ie7 & ie8
 - css fixes for ie7 & ie8

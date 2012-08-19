@@ -5,7 +5,11 @@
 *   url:        http://nicolahibbert.com/liteaccordion-v2/
 *   demo:       http://www.nicolahibbert.com/demo/liteAccordion/
 *
+<<<<<<< HEAD
 *   Version:    2.0.3
+=======
+*   Version:    2.1.0
+>>>>>>> dev
 *   Copyright:  (c) 2010-2012 Nicola Hibbert
 *   Licence:    MIT
 *
@@ -18,8 +22,13 @@
         var defaults = {
             containerWidth : 960,                   // fixed (px)
             containerHeight : 320,                  // fixed (px)
-            headerWidth: 48,                        // fixed (px)
-                                                    
+            headerWidth : 48,                       // fixed (px)
+            
+            responsive : false,                     // overrides the above three settings, accordion adjusts to fill container
+            autoScaleImages : false,                // if a single image is placed within the slide, this will be automatically scaled to fit
+            minContainerWidth : 300,                // minimum width the accordion will resize to
+            maxContainerWidth : 960,                // maximum width the accordion will resize to
+
             activateOn : 'click',                   // click or mouseover
             firstSlide : 1,                         // displays slide (n) on page load
             slideSpeed : 800,                       // slide animation speed
@@ -44,7 +53,7 @@
             slides = elem.children('ol').children('li'),
             header = slides.children(':first-child'),
             slideLen = slides.length,
-            slideWidth = settings.containerWidth - slideLen * settings.headerWidth, 
+            slideWidth = settings.containerWidth - slideLen * settings.headerWidth,
 
         // public methods    
             methods = {
@@ -70,7 +79,6 @@
                 // trigger next slide
                 next : function() {
                     methods.stop();
-
                     header.eq(core.currentSlide === slideLen - 1 ? 0 : core.currentSlide + 1).trigger('click.liteAccordion');
                 },
 
@@ -86,16 +94,16 @@
                     methods.stop();
 
                     // remove hashchange event bound to window
-                    $(window).unbind('.liteAccordion');
+                    $(window).off('.liteAccordion');
 
                     // remove generated styles, classes, data, events
                     elem
                         .attr('style', '')
-                        .removeClass('accordion basic dark light stitch')
+                        .removeClass('liteAccordion basic dark light stitch')
                         .removeData('liteAccordion')
-                        .unbind('.liteAccordion')
+                        .off('.liteAccordion')
                         .find('li > :first-child')
-                        .unbind('.liteAccordion')
+                        .off('.liteAccordion')
                         .filter('.selected')
                         .removeClass('selected')
                         .end()
@@ -124,35 +132,57 @@
             core = {
         
                 // set style properties
-                setStyles : function() {                    
-                    // set container heights, widths, theme & corner style
+                setStyles : function() {
+                    // set container height and width, theme and corner style
                     elem
                         .width(settings.containerWidth)
                         .height(settings.containerHeight)
-                        .addClass('accordion')
+                        .addClass('liteAccordion')
                         .addClass(settings.rounded && 'rounded')                  
                         .addClass(settings.theme);
                         
-                    // set tab width, height and selected class
+                    // set slide heights
                     slides
                         .addClass('slide')
                         .children(':first-child')
-                        .width(settings.containerHeight)
-                        .height(settings.headerWidth)
-                        .eq(settings.firstSlide - 1)
-                        .addClass('selected');
+                        .height(settings.headerWidth);
 
-                    // set initial positions for each slide             
+                    // set slide positions
+                    core.setSlidePositions();
+
+                    // override container and slide widths for responsive setting
+                    if (settings.responsive) {
+                        core.responsive();
+                    } else {
+                        // trigger autoScaleImages once for fixed width accordions
+                        if (settings.autoScaleImages) core.autoScaleImages();
+                    }
+                },
+
+                // set initial positions for each slide  
+                setSlidePositions : function() {
+                    var selected = header.filter('.selected');
+
+                    // account for already selected slide
+                    if (!selected.length) header.eq(settings.firstSlide - 1).addClass('selected');
+
                     header.each(function(index) {
                         var $this = $(this),
                             left = index * settings.headerWidth,
                             margin = header.first().next(),
                             offset = parseInt(margin.css('marginLeft'), 10) || parseInt(margin.css('marginRight'), 10) || 0;
-                            
-                        if (index >= settings.firstSlide) left += slideWidth;
+                        
+                        // compensate for already selected slide on resize
+                        if (selected.length) {
+                            if (index > header.index(selected)) left += slideWidth;
+                        } else {
+                            if (index >= settings.firstSlide) left += slideWidth;
+                        }
 
+                        // set each slide position
                         $this
                             .css('left', left)
+                            .width(settings.containerHeight)
                             .next()
                                 .width(slideWidth - offset)
                                 .css({ left : left, paddingLeft : settings.headerWidth });
@@ -163,25 +193,88 @@
                     });
                 },
 
+                // responsive styles
+                responsive : function() {
+                    var parentWidth = elem.parent().width(); 
+
+                    // set new container width
+                    if (parentWidth > settings.minContainerWidth) {
+                        settings.containerWidth = parentWidth < settings.maxContainerWidth ? parentWidth : settings.maxContainerWidth;
+                    } else if (parentWidth < settings.maxContainerWidth) {
+                        settings.containerWidth = parentWidth > settings.minContainerWidth ? parentWidth : settings.minContainerWidth;
+                    }
+
+                    // set new container height
+                    settings.containerHeight = settings.containerWidth / 3 | 0;
+
+                    // resize slides
+                    slideWidth = settings.containerWidth - slideLen * settings.headerWidth;
+
+                    // resize container
+                    elem
+                        .width(settings.containerWidth)
+                        .height(settings.containerHeight);
+
+                    // resize slides
+                    slides
+                        .children(':first-child')
+                        .width(settings.containerHeight);
+
+                    // set slide positions
+                    core.setSlidePositions();                                       
+                },
+
+                // scale images contained within a slide to fit the slide height and width
+                autoScaleImages : function() {
+                    slides.children('div').each(function() {
+                        var $this = $(this), 
+                            $imgs = $this.find('img');
+
+                        if ($imgs.length) {
+                            $imgs.each(function(index, item) {
+                                $(item).width($this.width() + 1); // fix the anti-aliasing bug in chrome
+                                $(item).height($this.height());                                
+                            });
+                        }
+                    });
+                },
+
                 // bind click and mouseover events
-                bindEvents : function() {                                        
+                bindEvents : function() {
+                    var resizeTimer = 0;
+
                     if (settings.activateOn === 'click') {
-                        header.bind('click.liteAccordion', core.triggerSlide);
+                        header.on('click.liteAccordion', core.triggerSlide);
                     } else if (settings.activateOn === 'mouseover') {
-                        header.bind({
-                            'mouseover.liteAccordion' : core.triggerSlide,
-                            'click.liteAccordion' : core.triggerSlide                          
-                        });
+                        header.on('click.liteAccordion mouseover.liteAccordion', core.triggerSlide);
                     }
                     
                     // pause on hover (can't use custom events with $.hover())      
                     if (settings.pauseOnHover && settings.autoPlay) {
-                        elem.bind('mouseover.liteAccordion', function() {
-                            core.playing && methods.stop();
-                        }).bind('mouseout.liteAccordion', function() {
-                            !core.playing && methods.play(core.currentSlide);
-                        });
-                    } 
+                        elem
+                            .on('mouseover.liteAccordion', function() {
+                                core.playing && methods.stop();
+                            })
+                            .on('mouseout.liteAccordion', function() {
+                                !core.playing && methods.play(core.currentSlide);
+                            });
+                    }
+
+                    // resize and orientationchange
+                    if (settings.responsive) {
+                        $(window)
+                            .on('load.liteAccordion', function() {
+                                if (settings.autoScaleImages) core.autoScaleImages();  
+                            })
+                            .on('resize.liteAccordion orientationchange.liteAccordion', function() {
+                                // approximates 'onresizeend'
+                                clearTimeout(resizeTimer);
+                                resizeTimer = setTimeout(function() {
+                                    core.responsive();
+                                    if (settings.autoScaleImages) core.autoScaleImages();
+                                }, 100);
+                            });
+                    }
                 },
                 
                 linkable : function() {
@@ -189,7 +282,7 @@
                         var slideNames = [];
 
                         slides.each(function() {
-                            if ($(this).attr('name')) slideNames.push(($(this).attr('name')).toLowerCase());
+                            if ($(this).attr('data-slide-name')) slideNames.push(($(this).attr('data-slide-name')).toLowerCase());
                         });
 
                         // memoize
@@ -206,10 +299,7 @@
                         if (index > -1 && index < cacheSlideNames.length) header.eq(index).trigger('click.liteAccordion');
                     };
 
-                    $(window).bind({
-                        'hashchange.liteAccordion' : triggerHash,
-                        'load.liteAccordion' : triggerHash
-                    });
+                    $(window).on('hashchange.liteAccordion load.liteAccordion', triggerHash);
                 },
                 
                 // counter for autoPlay (zero index firstSlide on init)
@@ -228,72 +318,119 @@
                 // holds interval counter
                 playing : 0,
                 
-                // animates left and right groups of slides
-                // side: denotes left side
-                animSlideGroup : function(index, next, side) {
-                    var filterExpr = side ? ':lt(' + (index + 1) + ')' : ':gt(' + index + ')';
-
-                    slides
-                        .filter(filterExpr)
-                        .each(function() {
-                            var $this = $(this),
-                                slideIndex = slides.index($this);
-                                
-                            $this
-                                .children()
-                                .stop(true)
-                                .animate({
-                                    left : (side ? 0 : slideWidth) + slideIndex * settings.headerWidth
-                                }, 
-                                    settings.slideSpeed, 
-                                    settings.easing,
-                                    function() { 
-                                        // flag ensures that fn is only called one time per triggerSlide
-                                        if (!core.slideAnimCompleteFlag) {
-                                            settings.onSlideAnimComplete.call(next);
-                                            core.slideAnimCompleteFlag = true;
-                                        }
-                                    });                                     
-                        });
-                },
-                
                 slideAnimCompleteFlag : false,
                 
                 // trigger slide animation
                 triggerSlide : function(e) {
                     var $this = $(this),
-                        index = header.index($this),
-                        next = $this.next();
-                                                                                       
+                        tab = {
+                            elem : $this, 
+                            index : header.index($this),
+                            next : $this.next(),
+                            prev : $this.parent().prev().children('h2')
+                        };
+
                     // update core.currentSlide
-                    core.currentSlide = index;
+                    core.currentSlide = tab.index;
                     
                     // reset onSlideAnimComplete callback flag
-                    core.slideAnimCompleteFlag = false;
+                    core.slideAnimCompleteFlag = false;            
+                            
+                    // set location.hash
+                    if (settings.linkable && !core.playing) window.location.hash = $this.parent().attr('data-slide-name');
 
-                    // remove, then add selected class
-                    header.removeClass('selected').filter($this).addClass('selected');               
-                 
-                    // reset current slide index in core.nextSlide closure
+                    // trigger callback in context of sibling div (jQuery wrapped)
+                    settings.onTriggerSlide.call(tab.next);
+
+                    // animate
+                    if ($this.hasClass('selected') && $this.position().left < slideWidth / 2) {
+                        // animate single selected tab
+                        core.animSlide.call(tab);                       
+                    } else {
+                        // animate groups
+                        core.animSlideGroup(tab);                       
+                    }
+
+                    // stop autoplay, reset current slide index in core.nextSlide closure
                     if (e.originalEvent && settings.autoPlay) {
                         methods.stop();
-                        methods.play(index);
+                        methods.play(header.index(header.filter('.selected')));
+                    }  
+                },
+
+                animSlide : function(triggerTab) {
+                    var _this = this;
+
+                    // set pos for single selected tab
+                    if (typeof this.pos === 'undefined') this.pos = slideWidth;
+
+                    // remove, then add selected class
+                    header.removeClass('selected').filter(this.elem).addClass('selected');
+
+                    // if slide index not zero
+                    if (!!this.index) {
+                        this.elem
+                            .add(this.next)
+                            .stop(true)
+                            .animate({
+                                left : this.pos + this.index * settings.headerWidth
+                            }, 
+                                settings.slideSpeed, 
+                                settings.easing,
+                                function() { 
+                                    // flag ensures that fn is only called one time per triggerSlide
+                                    if (!core.slideAnimCompleteFlag) {
+                                        // trigger onSlideAnimComplete callback in context of sibling div (jQuery wrapped)
+                                        settings.onSlideAnimComplete.call(triggerTab ? triggerTab.next : _this.prev.next());
+                                        core.slideAnimCompleteFlag = true;
+                                    }                                      
+                                });                          
+
+                            // remove, then add selected class
+                            header.removeClass('selected').filter(this.prev).addClass('selected');                              
+
                     }
-                    
-                    // set location.hash
-                    if (settings.linkable && !core.playing) window.location.hash = $this.parent().attr('name');
-
-                    // trigger callback in context of sibling div
-                    settings.onTriggerSlide.call(next);
-
-                    // animate left & right groups
-                    core.animSlideGroup(index, next, true);
-                    core.animSlideGroup(index, next);
                 },
                 
-                ieClass : function() {
-                    var version = +($.browser.version).charAt(0);
+                // animates left and right groups of slides
+                animSlideGroup : function(triggerTab) {
+                    var group = ['left', 'right'];
 
+                    $.each(group, function(index, side) {
+                        var filterExpr, left;
+
+                        if (side === 'left')  {
+                            filterExpr = ':lt(' + (triggerTab.index + 1) + ')';
+                            left = 0;
+                        } else {
+                            filterExpr = ':gt(' + triggerTab.index + ')';
+                            left = slideWidth;
+                        }
+
+                        slides
+                            .filter(filterExpr) 
+                            .children('h2')                           
+                            .each(function() {
+                                var $this = $(this),
+                                    tab = {
+                                        elem : $this, 
+                                        index : header.index($this),
+                                        next : $this.next(),
+                                        prev : $this.parent().prev().children('h2'),
+                                        pos : left
+                                    };                               
+
+                                // trigger item anim, pass original trigger context for callback fn
+                                core.animSlide.call(tab, triggerTab);
+                            });
+
+                    });
+
+                    // remove, then add selected class
+                    header.removeClass('selected').filter(triggerTab.elem).addClass('selected');
+                },
+
+                ieClass : function(version) {
                     if (version < 7) methods.destroy();
                     if (version === 7 || version === 8) {
                         slides.each(function(index) {
@@ -305,8 +442,14 @@
                 },
                 
                 init : function() {
+                    var ua = navigator.userAgent,
+                        index = ua.indexOf('MSIE');
+
                     // test for ie
-                    if ($.browser.msie) core.ieClass();              
+                    if (index !== -1) {                        
+                        ua = ua.slice(index + 5, index + 6);
+                        core.ieClass(+ua);
+                    }
 
                     // init styles and events
                     core.setStyles();
