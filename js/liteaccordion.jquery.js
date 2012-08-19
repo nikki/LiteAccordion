@@ -261,10 +261,15 @@
                 
                 // trigger slide animation
                 triggerSlide : function(e) {
-                    var $this = $(this),
-                        index = header.index($this),
-                        next = $this.next();
-                                                                                       
+                    var $this = $(this);
+
+                    if (settings.activateOn === 'mouseover' && $this.hasClass('selected')) {
+                      return;
+                    }
+              
+                    var index = header.index($this),
+                    next = $this.next();
+                                                                                     
                     // update core.currentSlide
                     core.currentSlide = index;
                     
