@@ -164,6 +164,8 @@
                             
                         if (index >= settings.firstSlide) left += slideWidth;
 
+                        // !!! TODO: need to account for already selected slide
+
                         $this
                             .css('left', left)
                             .width(settings.containerHeight)
