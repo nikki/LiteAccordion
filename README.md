@@ -27,7 +27,7 @@ These are the default settings for the liteAccordion plugin:
     cycleSpeed : 6000,                      // time between slide cycles  
     easing : 'swing',                       // custom easing function  
                                             
-    theme : 'basic',                        // basic, dark, light, or stitch  
+    theme : 'basic',                        // basic, dark, light, colorful, or stitch  
     rounded : false,                        // square or rounded corners  
     enumerateSlides : false,                // put numbers on slides  
     linkable : false                        // link slides via hash
@@ -60,8 +60,7 @@ $('#yourdiv').liteAccordion('next').liteAccordion('next');
 * added responsive layout option
 * added minContainerWidth and maxContainerWidth properties for use with responsive option
 * added autoScale images option
-* click or hover on selected header now triggers slide - contributed by BrentW
-* added 'colorful' theme - contributed by tig
+* click or hover on selected header now triggers slide
 - linkable now uses 'data-slide-name' instead of 'name'
 - $.browser no longer used
 

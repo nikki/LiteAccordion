@@ -14,6 +14,7 @@
             figure { display: block; width: 100%; height: 100%; margin: 0 }
             figcaption { padding: 10px 15px; position: absolute; bottom: 20px; right: 30px; z-index: 3; background: black; background: rgba(0,0,0,0.7); color: white;
                 -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px }   
+            .accordion.stitch .slide div { background: #333 }
         </style>
 
         <!-- liteAccordion css -->
@@ -71,7 +72,7 @@
                     <h2><span>Slide Four</span></h2>
                     <div>
                         <figure>
-                            <img src="img-demo/4.jpg" width="768" alt="image" />
+                            <img src="img-demo/4.jpg" alt="image" />
                             <figcaption>Was fun for a couple of hours or so...</figcaption>
                         </figure>
                     </div>
@@ -405,11 +406,12 @@
                 // demos
                 $('#one').liteAccordion({
                         onTriggerSlide : function() {
-                            this.find('figcaption').fadeOut();
+                            $('figcaption').fadeOut();
                         },
                         onSlideAnimComplete : function() {    
                             this.find('figcaption').fadeIn();
                         },
+                        autoScaleImages : true,
                         autoPlay : true,
                         pauseOnHover : true,
                         theme : 'stitch',
