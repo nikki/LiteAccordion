@@ -206,6 +206,13 @@
                     core.setSlidePositions();                       
                 },
 
+                // scale images contained within a slide to fit the slide height and width
+                autoScaleImages : function() {
+
+
+
+                },
+
                 // bind click and mouseover events
                 bindEvents : function() {
                     var resizeTimer = 0;
@@ -316,7 +323,7 @@
                     var $this = $(this),
                         index = header.index($this),
                         next = $this.next();
-                                                                                       
+
                     // update core.currentSlide
                     core.currentSlide = index;
                     

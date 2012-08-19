@@ -12,7 +12,8 @@
 *
 **************************************************/
 /****************************************** Core */
-.accordion { text-align: left; font: 'Helvetica Neue', Verdana, Arial, sans-serif }
+body {     }
+.accordion { text-align: left; font: 'Helvetica Neue', Verdana, Arial, sans-serif; -webkit-tap-highlight-color: transparent }
 .accordion > ol { position: relative; overflow: hidden; height: 100%; margin: 0; padding: 0; list-style-type: none }
 .accordion .slide > h2 { 
 	color: black;
@@ -22,8 +23,8 @@
 	z-index: 100; 
 	position: absolute; 
 	top: 0; 
-	left: 0;
-    -webkit-backface-visibility: hidden;
+	left: 0;    
+    -webkit-backface-visibility: hidden; /* fixes chrome bug */
 	-webkit-transform: translateX(-100%) rotate(-90deg); 
 	-webkit-transform-origin: right top; 
 	-moz-transform: translateX(-100%) rotate(-90deg);
@@ -33,7 +34,7 @@
 	transform: translateX(-100%) rotate(-90deg); 
 	transform-origin: right top;
 	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
-    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); 
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);  
 }
 .accordion .slide > h2 span { 
     display: block; 
@@ -41,9 +42,11 @@
     text-align: right; 
     height: 90%;
     margin-top: 5px; 
-    -moz-user-select: none;
+    -webkit-user-select: none;
     -khtml-user-select: none;
-    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; 
 }
 .accordion .slide > h2 b { 
     display: inline-block; 
@@ -58,6 +61,7 @@
 	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
 }
+
 .accordion .slide > h2:hover { cursor: pointer }
 .accordion .slide > div { height: 100%; position: absolute; top: 0; z-index: 10; overflow: hidden; background: white }
 .accordion noscript p { padding: 10px; margin: 0; background: white }
