@@ -15,23 +15,23 @@
 .liteAccordion { text-align: left; font: 'Helvetica Neue', Verdana, Arial, sans-serif; -webkit-tap-highlight-color: transparent }
 .liteAccordion > ol { position: relative; overflow: hidden; height: 100%; margin: 0; padding: 0; list-style-type: none }
 .liteAccordion .slide > h2 { 
-	color: black;
-    font-size: 16px;	 
-	font-weight: normal;
-	margin: 0; 
-	z-index: 100; 
-	position: absolute; 
-	top: 0; 
-	left: 0;    
+    color: black;
+    font-size: 16px;     
+    font-weight: normal;
+    margin: 0; 
+    z-index: 100; 
+    position: absolute; 
+    top: 0; 
+    left: 0;    
     -webkit-backface-visibility: hidden; /* fixes chrome bug */
-	-webkit-transform: translateX(-100%) rotate(-90deg); 
-	-webkit-transform-origin: right top; 
-	-moz-transform: translateX(-100%) rotate(-90deg);
-	-moz-transform-origin: right top; 
-	-o-transform: translateX(-100%) rotate(-90deg); 
-	-o-transform-origin: right top; 
-	transform: translateX(-100%) rotate(-90deg); 
-	transform-origin: right top; 
+    -webkit-transform: translateX(-100%) rotate(-90deg); 
+    -webkit-transform-origin: right top; 
+    -moz-transform: translateX(-100%) rotate(-90deg);
+    -moz-transform-origin: right top; 
+    -o-transform: translateX(-100%) rotate(-90deg); 
+    -o-transform-origin: right top; 
+    transform: translateX(-100%) rotate(-90deg); 
+    transform-origin: right top; 
 }
 .liteAccordion .slide > h2 span { 
     display: block; 
@@ -74,7 +74,7 @@
     -moz-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4); 
     -ms-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4);
     -o-box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4);
-	box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 -1px 0 #5b5b5b inset, 0 5px 15px rgba(0, 0, 0, 0.4);
 }
 .liteAccordion.dark .slide > h2 { background: #030303; text-shadow: 0 -1px 0 #030303; line-height: 265% }
 .liteAccordion.dark .slide > h2 span { background: #353535; color: white }
@@ -110,7 +110,7 @@
     -moz-box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4);
     -ms-box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4);    
     -o-box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4); 
-	box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4);
+    box-shadow: -1px -1px 0 #c0c0c0, 1px 1px 0 #c0c0c0, 0 5px 15px rgba(0, 0, 0, 0.4);
 }
 .liteAccordion.light .slide > h2 { background: #a0a0a0; text-shadow: 0 -1px 0 white; line-height: 265% }
 .liteAccordion.light .slide > h2 span { 
@@ -125,7 +125,7 @@
     -webkit-box-shadow: -1px -1px 0 #909090 inset, 1px 1px 0 #909090 inset; 
     -moz-box-shadow: -1px -1px 0 #909090 inset, 1px 1px 0 #909090 inset;
     -o-box-shadow: -1px -1px 0 #909090 inset, 1px 1px 0 #909090 inset;
-	box-shadow: -1px -1px 0 #909090 inset, 1px 1px 0 #909090 inset;
+    box-shadow: -1px -1px 0 #909090 inset, 1px 1px 0 #909090 inset;
     color: #909090;
 }
 .liteAccordion.light .slide > h2 b { background: #ffffff; color: #909090; text-shadow: -1px 1px 0 white }
@@ -183,7 +183,7 @@
     -moz-transform: rotate(45deg); 
     -o-transform: rotate(45deg); 
     transform: rotate(45deg);
-	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
+    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
     border-width: 9px;
     border-top: 0;
