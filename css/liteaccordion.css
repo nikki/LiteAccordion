@@ -6,11 +6,7 @@
 *   url:        http://nicolahibbert.com/liteaccordion-v2/
 *   demo:       http://www.nicolahibbert.com/demo/liteAccordion/
 *
-<<<<<<< HEAD
-*   Version:    2.0.3
-=======
 *   Version:    2.1.0
->>>>>>> dev
 *   Copyright:  (c) 2010-2012 Nicola Hibbert
 *   Licence:    MIT
 *
@@ -26,13 +22,8 @@
 	z-index: 100; 
 	position: absolute; 
 	top: 0; 
-<<<<<<< HEAD
-	left: 0; 
-    -webkit-backface-visibility: hidden;    
-=======
 	left: 0;    
     -webkit-backface-visibility: hidden; /* fixes chrome bug */
->>>>>>> dev
 	-webkit-transform: translateX(-100%) rotate(-90deg); 
 	-webkit-transform-origin: right top; 
 	-moz-transform: translateX(-100%) rotate(-90deg);

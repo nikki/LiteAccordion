@@ -60,13 +60,6 @@ $('#yourdiv').liteAccordion('next').liteAccordion('next');
 ***
 ###Changelog
 
-<<<<<<< HEAD
-**v2.0.3 - 19/08/2012
-
-- Chrome bug fix
-
-**v2.0.2 - 23/01/2012
-=======
 **v2.1** - 19/08/2012
 
 * added responsive layout option
@@ -81,7 +74,6 @@ $('#yourdiv').liteAccordion('next').liteAccordion('next');
 - Chrome residual animation artifacts bug fix
 
 **v2.0.2** - 23/01/2012
->>>>>>> dev
 
 - slide width fix for IE
 - added documentation for methods
