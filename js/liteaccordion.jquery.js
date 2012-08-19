@@ -338,23 +338,20 @@
                     // trigger callback in context of sibling div (jQuery wrapped)
                     settings.onTriggerSlide.call(tab.next);
 
-                    // stop autoplay
-                    if (e.originalEvent && settings.autoPlay) methods.stop();
-
                     // animate
                     if ($this.hasClass('selected') && $this.position().left < slideWidth / 2) {
                         // animate single selected tab
-                         core.animSlide.call(tab);
-
-                        // reset current slide index in core.nextSlide closure
-                        if (e.originalEvent && settings.autoPlay) methods.play(tab.index - 1);                        
+                        core.animSlide.call(tab);                       
                     } else {
                         // animate groups
-                        core.animSlideGroup(tab);
-
-                        // reset current slide index in core.nextSlide closure
-                        if (e.originalEvent && settings.autoPlay) methods.play(tab.index);                         
+                        core.animSlideGroup(tab);                       
                     }
+
+                    // stop autoplay, reset current slide index in core.nextSlide closure
+                    if (e.originalEvent && settings.autoPlay) {
+                        methods.stop();
+                        methods.play(header.index(header.filter('.selected')));
+                    }  
                 },
 
                 animSlide : function(triggerTab) {
