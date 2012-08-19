@@ -149,7 +149,9 @@
                     core.setSlidePositions();
 
                     // override container and slide widths for responsive setting
-                    if (settings.responsive) core.responsive();                      
+                    if (settings.responsive) {
+                        core.responsive();
+                    }
                 },
 
                 // set initial positions for each slide  
@@ -203,14 +205,22 @@
                         .width(settings.containerHeight);
 
                     // set slide positions
-                    core.setSlidePositions();                       
+                    core.setSlidePositions();                                       
                 },
 
                 // scale images contained within a slide to fit the slide height and width
                 autoScaleImages : function() {
+                    slides.children('div').each(function() {
+                        var $this = $(this), 
+                            $imgs = $this.find('img');
 
-
-
+                        if ($imgs.length) {
+                            $imgs.each(function(index, item) {
+                                $(item).width($this.width());
+                                $(item).height($this.height());                                
+                            });
+                        }
+                    });
                 },
 
                 // bind click and mouseover events
@@ -234,12 +244,18 @@
 
                     // resize and orientationchange
                     if (settings.responsive) {
-                        $(window).bind('resize.liteAccordion, orientationchange.liteAccordion', function() {
-                            clearTimeout(resizeTimer);
-                            resizeTimer = setTimeout(function() {
-                                core.responsive();
-                            }, 100);
-                        });
+                        $(window)
+                            .bind('load.liteAccordion', function() {
+                                if (settings.autoScaleImages) core.autoScaleImages();  
+                            })
+                            .bind('resize.liteAccordion, orientationchange.liteAccordion', function() {
+                                // approximates 'onresizeend'
+                                clearTimeout(resizeTimer);
+                                resizeTimer = setTimeout(function() {
+                                    core.responsive();
+                                    if (settings.autoScaleImages) core.autoScaleImages();
+                                }, 100);
+                            });
                     }
                 },
                 
