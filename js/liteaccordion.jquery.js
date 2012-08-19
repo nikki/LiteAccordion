@@ -137,34 +137,36 @@
                         .addClass(settings.rounded && 'rounded')                  
                         .addClass(settings.theme);
                         
-                    // set slide heights and widths, selected class
+                    // set slide heights
                     slides
                         .addClass('slide')
                         .children(':first-child')
-                        .height(settings.headerWidth)                        
-                        .eq(settings.firstSlide - 1)
-                        .addClass('selected');
+                        .height(settings.headerWidth);
 
                     // set slide positions
                     core.setSlidePositions();
 
                     // override container and slide widths for responsive setting
-                    if (settings.responsive) {
-                        core.responsive();
-                    }
+                    if (settings.responsive) core.responsive();
                 },
 
                 // set initial positions for each slide  
-                setSlidePositions : function() {          
+                setSlidePositions : function() {
+                    var selected = header.filter('.selected');
+
+                    // account for already selected slide
+                    if (!selected.length) header.eq(settings.firstSlide - 1).addClass('selected');
+
                     header.each(function(index) {
                         var $this = $(this),
                             left = index * settings.headerWidth,
                             margin = header.first().next(),
                             offset = parseInt(margin.css('marginLeft'), 10) || parseInt(margin.css('marginRight'), 10) || 0;
-                            
-                        if (index >= settings.firstSlide) left += slideWidth;
-
-                        // !!! TODO: need to account for already selected slide
+                        
+                        // compensate for already selected slide on resize
+                        if (selected.length && index > header.index(selected)) {
+                            if (index >= settings.firstSlide) left += slideWidth;
+                        }
 
                         $this
                             .css('left', left)
