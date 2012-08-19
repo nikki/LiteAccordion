@@ -112,8 +112,17 @@
         </dl>
         <p>If you find any bugs, please <a href="https://github.com/nikki/liteAccordion/issues">file a ticket on Github</a> and I'll fix it as soon as possible.  Thanks!</p>
 
+        <h2>New in 2.1! (19/08/11)</h2>
+        <strong>Responsive layout option</strong>
+        <p>liteAccordion now has a responsive layout option.  If you set { responsive : true } in the plugin options, the accordion will now stretch to fit your page's responsive design.  This also works on mobile devices when the orientation of the device is changed.  Check out the demo on desktop or mobile <a href="responsive.html">here</a>.
+        Use the minContainerWidth and maxContainerWidth options in conjunction with the responsive option, to limit the minimum and maximum ranges your accordion can scale to.</p>
+
+        <strong>Auto scale images</strong>
+        <p>If you plan to use liteAccordion as an image slider, there is now an option to scale images contained in a slide to automatically fit the slide dimensions.  This works
+        in both responsive and fixed width modes.  Check out the <a href="responsive.html">responsive demo</a> to see it in action.</p>
+
         <h2>New in 2.0! (16/11/11)</h2>
-        <strong>Methods:</strong>
+        <strong>Methods</strong>
         <p>liteAccordion now has play, stop, trigger next slide, trigger previous slide, destroy and debug methods.</p>
 
         <strong>Mouseover activation</strong>
@@ -406,9 +415,11 @@
                 // demos
                 $('#one').liteAccordion({
                         onTriggerSlide : function() {
+                            // console.log('onTriggerSlide triggered');
                             $('figcaption').fadeOut();
                         },
                         onSlideAnimComplete : function() {    
+                            // console.log('onSlideAnimComplete triggered');
                             this.find('figcaption').fadeIn();
                         },
                         autoScaleImages : true,

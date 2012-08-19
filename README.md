@@ -16,6 +16,11 @@ These are the default settings for the liteAccordion plugin:
     containerHeight : 320,                  // fixed (px)  
     headerWidth: 48,                        // fixed (px)  
     
+    responsive : false,                     // overrides the above three settings, accordion adjusts to fill container
+    autoScaleImages : false,                // if a single image is placed within the slide, this will be automatically scaled to fit
+    minContainerWidth : 300,                // minimum width the accordion will resize to
+    maxContainerWidth : 960,                // maximum width the accordion will resize to
+
     activateOn : 'click',                   // click or mouseover  
     firstSlide : 1,                         // displays slide (n) on page load  
     slideSpeed : 800,                       // slide animation speed  
@@ -55,7 +60,7 @@ $('#yourdiv').liteAccordion('next').liteAccordion('next');
 ***
 ###Changelog
 
-**v2.1**
+**v2.1** - 19/08/2012
 
 * added responsive layout option
 * added minContainerWidth and maxContainerWidth properties for use with responsive option
@@ -64,7 +69,7 @@ $('#yourdiv').liteAccordion('next').liteAccordion('next');
 - linkable now uses 'data-slide-name' instead of 'name'
 - $.browser no longer used
 
-**v2.0.3** - 19/08/2012
+**v2.0.3** - 18/08/2012
 
 - Chrome residual animation artifacts bug fix
 
