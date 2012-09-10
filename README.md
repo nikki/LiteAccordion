@@ -60,12 +60,16 @@ $('#yourdiv').liteAccordion('next').liteAccordion('next');
 ***
 ###Changelog
 
+**v2.1.1** - 10/09/2012
+
+- fixed issue #58
+
 **v2.1** - 19/08/2012
 
-* added responsive layout option
-* added minContainerWidth and maxContainerWidth properties for use with responsive option
-* added autoScale images option
-* click or hover on selected header now triggers slide
+- added responsive layout option
+- added minContainerWidth and maxContainerWidth properties for use with responsive option
+- added autoScale images option
+- click or hover on selected header now triggers slide
 - linkable now uses 'data-slide-name' instead of 'name'
 - $.browser no longer used
 

@@ -6,7 +6,7 @@
 *   url:        http://nicolahibbert.com/liteaccordion-v2/
 *   demo:       http://www.nicolahibbert.com/demo/liteAccordion/
 *
-*   Version:    2.1.0
+*   Version:    2.1.1
 *   Copyright:  (c) 2010-2012 Nicola Hibbert
 *   Licence:    MIT
 *
@@ -151,7 +151,7 @@
     top: -9px; 
     left: -9px; 
     background: #353535; 
-    border-width: 9px;     
+    border: 9px solid transparent;    
     -webkit-border-image: url('bg_stitch.png') 9 repeat; 
     -moz-border-image: url('bg_stitch.png') 9 repeat;
     -o-border-image: url('bg_stitch.png') 9 repeat;
@@ -163,13 +163,13 @@
     padding-right: 5%;
     color: white;
     text-shadow: -1px 1px 0 #5b5b5b;
-    border-width: 9px; 
+    border: 9px solid transparent;
     background-image: url('bg_noise.png');
-    margin-top: 0;
+    margin-top: 0;   
     -webkit-border-image: url('bg_stitch.png') 9 repeat; 
     -moz-border-image: url('bg_stitch.png') 9 repeat;
     -o-border-image: url('bg_stitch.png') 9 repeat;
-    border-image: url('bg_stitch.png') 9 repeat;
+    border-image: url('bg_stitch.png') 9 repeat;    
 }
 .liteAccordion.stitch .slide > h2.selected:after { 
     content: ''; 
@@ -185,13 +185,13 @@
     transform: rotate(45deg);
     -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
-    border-width: 9px;
+    border: 9px solid transparent;
     border-top: 0;
-    border-left: 0; 
+    border-left: 0;  
     -webkit-border-image: url('bg_stitch.png') 9 repeat; 
     -moz-border-image: url('bg_stitch.png') 9 repeat;
     -o-border-image: url('bg_stitch.png') 9 repeat;
-    border-image: url('bg_stitch.png') 9 repeat;
+    border-image: url('bg_stitch.png') 9 repeat;  
     background-image: url('bg_noise.png');  
 }
 
