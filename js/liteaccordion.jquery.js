@@ -28,7 +28,7 @@
             activateOn : 'click',                   // click or mouseover
             firstSlide : 1,                         // displays slide (n) on page load
             slideSpeed : 800,                       // slide animation speed
-            onTriggerSlide : function() {},         // callback on slide activate
+            onTriggerSlide : function(e) {},        // callback on slide activate
             onSlideAnimComplete : function() {},    // callback on slide anim complete
 
             autoPlay : false,                       // automatically cycle through slides
@@ -336,7 +336,7 @@
                     if (settings.linkable && !core.playing) window.location.hash = $this.parent().attr('data-slide-name');
 
                     // trigger callback in context of sibling div (jQuery wrapped)
-                    settings.onTriggerSlide.call(tab.next);
+                    settings.onTriggerSlide.call(tab.next, $this);
 
                     // animate
                     if ($this.hasClass('selected') && $this.position().left < slideWidth / 2) {
