@@ -28,7 +28,7 @@
             activateOn : 'click',                   // click or mouseover
             firstSlide : 1,                         // displays slide (n) on page load
             slideSpeed : 800,                       // slide animation speed
-            onTriggerSlide : function() {},         // callback on slide activate
+            onTriggerSlide : function(e) {},        // callback on slide activate
             onSlideAnimComplete : function() {},    // callback on slide anim complete
 
             autoPlay : false,                       // automatically cycle through slides
@@ -325,7 +325,7 @@
                             next : $this.next(),
                             prev : $this.parent().prev().children('h2')
                         };
-
+                    
                     // update core.currentSlide
                     core.currentSlide = tab.index;
                     
@@ -336,22 +336,25 @@
                     if (settings.linkable && !core.playing) window.location.hash = $this.parent().attr('data-slide-name');
 
                     // trigger callback in context of sibling div (jQuery wrapped)
-                    settings.onTriggerSlide.call(tab.next);
-
-                    // animate
-                    if ($this.hasClass('selected') && $this.position().left < slideWidth / 2) {
-                        // animate single selected tab
-                        core.animSlide.call(tab);                       
-                    } else {
-                        // animate groups
-                        core.animSlideGroup(tab);                       
+                    settings.onTriggerSlide.call(tab.next, $this);
+                    
+                    // do not triggerSlide if the current slide is already open
+    				if (!$this.hasClass('selected')) {
+                        // animate
+                        if ($this.hasClass('selected') && $this.position().left < slideWidth / 2) {
+                            // animate single selected tab
+                            core.animSlide.call(tab);
+                        } else {
+                            // animate groups
+                            core.animSlideGroup(tab);                       
+                        }
+    
+                        // stop autoplay, reset current slide index in core.nextSlide closure
+                        if (e.originalEvent && settings.autoPlay) {
+                            methods.stop();
+                            methods.play(header.index(header.filter('.selected')));
+                        }
                     }
-
-                    // stop autoplay, reset current slide index in core.nextSlide closure
-                    if (e.originalEvent && settings.autoPlay) {
-                        methods.stop();
-                        methods.play(header.index(header.filter('.selected')));
-                    }  
                 },
 
                 animSlide : function(triggerTab) {
