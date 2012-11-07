@@ -341,7 +341,7 @@
                     // animate
                     if ($this.hasClass('selected') && $this.position().left < slideWidth / 2) {
                         // animate single selected tab
-                        core.animSlide.call(tab);                       
+                        core.animSlide(tab);                       
                     } else {
                         // animate groups
                         core.animSlideGroup(tab);                       
