@@ -414,7 +414,7 @@
                                         next : $this.next(),
                                         prev : $this.parent().prev().children('h2'),
                                         pos : left
-                                    };                               
+                                    };
 
                                 // trigger item anim, pass original trigger context for callback fn
                                 core.animSlide.call(tab, triggerTab);
@@ -436,13 +436,13 @@
 
                     elem.addClass('ie ie' + version);
                 },
-                
+
                 init : function() {
                     var ua = navigator.userAgent,
                         index = ua.indexOf('MSIE');
 
                     // test for ie
-                    if (index !== -1) {                        
+                    if (index !== -1) {
                         ua = ua.slice(index + 5, index + 6);
                         core.ieClass(+ua);
                     }
@@ -467,7 +467,7 @@
 
         // expose methods
         return methods;
-       
+
     };
 
     $.fn.liteAccordion = function(method) {
@@ -478,7 +478,7 @@
         if (typeof method === 'object' || !method) {
             return elem.each(function() {
                 var liteAccordion;
-    
+
                 // if plugin already instantiated, return
                 if (instance) return;
 
@@ -494,7 +494,7 @@
                 return instance[method].call(elem);
             } else { // the rest of the methods are chainable though
                 instance[method].call(elem);
-                return elem;                
+                return elem;
             }
         }
     };
