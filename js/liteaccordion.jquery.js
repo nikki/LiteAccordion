@@ -12,14 +12,14 @@
 **************************************************/
 
 ;(function($) {
-    
+
     var LiteAccordion = function(elem, options) {
-        
+
         var defaults = {
             containerWidth : 960,                   // fixed (px)
             containerHeight : 320,                  // fixed (px)
             headerWidth : 48,                       // fixed (px)
-            
+
             responsive : false,                     // overrides the above three settings, accordion adjusts to fill container
             autoScaleImages : false,                // if a single image is placed within the slide, this will be automatically scaled to fit
             minContainerWidth : 300,                // minimum width the accordion will resize to
@@ -35,25 +35,25 @@
             pauseOnHover : false,                   // pause on hover
             cycleSpeed : 6000,                      // time between slide cycles
             easing : 'swing',                       // custom easing function
-                                                    
+
             theme : 'basic',                        // basic, dark, light, or stitch
             rounded : false,                        // square or rounded corners
-            enumerateSlides : false,                // put numbers on slides 
+            enumerateSlides : false,                // put numbers on slides
             linkable : false                        // link slides via hash
         },
 
-        // merge defaults with options in new settings object   
+        // merge defaults with options in new settings object
             settings = $.extend({}, defaults, options),
-        
+
         // 'globals'
             slides = elem.children('ol').children('li'),
             header = slides.children(':first-child'),
             slideLen = slides.length,
             slideWidth = settings.containerWidth - slideLen * settings.headerWidth,
 
-        // public methods    
+        // public methods
             methods = {
-                    
+
                 // start elem animation
                 play : function(index) {
                     var next = core.nextSlide(index && index);
@@ -65,7 +65,7 @@
                         header.eq(next()).trigger('click.liteAccordion');
                     }, settings.cycleSpeed);
                 },
-            
+
                 // stop elem animation
                 stop : function() {
                     clearInterval(core.playing);
@@ -81,11 +81,11 @@
                 // trigger previous slide
                 prev : function() {
                     methods.stop();
-                    header.eq(core.currentSlide - 1).trigger('click.liteAccordion');  
+                    header.eq(core.currentSlide - 1).trigger('click.liteAccordion');
                 },
-                
+
                 // destroy plugin instance
-                destroy : function() {                    
+                destroy : function() {
                     // stop autoplay
                     methods.stop();
 
@@ -105,7 +105,7 @@
                         .end()
                         .find('b')
                         .remove();
-                        
+
                     slides
                         .removeClass('slide')
                         .children()
@@ -121,12 +121,12 @@
                         methods : methods,
                         core : core
                     };
-                }       
+                }
             },
 
         // core utility and animation methods
             core = {
-        
+
                 // set style properties
                 setStyles : function() {
                     // set container height and width, theme and corner style
@@ -134,9 +134,9 @@
                         .width(settings.containerWidth)
                         .height(settings.containerHeight)
                         .addClass('liteAccordion')
-                        .addClass(settings.rounded && 'rounded')                  
+                        .addClass(settings.rounded && 'rounded')
                         .addClass(settings.theme);
-                        
+
                     // set slide heights
                     slides
                         .addClass('slide')
@@ -155,7 +155,7 @@
                     }
                 },
 
-                // set initial positions for each slide  
+                // set initial positions for each slide
                 setSlidePositions : function() {
                     var selected = header.filter('.selected');
 
@@ -167,7 +167,7 @@
                             left = index * settings.headerWidth,
                             margin = header.first().next(),
                             offset = parseInt(margin.css('marginLeft'), 10) || parseInt(margin.css('marginRight'), 10) || 0;
-                        
+
                         // compensate for already selected slide on resize
                         if (selected.length) {
                             if (index > header.index(selected)) left += slideWidth;
@@ -191,7 +191,7 @@
 
                 // responsive styles
                 responsive : function() {
-                    var parentWidth = elem.parent().width(); 
+                    var parentWidth = elem.parent().width();
 
                     // set new container width
                     if (parentWidth > settings.minContainerWidth) {
@@ -217,19 +217,19 @@
                         .width(settings.containerHeight);
 
                     // set slide positions
-                    core.setSlidePositions();                                       
+                    core.setSlidePositions();
                 },
 
                 // scale images contained within a slide to fit the slide height and width
                 autoScaleImages : function() {
                     slides.children('div').each(function() {
-                        var $this = $(this), 
+                        var $this = $(this),
                             $imgs = $this.find('img');
 
                         if ($imgs.length) {
                             $imgs.each(function(index, item) {
                                 $(item).width($this.width() + 1); // fix the anti-aliasing bug in chrome
-                                $(item).height($this.height());                                
+                                $(item).height($this.height());
                             });
                         }
                     });
@@ -244,8 +244,8 @@
                     } else if (settings.activateOn === 'mouseover') {
                         header.on('click.liteAccordion mouseover.liteAccordion', core.triggerSlide);
                     }
-                    
-                    // pause on hover (can't use custom events with $.hover())      
+
+                    // pause on hover (can't use custom events with $.hover())
                     if (settings.pauseOnHover && settings.autoPlay) {
                         elem
                             .on('mouseover.liteAccordion', function() {
@@ -260,7 +260,7 @@
                     if (settings.responsive) {
                         $(window)
                             .on('load.liteAccordion', function() {
-                                if (settings.autoScaleImages) core.autoScaleImages();  
+                                if (settings.autoScaleImages) core.autoScaleImages();
                             })
                             .on('resize.liteAccordion orientationchange.liteAccordion', function() {
                                 // approximates 'onresizeend'
@@ -272,7 +272,7 @@
                             });
                     }
                 },
-                
+
                 linkable : function() {
                     var cacheSlideNames = (function() {
                         var slideNames = [];
@@ -282,24 +282,24 @@
                         });
 
                         // memoize
-                        return cacheSlideNames = slideNames;                        
+                        return cacheSlideNames = slideNames;
                     })();
-                    
+
                     var triggerHash = function(e) {
                         var index;
-                        
+
                         if (e.type === 'load' && !window.location.hash) return;
                         if (e.type === 'hashchange' && core.playing) return;
-                        
+
                         index = $.inArray((window.location.hash.slice(1)).toLowerCase(), cacheSlideNames);
                         if (index > -1 && index < cacheSlideNames.length) header.eq(index).trigger('click.liteAccordion');
                     };
 
                     $(window).on('hashchange.liteAccordion load.liteAccordion', triggerHash);
                 },
-                
+
                 // counter for autoPlay (zero index firstSlide on init)
-                currentSlide : settings.firstSlide - 1,             
+                currentSlide : settings.firstSlide - 1,
 
                 // next slide index
                 nextSlide : function(index) {
@@ -309,18 +309,18 @@
                     return function() {
                         return next++ % slideLen;
                     };
-                },  
-    
+                },
+
                 // holds interval counter
                 playing : 0,
-                
+
                 slideAnimCompleteFlag : false,
-                
+
                 // trigger slide animation
                 triggerSlide : function(e) {
                     var $this = $(this),
                         tab = {
-                            elem : $this, 
+                            elem : $this,
                             index : header.index($this),
                             next : $this.next(),
                             prev : $this.parent().prev().children('h2')
@@ -328,10 +328,10 @@
 
                     // update core.currentSlide
                     core.currentSlide = tab.index;
-                    
+
                     // reset onSlideAnimComplete callback flag
-                    core.slideAnimCompleteFlag = false;            
-                            
+                    core.slideAnimCompleteFlag = false;
+
                     // set location.hash
                     if (settings.linkable && !core.playing) window.location.hash = $this.parent().attr('data-slide-name');
 
@@ -341,17 +341,17 @@
                     // animate
                     if ($this.hasClass('selected') && $this.position().left < slideWidth / 2) {
                         // animate single selected tab
-                        core.animSlide(tab);                       
+                        core.animSlide(tab);
                     } else {
                         // animate groups
-                        core.animSlideGroup(tab);                       
+                        core.animSlideGroup(tab);
                     }
 
                     // stop autoplay, reset current slide index in core.nextSlide closure
                     if (e.originalEvent && settings.autoPlay) {
                         methods.stop();
                         methods.play(header.index(header.filter('.selected')));
-                    }  
+                    }
                 },
 
                 animSlide : function(triggerTab) {
