@@ -370,24 +370,24 @@
                             .stop(true)
                             .animate({
                                 left : this.pos + this.index * settings.headerWidth
-                            }, 
-                                settings.slideSpeed, 
+                            },
+                                settings.slideSpeed,
                                 settings.easing,
-                                function() { 
+                                function() {
                                     // flag ensures that fn is only called one time per triggerSlide
                                     if (!core.slideAnimCompleteFlag) {
                                         // trigger onSlideAnimComplete callback in context of sibling div (jQuery wrapped)
                                         settings.onSlideAnimComplete.call(triggerTab ? triggerTab.next : _this.prev.next());
                                         core.slideAnimCompleteFlag = true;
-                                    }                                      
-                                });                          
+                                    }
+                                });
 
                             // remove, then add selected class
-                            header.removeClass('selected').filter(this.prev).addClass('selected');                              
+                            header.removeClass('selected').filter(this.prev).addClass('selected');
 
                     }
                 },
-                
+
                 // animates left and right groups of slides
                 animSlideGroup : function(triggerTab) {
                     var group = ['left', 'right'];
@@ -404,12 +404,12 @@
                         }
 
                         slides
-                            .filter(filterExpr) 
-                            .children('h2')                           
+                            .filter(filterExpr)
+                            .children('h2')
                             .each(function() {
                                 var $this = $(this),
                                     tab = {
-                                        elem : $this, 
+                                        elem : $this,
                                         index : header.index($this),
                                         next : $this.next(),
                                         prev : $this.parent().prev().children('h2'),
