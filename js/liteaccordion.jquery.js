@@ -364,7 +364,7 @@
                     header.removeClass('selected').filter(this.elem).addClass('selected');
 
                     // if slide index not zero
-                    if (!!this.index) {
+                    if (this.index > 0 || this.pos == 0) {
                         this.elem
                             .add(this.next)
                             .stop(true)
