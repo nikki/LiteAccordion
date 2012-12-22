@@ -47,7 +47,7 @@
                 line-height: 20px;
                 margin: 10px 0;
             }
-            
+
             .call_out a.alt_btn {
                 background: url('img-demo/sprite.png') 24px 356px;
                 display: block;
@@ -81,7 +81,7 @@
         <!-- liteAccordion css -->
         <link href="css/liteaccordion.css" rel="stylesheet" />
 
-        <!-- jQuery -->        
+        <!-- jQuery -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 
         <!-- easing -->
@@ -93,9 +93,9 @@
         <!--[if lt IE 9]>
             <script>
                 document.createElement('figure');
-                document.createElement('figcaption');           
+                document.createElement('figcaption');
             </script>
-        <![endif]-->         
+        <![endif]-->
     </head>
     <body>
 
@@ -174,7 +174,7 @@
                 <div class="detail">
                     <h2>Looking for a WordPress version?</h2>
                     <a href="http://accordionpro.nicolahibbert.com" class="alt_btn right" title="horizontal accordion plugin for WordPress"><span>Accordion Pro</span></a>
-                </div>             
+                </div>
             </div>
         </div>
 
@@ -336,30 +336,30 @@
 
         <h2>Options</h2>
         <p>These are the default settings for the liteAccordion plugin:</p>
-        <pre class="brush: js">         
-            containerWidth : 960,                   // fixed (px)  
-            containerHeight : 320,                  // fixed (px)  
-            headerWidth: 48,                        // fixed (px)  
+        <pre class="brush: js">
+            containerWidth : 960,                   // fixed (px)
+            containerHeight : 320,                  // fixed (px)
+            headerWidth: 48,                        // fixed (px)
 
             responsive : false,                     // overrides the above three settings, accordion adjusts to fill container
             autoScaleImages : false,                // if a single image is placed within the slide, this will be automatically scaled to fit
             minContainerWidth : 300,                // minimum width the accordion will resize to
             maxContainerWidth : 960,                // maximum width the accordion will resize to
 
-            activateOn : 'click',                   // click or mouseover  
-            firstSlide : 1,                         // displays slide (n) on page load  
-            slideSpeed : 800,                       // slide animation speed  
-            onTriggerSlide : function() {},         // callback on slide activate  
-            onSlideAnimComplete : function() {},    // callback on slide anim complete  
+            activateOn : 'click',                   // click or mouseover
+            firstSlide : 1,                         // displays slide (n) on page load
+            slideSpeed : 800,                       // slide animation speed
+            onTriggerSlide : function() {},         // callback on slide activate
+            onSlideAnimComplete : function() {},    // callback on slide anim complete
 
-            autoPlay : false,                       // automatically cycle through slides  
-            pauseOnHover : false,                   // pause on hover  
-            cycleSpeed : 6000,                      // time between slide cycles  
-            easing : 'swing',                       // custom easing function  
+            autoPlay : false,                       // automatically cycle through slides
+            pauseOnHover : false,                   // pause on hover
+            cycleSpeed : 6000,                      // time between slide cycles
+            easing : 'swing',                       // custom easing function
 
-            theme : 'basic',                        // basic, dark, light, or stitch  
-            rounded : false,                        // square or rounded corners  
-            enumerateSlides : false,                // put numbers on slides  
+            theme : 'basic',                        // basic, dark, light, or stitch
+            rounded : false,                        // square or rounded corners
+            enumerateSlides : false,                // put numbers on slides
             linkable : false                        // link slides via hash</pre>
 
         <p>Simply pass options into the liteAccordion function with an object literal, for example, below is the code for the accordion at the top of the page.</p>
@@ -368,20 +368,20 @@
                     onTriggerSlide : function() {
                         this.find('figcaption').fadeOut();
                     },
-                    onSlideAnimComplete : function() {    
+                    onSlideAnimComplete : function() {
                         this.find('figcaption').fadeIn();
                     },
                     autoPlay : true,
                     pauseOnHover : true,
                     theme : 'stitch',
                     rounded : true,
-                    enumerateSlides : true                  
+                    enumerateSlides : true
             }).find('figcaption:first').show();
         </pre>
 
         <h2>Methods</h2>
         <p>These are the methods for the liteAccordion plugin:</p>
-        <pre class="brush: js">         
+        <pre class="brush: js">
             play                                    // trigger autoPlay on a stopped accordion
             stop                                    // stop an accordion playing
             next                                    // trigger the next slide
@@ -442,10 +442,10 @@
             <a href="#man-down">man down!</a>
             <a href="#crash">crashy crashy</a>
         </p>
-        <pre class="brush: js">$('#yourdiv').liteAccordion({ 
-    theme : 'dark', 
-    rounded : true, 
-    enumerateSlides : true, 
+        <pre class="brush: js">$('#yourdiv').liteAccordion({
+    theme : 'dark',
+    rounded : true,
+    enumerateSlides : true,
     firstSlide : 2,
     linkable : true,
     easing: 'easeInOutQuart'
@@ -488,7 +488,7 @@
                 <p>Please enable JavaScript to get the full experience.</p>
             </noscript>
         </div>
-        <pre class="brush: js">$('#yourdiv').liteAccordion({ 
+        <pre class="brush: js">$('#yourdiv').liteAccordion({
     theme : 'light',
     firstSlide : 3,
     easing: 'easeOutBounce',
@@ -506,32 +506,32 @@
             (function($, d) {
                 // please don't copy and paste this page
                 // it breaks my analytics!
-                
+
                 // demos
                 $('#one').liteAccordion({
                         onTriggerSlide : function() {
                             this.find('figcaption').fadeOut();
                         },
-                        onSlideAnimComplete : function() {    
+                        onSlideAnimComplete : function() {
                             this.find('figcaption').fadeIn();
                         },
                         autoPlay : true,
                         pauseOnHover : true,
                         theme : 'stitch',
                         rounded : true,
-                        enumerateSlides : true                  
+                        enumerateSlides : true
                 }).find('figcaption:first').show();
                 $('#two').liteAccordion();
                 $('#three').liteAccordion({ theme : 'dark', rounded : true, enumerateSlides : true, firstSlide : 2, linkable : true, easing: 'easeInOutQuart' });
-                $('#four').liteAccordion({ theme : 'light', firstSlide : 3, easing: 'easeOutBounce', activateOn: 'mouseover' });  
+                $('#four').liteAccordion({ theme : 'light', firstSlide : 3, easing: 'easeOutBounce', activateOn: 'mouseover' });
 
                 // social links
-                var js, id = 'facebook-jssdk'; 
+                var js, id = 'facebook-jssdk';
 
                 if (d.getElementById(id)) return;
 
-                js = d.createElement('script'); 
-                js.id = id; 
+                js = d.createElement('script');
+                js.id = id;
                 js.async = true;
                 js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
                 d.getElementsByTagName('head')[0].appendChild(js);
@@ -541,7 +541,7 @@
                 // Load Tweet Button Script
                 jQuery.getScript('https://platform.twitter.com/widgets.js');
                 // Load LinkedIn button
-                jQuery.getScript('https://platform.linkedin.com/in.js?v=2');                
+                jQuery.getScript('https://platform.linkedin.com/in.js?v=2');
             })(jQuery, document);
 
             // analytics
