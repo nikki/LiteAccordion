@@ -310,8 +310,17 @@
                             elem : $this,
                             index : header.index($this),
                             next : $this.next(),
-                            prev : $this.parent().prev().children('h2')
+                            prev : $this.parent().prev().children('h2'),
+                            parent : $this.parent()
                         };
+
+                    // current hash not correct?
+                    if (settings.linkable && tab.parent.attr('data-slide-name')) {
+                        if (tab.parent.attr('data-slide-name') !== window.location.hash.split('#')[1]) {
+                            // exit early and try again (prevents double trigger (issue #60))
+                            return window.location.hash = '#' + tab.parent.attr('data-slide-name');
+                        }
+                    }
 
                     // update core.currentSlide
                     core.currentSlide = tab.index;
@@ -332,7 +341,7 @@
                     }
 
                     // stop autoplay, reset current slide index in core.nextSlide closure
-                    if (!e.isTrigger && settings.autoPlay) {
+                    if (settings.autoPlay) {
                         methods.stop();
                         methods.play(header.index(header.filter('.selected')));
                     }
