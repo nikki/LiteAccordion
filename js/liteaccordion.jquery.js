@@ -253,7 +253,11 @@
                                 return $(this).attr('data-slide-name') === window.location.hash.split('#')[1];
                             });
 
-                            core.triggerSlide.call(url.children('h2')[0], e);
+                            // if slide name exists
+                            if (url.length) {
+                                // trigger slide
+                                core.triggerSlide.call(url.children('h2')[0], e);
+                            }
                         });
                     }
 
