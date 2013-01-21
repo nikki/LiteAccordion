@@ -27,7 +27,7 @@ These are the default settings for the liteAccordion plugin:
     cycleSpeed : 6000,                      // time between slide cycles
     easing : 'swing',                       // custom easing function
 
-    theme : 'basic',                        // basic, dark, light, colorful, or stitch
+    theme : 'basic',                        // basic, dark, light, or stitch
     rounded : false,                        // square or rounded corners
     enumerateSlides : false,                // put numbers on slides
     linkable : false                        // link slides via hash
