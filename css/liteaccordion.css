@@ -1,3 +1,6 @@
+
+/* !!! box-sizing: whatever normal is, not border-box; */
+
 @charset 'utf-8';
 /*************************************************!
 *
@@ -12,9 +15,37 @@
 *
 **************************************************/
 /****************************************** Core */
-.liteAccordion { text-align: left; font: 'Helvetica Neue', Verdana, Arial, sans-serif; -webkit-tap-highlight-color: transparent }
-.liteAccordion, .liteAccordion * { padding: 0; margin: 0 }
+.liteAccordion {
+    text-align: left;
+    font-size: 16px;
+    line-height: 24px;
+    font: 'Helvetica Neue', Verdana, Arial, sans-serif;
+    -webkit-transform-origin: 0 0;
+    -moz-transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    -o-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    -webkit-tap-highlight-color: transparent;
+
+
+    /* translate Z to trigger hw acceleration */
+    /*transform: scale3d(0.5, 0.5, 0.01);*/
+
+
+
+  image-rendering: optimizeSpeed;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: optimize-contrast;
+  -ms-interpolation-mode: nearest-neighbor;
+
+
+
+}
+.liteAccordion, .liteAccordion * { padding: 0; margin: 0; border: 0 }
 .liteAccordion > ol { position: relative; overflow: hidden; height: 100%; margin: 0; padding: 0; list-style-type: none }
+.liteAccordion > ol > li { list-style-type: none }
 .liteAccordion .slide > h2 {
     color: black;
     font-size: 16px;
@@ -213,26 +244,32 @@
 
 /******************************************** IE */
 /* stitch */
-.liteAccordion.ie.stitch .slide > h2 { line-height: 265% }
-.liteAccordion.ie.stitch .slide > h2 span { height: 89%; padding-right: 8% }
+.liteAccordion.ie.stitch .slide > h2 { /*line-height: 265%*/ }
+.liteAccordion.ie.stitch .slide > h2 span { /*height: 89%; padding-right: 8%*/ }
 .liteAccordion.ie.stitch .slide > h2.selected:after { display: none }
 .liteAccordion.ie.stitch .slide-0 > h2 span { background-color: #c25252 }
 .liteAccordion.ie.stitch .slide-1 > h2 span { background-color: #ca9859 }
 .liteAccordion.ie.stitch .slide-2 > h2 span { background-color: #96ba5f }
 .liteAccordion.ie.stitch .slide-3 > h2 span { background-color: #59abb7 }
 .liteAccordion.ie.stitch .slide-4 > h2 span { background-color: #bb6098 }
+.liteAccordion.ie.stitch .slide-5 > h2 span { background-color: #c25252 }
+.liteAccordion.ie.stitch .slide-6 > h2 span { background-color: #ca9859 }
+.liteAccordion.ie.stitch .slide-7 > h2 span { background-color: #96ba5f }
+.liteAccordion.ie.stitch .slide-8 > h2 span { background-color: #59abb7 }
+.liteAccordion.ie.stitch .slide-9 > h2 span { background-color: #bb6098 }
 
 /* transforms */
+.liteAccordion.ie .slide > h2,
+.liteAccordion.ie .slide > h2 span,
+.liteAccordion.ie .slide > h2 b { filter: none; -ms-filter: none; -ms-transform: none }
 .liteAccordion.ie7 .slide > h2 { filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3) }
 .liteAccordion.ie7 .slide > h2 b { filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1) }
-.liteAccordion.ie8 .slide > h2 { filter: none; -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)"; -ms-transform: none }
-.liteAccordion.ie8 .slide > h2 b { filter: none; -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)"; -ms-transform: none }
-.liteAccordion.ie9 .slide > h2 { filter: none; -ms-filter: none; -ms-transform: translateX(-100%) rotate(-90deg); -ms-transform-origin: right top }
-.liteAccordion.ie9 .slide > h2 b { filter: none; -ms-filter: none; -ms-transform: rotate(90deg) }
+.liteAccordion.ie8 .slide > h2 { -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)" }
+.liteAccordion.ie8 .slide > h2 b { -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)" }
+.liteAccordion.ie9 .slide > h2 { -ms-transform: translateX(-100%) rotate(-90deg); -ms-transform-origin: right top }
+.liteAccordion.ie9 .slide > h2 b { -ms-transform: rotate(90deg) }
 
 /* misc */
-.liteAccordion.ie .slide > h2 b { top: 36%; left: 5% }
-.liteAccordion.ie.dark .slide > h2 b, .liteAccordion.ie.light .slide > h2 b { top: 44% }
-.liteAccordion.ie9.dark .slide > h2.selected span, .liteAccordion.ie9.dark .slide > h2.selected span:hover, .liteAccordion.light .slide > h2 span { filter: none }
-.liteAccordion.ie9.stitch { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); }
-.liteAccordion.ie9.stitch .slide > h2 b { top: 0; left: 10% }
+.liteAccordion.ie7 .slide > h2 b, .liteAccordion.ie8 .slide > h2 b { top: 44%; left: 5% }
+.liteAccordion.ie7.stitch .slide > h2 b, .liteAccordion.ie8.stitch .slide > h2 b { top: 36% }
+.liteAccordion.ie9.stitch { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4) }

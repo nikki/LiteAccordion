@@ -19,11 +19,7 @@
             containerWidth : 960,                   // px, % or em
             containerHeight : 320,                  // px, % or em
             headerWidth : 48,                       // px, % or em
-
             responsive : false,                     // overrides the above three settings, accordion adjusts to fill container
-            autoScaleImages : false,                // if a single image is placed within the slide, this will be automatically scaled to fit
-            // minContainerWidth : 300,             // minimum width the accordion will resize to
-            // maxContainerWidth : 960,             // maximum width the accordion will resize to
 
             activateOn : 'click',                   // click or mouseover
             firstSlide : 1,                         // displays slide (n) on page load
@@ -147,12 +143,7 @@
                     core.setSlidePositions();
 
                     // override container and slide widths for responsive setting
-                    if (settings.responsive) {
-                        core.responsive();
-                    } else {
-                        // trigger autoScaleImages once for fixed width accordions
-                        if (settings.autoScaleImages) core.autoScaleImages();
-                    }
+                    if (settings.responsive) core.responsive();
                 },
 
                 // set initial positions for each slide
@@ -191,47 +182,26 @@
 
                 // responsive styles
                 responsive : function() {
-                    var parentWidth = elem.parent().width();
+                    var prefixes = ['Webkit', 'Moz', 'ms', 'O', ''],
+                        width = elem.parent().width(),
+                        scale = width / settings.containerWidth; // linear scale
 
-                    // set new container width
-                    if (parentWidth > settings.minContainerWidth) {
-                        settings.containerWidth = parentWidth < settings.maxContainerWidth ? parentWidth : settings.maxContainerWidth;
-                    } else if (parentWidth < settings.maxContainerWidth) {
-                        settings.containerWidth = parentWidth > settings.minContainerWidth ? parentWidth : settings.minContainerWidth;
+                    console.log(scale);
+/*
+                    if (linear) {
+                        // linear scale
+                        scale.x = scale.y = Math.min(obj.width / 480, obj.height / 320); // linear scale
+
+                        // don't scale beyond min size
+                        if (scale.x < 1) return;
+                    } else {
+                        scale.x = obj.width / 480;
+                        scale.y = obj.height / 320;
                     }
+*/
 
-                    // set new container height
-                    settings.containerHeight = settings.containerWidth / 3 | 0;
-
-                    // resize slides
-                    slideWidth = settings.containerWidth - slideLen * settings.headerWidth;
-
-                    // resize container
-                    elem
-                        .width(settings.containerWidth)
-                        .height(settings.containerHeight);
-
-                    // resize slides
-                    slides
-                        .children(':first-child')
-                        .width(settings.containerHeight);
-
-                    // set slide positions
-                    core.setSlidePositions();
-                },
-
-                // scale images contained within a slide to fit the slide height and width
-                autoScaleImages : function() {
-                    slides.children('div').each(function() {
-                        var $this = $(this),
-                            $imgs = $this.find('img');
-
-                        if ($imgs.length) {
-                            $imgs.each(function(index, item) {
-                                $(item).width($this.width() + 1); // fix the anti-aliasing bug in chrome
-                                $(item).height($this.height());
-                            });
-                        }
+                    prefixes.forEach(function(prefix) {
+                        elem[0].style[prefix ? prefix + 'Transform' : 'transform'] = 'scale(' + scale + ', ' + scale + ')';
                     });
                 },
 
@@ -274,18 +244,13 @@
 
                     // resize and orientationchange
                     if (settings.responsive) {
-                        $(window)
-                            .on('load.liteAccordion', function() {
-                                if (settings.autoScaleImages) core.autoScaleImages();
-                            })
-                            .on('resize.liteAccordion orientationchange.liteAccordion', function() {
-                                // approximates 'onresizeend'
-                                clearTimeout(resizeTimer);
-                                resizeTimer = setTimeout(function() {
-                                    core.responsive();
-                                    if (settings.autoScaleImages) core.autoScaleImages();
-                                }, 100);
-                            });
+                        $(window).on('resize.liteAccordion orientationchange.liteAccordion', function() {
+                            // approximates 'onresizeend'
+                            clearTimeout(resizeTimer);
+                            resizeTimer = setTimeout(function() {
+                                core.responsive();
+                            }, 100);
+                        });
                     }
                 },
 
@@ -425,6 +390,7 @@
 
                 ieClass : function(version) {
                     if (version < 7) methods.destroy();
+                    if (version >= 10) return;
                     if (version === 7 || version === 8) {
                         slides.each(function(index) {
                             $(this).addClass('slide-' + index);
@@ -440,7 +406,7 @@
 
                     // test for ie
                     if (index !== -1) {
-                        ua = ua.slice(index + 5, index + 6);
+                        ua = ua.slice(index + 5, index + 7);
                         core.ieClass(+ua);
                     }
 
