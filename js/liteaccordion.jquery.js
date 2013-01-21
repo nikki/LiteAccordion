@@ -6,7 +6,7 @@
 *   demo:       http://www.nicolahibbert.com/demo/liteAccordion/
 *
 *   Version:    2.2.0
-*   Copyright:  (c) 2010-2012 Nicola Hibbert
+*   Copyright:  (c) 2010-2013 Nicola Hibbert
 *   Licence:    MIT
 *
 **************************************************/
@@ -16,10 +16,9 @@
     var LiteAccordion = function(elem, options) {
 
         var defaults = {
-            containerWidth : 960,                   // px, % or em
-            containerHeight : 320,                  // px, % or em
-            headerWidth : 48,                       // px, % or em
-            responsive : false,                     // overrides the above three settings, accordion adjusts to fill container
+            containerWidth : 960,                   // fixed (px)
+            containerHeight : 320,                  // fixed (px)
+            headerWidth : 48,                       // fixed (px)
 
             activateOn : 'click',                   // click or mouseover
             firstSlide : 1,                         // displays slide (n) on page load
@@ -141,9 +140,6 @@
 
                     // set slide positions
                     core.setSlidePositions();
-
-                    // override container and slide widths for responsive setting
-                    if (settings.responsive) core.responsive();
                 },
 
                 // set initial positions for each slide
@@ -180,35 +176,8 @@
                     });
                 },
 
-                // responsive styles
-                responsive : function() {
-                    var prefixes = ['Webkit', 'Moz', 'ms', 'O', ''],
-                        width = elem.parent().width(),
-                        scale = width / settings.containerWidth; // linear scale
-
-                    console.log(scale);
-/*
-                    if (linear) {
-                        // linear scale
-                        scale.x = scale.y = Math.min(obj.width / 480, obj.height / 320); // linear scale
-
-                        // don't scale beyond min size
-                        if (scale.x < 1) return;
-                    } else {
-                        scale.x = obj.width / 480;
-                        scale.y = obj.height / 320;
-                    }
-*/
-
-                    prefixes.forEach(function(prefix) {
-                        elem[0].style[prefix ? prefix + 'Transform' : 'transform'] = 'scale(' + scale + ', ' + scale + ')';
-                    });
-                },
-
                 // bind events
                 bindEvents : function() {
-                    var resizeTimer = 0;
-
                     // bind click and mouseover events
                     if (settings.activateOn === 'click') {
                         header.on('click.liteAccordion', core.triggerSlide);
@@ -240,17 +209,6 @@
                             .on('mouseout.liteAccordion', function() {
                                 !core.playing && methods.play(core.currentSlide);
                             });
-                    }
-
-                    // resize and orientationchange
-                    if (settings.responsive) {
-                        $(window).on('resize.liteAccordion orientationchange.liteAccordion', function() {
-                            // approximates 'onresizeend'
-                            clearTimeout(resizeTimer);
-                            resizeTimer = setTimeout(function() {
-                                core.responsive();
-                            }, 100);
-                        });
                     }
                 },
 
