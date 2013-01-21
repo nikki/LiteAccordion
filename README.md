@@ -2,7 +2,7 @@
 
 liteAccordion is a horizontal accordion plugin for jQuery.
 
-Please post any support or feature requests [here](http://nicolahibbert.com/liteaccordion-v2/).   
+Please post any support or feature requests [here](http://nicolahibbert.com/liteaccordion-v2/).
 **Please do not post support requests on the issue tracker!**
 
 Follow me on Twitter [@nicolahibbert](http://twitter.com/nicolahibbert) for liteAccordion development news.
@@ -12,29 +12,24 @@ Follow me on Twitter [@nicolahibbert](http://twitter.com/nicolahibbert) for lite
 
 These are the default settings for the liteAccordion plugin:
 
-    containerWidth : 960,                   // fixed (px)  
-    containerHeight : 320,                  // fixed (px)  
-    headerWidth: 48,                        // fixed (px)  
-    
-    responsive : false,                     // overrides the above three settings, accordion adjusts to fill container
-    autoScaleImages : false,                // if a single image is placed within the slide, this will be automatically scaled to fit
-    minContainerWidth : 300,                // minimum width the accordion will resize to
-    maxContainerWidth : 960,                // maximum width the accordion will resize to
+    containerWidth : 960,                   // fixed (px)
+    containerHeight : 320,                  // fixed (px)
+    headerWidth: 48,                        // fixed (px)
 
-    activateOn : 'click',                   // click or mouseover  
-    firstSlide : 1,                         // displays slide (n) on page load  
-    slideSpeed : 800,                       // slide animation speed  
-    onTriggerSlide : function() {},         // callback on slide activate  
-    onSlideAnimComplete : function() {},    // callback on slide anim complete  
-    
-    autoPlay : false,                       // automatically cycle through slides  
-    pauseOnHover : false,                   // pause on hover  
-    cycleSpeed : 6000,                      // time between slide cycles  
-    easing : 'swing',                       // custom easing function  
-                                            
-    theme : 'basic',                        // basic, dark, light, colorful, or stitch  
-    rounded : false,                        // square or rounded corners  
-    enumerateSlides : false,                // put numbers on slides  
+    activateOn : 'click',                   // click or mouseover
+    firstSlide : 1,                         // displays slide (n) on page load
+    slideSpeed : 800,                       // slide animation speed
+    onTriggerSlide : function() {},         // callback on slide activate
+    onSlideAnimComplete : function() {},    // callback on slide anim complete
+
+    autoPlay : false,                       // automatically cycle through slides
+    pauseOnHover : false,                   // pause on hover
+    cycleSpeed : 6000,                      // time between slide cycles
+    easing : 'swing',                       // custom easing function
+
+    theme : 'basic',                        // basic, dark, light, colorful, or stitch
+    rounded : false,                        // square or rounded corners
+    enumerateSlides : false,                // put numbers on slides
     linkable : false                        // link slides via hash
 
 ***
@@ -59,6 +54,13 @@ $('#yourdiv').liteAccordion('next').liteAccordion('next');
 
 ***
 ###Changelog
+
+**v2.2** - 21/01/2013
+
+ - removed responsive option
+ - removed autoScale images option
+ - fixed issue #66
+ - fixed minor css bugs (ie10)
 
 **v2.1.1** - 10/09/2012
 
@@ -91,12 +93,12 @@ $('#yourdiv').liteAccordion('next').liteAccordion('next');
 **v2.0** - 16/11/2011
 
 - new methods:
-    - play    
+    - play
     - stop
     - next
     - prev
     - destroy
-    - debug    
+    - debug
 - rewrote plugin to expose methods
 - refactored core
 - refactored css, styles no longer cascade into slide content divs
