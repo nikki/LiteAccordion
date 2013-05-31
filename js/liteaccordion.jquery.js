@@ -165,7 +165,7 @@
                         // set each slide position
                         $this
                             .css('left', left)
-                            .width(settings.containerHeight)
+                            .height(settings.containerHeight)
                             .next()
                                 .width(slideWidth - offset)
                                 .css({ left : left, paddingLeft : settings.headerWidth });
