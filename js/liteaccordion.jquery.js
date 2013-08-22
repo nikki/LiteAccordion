@@ -51,7 +51,7 @@
 
                 // start elem animation
                 play : function(index) {
-                	console.log(index);
+                	
                     var next = core.nextSlide(index && index);
 
                     if (core.playing) return;
