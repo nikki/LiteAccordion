@@ -51,6 +51,7 @@
 
                 // start elem animation
                 play : function(index) {
+                	console.log(index);
                     var next = core.nextSlide(index && index);
 
                     if (core.playing) return;
@@ -116,6 +117,16 @@
                         methods : methods,
                         core : core
                     };
+                },
+                resize:function(data){
+                	settings = $.extend({}, defaults, data),
+            		slides = elem.children('ol').children('li'),
+            		header = slides.children(':first-child'),
+            		slideLen = slides.length,
+            		slideWidth = settings.containerWidth - slideLen * settings.headerWidth;
+            		
+            		
+                	core.setStyles();
                 }
             },
 
@@ -388,7 +399,8 @@
 
     };
 
-    $.fn.liteAccordion = function(method) {
+    $.fn.liteAccordion = function() {
+    	var method=arguments[0];
         var elem = this,
             instance = elem.data('liteAccordion');
 
@@ -407,11 +419,13 @@
 
         // otherwise, call method on current instance
         } else if (typeof method === 'string' && instance[method]) {
+        	 arguments = Array.prototype.slice.call(arguments, 1);		
             // debug method isn't chainable b/c we need the debug object to be returned
             if (method === 'debug') {
                 return instance[method].call(elem);
             } else { // the rest of the methods are chainable though
-                instance[method].call(elem);
+                instance[method].apply(elem, arguments);
+               
                 return elem;
             }
         }
