@@ -119,6 +119,7 @@
                     };
                 },
                 resize:function(data){
+                    //User Passes containerWidth,ContainerHeight and firstSlide
                 	settings = $.extend({}, defaults, data),
             		slides = elem.children('ol').children('li'),
             		header = slides.children(':first-child'),
