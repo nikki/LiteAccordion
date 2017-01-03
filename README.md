@@ -1,11 +1,7 @@
-##[liteAccordion](http://stitchui.com/accordion/liteaccordion/)
+##[liteAccordion]
 
 liteAccordion is a horizontal accordion plugin for jQuery.
-
-Please post any support or feature requests [here](http://stitchui.com/liteaccordion-v2/).
-**Please do not post support requests on the issue tracker!**
-
-Follow Stitch UI on Twitter [@stitch_ui](http://twitter.com/stitch_ui) for liteAccordion development news.
+**This plugin is no longer under development and will not be receiving any updates in the future**
 
 ***
 ###Options
