@@ -248,6 +248,9 @@
                             return window.location.hash = '#' + tab.parent.attr('data-slide-name');
                         }
                     }
+                    
+                    if (core.currentSlide == tab.index)
+                        return;
 
                     // update core.currentSlide
                     core.currentSlide = tab.index;
