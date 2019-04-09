@@ -1,44 +1,44 @@
 [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 
 # LiteAccordion
-liteAccordion is a horizontal accordion plugin for jQuery.
-
-**This plugin is no longer under development and will not be receiving any updates in the future**
+LiteAccordion is a horizontal accordion plugin for jQuery. **This plugin is no longer under development and will not be receiving any updates in the future**
 
 ## Options
 These are the default settings for the liteAccordion plugin:
 ```
-    containerWidth : 960,                   // fixed (px)
-    containerHeight : 320,                  // fixed (px)
-    headerWidth: 48,                        // fixed (px)
+containerWidth : 960,                   // fixed (px)
+containerHeight : 320,                  // fixed (px)
+headerWidth: 48,                        // fixed (px)
 
-    activateOn : 'click',                   // click or mouseover
-    firstSlide : 1,                         // displays slide (n) on page load
-    slideSpeed : 800,                       // slide animation speed
-    onTriggerSlide : function() {},         // callback on slide activate
-    onSlideAnimComplete : function() {},    // callback on slide anim complete
+activateOn : 'click',                   // click or mouseover
+firstSlide : 1,                         // displays slide (n) on page load
+slideSpeed : 800,                       // slide animation speed
+onTriggerSlide : function() {},         // callback on slide activate
+onSlideAnimComplete : function() {},    // callback on slide anim complete
 
-    autoPlay : false,                       // automatically cycle through slides
-    pauseOnHover : false,                   // pause on hover
-    cycleSpeed : 6000,                      // time between slide cycles
-    easing : 'swing',                       // custom easing function
+autoPlay : false,                       // automatically cycle through slides
+pauseOnHover : false,                   // pause on hover
+cycleSpeed : 6000,                      // time between slide cycles
+easing : 'swing',                       // custom easing function
 
-    theme : 'basic',                        // basic, dark, light, or stitch
-    rounded : false,                        // square or rounded corners
-    enumerateSlides : false,                // put numbers on slides
-    linkable : false                        // link slides via hash
+theme : 'basic',                        // basic, dark, light, or stitch
+rounded : false,                        // square or rounded corners
+enumerateSlides : false,                // put numbers on slides
+linkable : false                        // link slides via hash
 ```
 
 ## Methods
 
 These are the methods for the liteAccordion plugin:
 
-	play									// trigger autoPlay on a stopped accordion
-	stop									// stop an accordion playing
-	next									// trigger the next slide
-	prev									// trigger the previous slide
-	destroy									// remove the accordion, destroying all event handlers and styles (unstyled html content will remain)
-	debug									// returns a debug object
+```
+play					// trigger autoPlay on a stopped accordion
+stop					// stop an accordion playing
+next					// trigger the next slide
+prev					// trigger the previous slide
+destroy					// remove the accordion, destroying all event handlers and styles (unstyled html content will remain)
+debug					// returns a debug object
+```
 
 All of these methods are chainable (i.e. they return the original DOM object) with the exception of the debug method.  To call a method, use:
 
